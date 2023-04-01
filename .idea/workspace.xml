@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b94e2a1e-a692-417a-bf44-de44ac3f5b39" name="Changes" comment="Readme" />
+    <list default="true" id="b94e2a1e-a692-417a-bf44-de44ac3f5b39" name="Changes" comment="Language level set to 8" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -46,7 +46,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1680363005077</updated>
-      <workItem from="1680363006848" duration="364000" />
+      <workItem from="1680363006848" duration="442000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <created>1680363062452</created>
@@ -62,7 +62,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680363336746</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Language level set to 8">
+      <created>1680363387884</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1680363387884</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -71,6 +78,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="init" />
     <MESSAGE value="Readme" />
-    <option name="LAST_COMMIT_MESSAGE" value="Readme" />
+    <MESSAGE value="Language level set to 8" />
+    <option name="LAST_COMMIT_MESSAGE" value="Language level set to 8" />
   </component>
 </project>
