@@ -135,5 +135,8 @@ public class GameEngine {
     }
 
 
-
+    public static void printFile(String filename) {
+        System.out.println(DataLoader.dl.getInstructions(filename));
+                System.out.println("________________________________________________________________________________\n");
+    }
 }

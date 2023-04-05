@@ -1,25 +1,25 @@
-# CS611 - Assignment 3
+# CS611 - Assignment 4
 
-## Legends: Monsters and Heroes
+## Legends of Valor (for Legends, Monsters, and Heroes, see Rithvik's A3 README)
 
-- Rithvik Doshi
-- [rithvik@bu.edu](mailto:rithvik@bu.edu)
-- U98773385
+- Rithvik Doshi and Huy Phan
+- [rithvik@bu.edu](mailto:rithvik@bu.edu) and [hphan6@bu.edu](mailto:hphan6@bu.edu)
+- U98773385 and U________
 
 Files
 - data - contains object attributes
-  - Armory.txt
-  - Dragons.txt
-  - Exoskeletons.txt
-  - FireSpells.txt
-  - IceSpells.txt
-  - LightningSpells.txt
-  - Paladins.txt
-  - Potions.txt
-  - Sorcerers.txt
-  - Spirits.txt
-  - Warriors.txt
-  - Weaponry.txt
+  - Armory.ldf
+  - Dragons.ldf
+  - Exoskeletons.ldf
+  - FireSpells.ldf
+  - IceSpells.ldf
+  - LightningSpells.ldf
+  - Paladins.ldf
+  - Potions.ldf
+  - Sorcerers.ldf
+  - Spirits.ldf
+  - Warriors.ldf
+  - Weaponry.ldf
 - UML.png - UML diagram of project
 - Accessible.java - interface for accessible objects
 - Color.java
@@ -37,9 +37,9 @@ Files
   - Hero.java
   - Monster.java
 - LegendStatus.java - enum for legend status
-- LMH - Game object
+- LMH_Game - Game object
 - Main.java - main class
-- Map.java - class to store map data
+- LMH_Map.java - class to store map data
 - Space.java - abstract space object
   - Common.java (accessible)
   - Inaccessible.java

@@ -1,5 +1,4 @@
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
@@ -14,6 +13,8 @@ public class DataLoader {
      */
     public static DataLoader dl;
 
+    public DataMap<String, String> instructionMap = new DataMap<>();
+
     /**
      * The static block that loads the data from the data directory into the static object.
      */
@@ -23,6 +24,23 @@ public class DataLoader {
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public String getInstructions(String filename){
+        if (!instructionMap.containsKey(filename)) {
+            StringBuilder sb = new StringBuilder();
+            try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
+                String line;
+                while ((line = br.readLine()) != null) {
+                    sb.append(line).append("\n");
+                    System.out.println(line);
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            instructionMap.put(filename, sb.toString());
+        }
+        return instructionMap.get(filename);
     }
 
     /**
@@ -37,7 +55,7 @@ public class DataLoader {
      */
     private DataLoader() throws FileNotFoundException {
         String directory = "src/data/";
-        String[] filenames = getFilenames(directory);
+        String[] filenames = getDataFilenames(directory);
         allFiles = new DataMap<>();
         for (String filename : filenames) {
             String[] lines = loadFile(Paths.get(directory + filename));
@@ -47,13 +65,13 @@ public class DataLoader {
     }
 
     /**
-     * Gets the filenames of all the files in the data directory.
+     * Gets the filenames of all the .ldf files in the data directory.
      * @param directory the directory to get the filenames from.
      * @return the filenames of all the files in the data directory.
      */
-    public static String[] getFilenames(String directory) {
+    public static String[] getDataFilenames(String directory) {
         File folder = new File(directory);
-        File[] listOfFiles = folder.listFiles();
+        File[] listOfFiles = folder.listFiles((dir, name) -> name.toLowerCase().endsWith(".ldf"));
         assert listOfFiles != null;
         String[] filenames = new String[listOfFiles.length];
         for (int i = 0; i < listOfFiles.length; i++) {

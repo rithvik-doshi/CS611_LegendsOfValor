@@ -1,17 +1,14 @@
-import java.io.BufferedReader;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 
 /**
  * This class is the main class of the game. It handles the game logic and the
  * game loop.
  */
-public class LMH {
+public class LMH_Game extends Game{
     /**
-     * Map of the game.
+     * LMH_Map of the game.
      */
-    private final Map map;
+    private final LMH_Map LMHMap;
 
     /**
      * List of heroes in the game.
@@ -24,24 +21,24 @@ public class LMH {
     static final int maxHeroes = 3;
 
     /**
-     * Constructor for the LMH class.
+     * Constructor for the LMH_Game class.
      * @throws FileNotFoundException If the file is not found.
      */
-    public LMH() throws FileNotFoundException {
+    public LMH_Game() throws FileNotFoundException {
 
-        System.out.println("Do you want to see the instructions? (Y/N)");
+        System.out.println("Welcome to Legends: Heroes and Monsters! Do you want to see the instructions? (Y/N)");
         String printInst = GameEngine.getOption(new String[]{"Y", "N"});
         if (printInst.equals("Y")) printInstructions();
 
-        System.out.println("Select a map to play on: ");
+        System.out.println("Select a LMHMap to play on: ");
         while (true){
-            System.out.println("Generating map...");
-            Map tempMap = new Map(8);
-            System.out.println(tempMap);
-            System.out.println("Confirm this map? (1 for Yes, 2 for No)");
+            System.out.println("Generating LMHMap...");
+            LMH_Map tempLMHMap = new LMH_Map(8);
+            System.out.println(tempLMHMap);
+            System.out.println("Confirm this LMHMap? (1 for Yes, 2 for No)");
             String input = GameEngine.getOption(new String[]{"Y", "N"});
             if (input.equals("Y")) {
-                this.map = tempMap;
+                this.LMHMap = tempLMHMap;
                 break;
             }
         }
@@ -53,7 +50,7 @@ public class LMH {
      * Adds a hero to the list of heroes.
      * @param hero Hero to be added.
      */
-    public void addHero(Hero hero){
+    private void addHero(Hero hero){
         heroes.add(hero);
     }
 
@@ -61,7 +58,7 @@ public class LMH {
      * Allows users to create heroes.
      * @throws FileNotFoundException If the file is not found.
      */
-    private void makeHeroes() throws FileNotFoundException {
+    void makeHeroes() throws FileNotFoundException {
         System.out.println("Choose the number of heroes to embark on a quest");
         int num = GameEngine.getInt(1, maxHeroes);
         String[] heroClasses = {"Paladins", "Sorcerers", "Warriors"};
@@ -74,12 +71,11 @@ public class LMH {
             DataMap<String, String> heroData = DataLoader.dl.getInnerMap(classOption, heroOption);
             this.addHero(new Hero(heroOption, heroData, classOption));
         }
-        map.heroInitialPlace(heroes);
+        LMHMap.heroInitialPlace(heroes);
     }
 
     /**
      * Handles the game loop.
-     * @throws FileNotFoundException If the file is not found.
      */
     public void start() throws FileNotFoundException {
         while (true) {
@@ -88,8 +84,8 @@ public class LMH {
                 System.out.println(Color.color(Color.red, "All heroes are dead. Game over!"));
                 System.exit(0);
             }
-            System.out.println(this.map);
-            char control = GameEngine.getControl(map.getSpace().getSymbol());
+            System.out.println(this.LMHMap);
+            char control = GameEngine.getControl(LMHMap.getSpace().getSymbol());
             if (control == 'Q') {
                 System.out.println(Color.color(Color.bold, "Thanks for playing!"));
                 System.exit(0);
@@ -99,7 +95,7 @@ public class LMH {
                 System.out.println(heroes);
             }
             if (control == 'M') {
-                Space currentSpace = map.getSpace();
+                Space currentSpace = LMHMap.getSpace();
                 if (currentSpace.getSymbol() == 'M') {
                     Market market = (Market) currentSpace;
                     this.heroes = market.goToMarket(heroes);
@@ -108,7 +104,7 @@ public class LMH {
                 }
             }
             if (control == 'W' || control == 'A' || control == 'S' || control == 'D') {
-                if (!map.moveHeroes(heroes, control)) {
+                if (!LMHMap.moveHeroes(heroes, control)) {
                     System.out.println(Color.color(Color.bgBlack, "You cannot access this space"));
                 }
             }
@@ -129,17 +125,11 @@ public class LMH {
     }
 
     /**
-     * Prints the instructions of the game from instructions.md
+     * Prints the instructions of the game from LMH_instructions.md
      */
-    private void printInstructions() {
-        try (BufferedReader br = new BufferedReader(new FileReader("src/Instructions.md"))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                System.out.println(line);
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        System.out.println("\n\n\n");
+    public void printInstructions() {
+
+        GameEngine.printFile("src/data/LMH_instructions.md");
+
     }
 }
