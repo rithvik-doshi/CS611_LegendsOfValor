@@ -10,8 +10,6 @@ import java.io.FileNotFoundException;
  */
 public class Main {
     public static void main(String[] args) throws FileNotFoundException {
-        System.out.println("Welcome to Legends: Monsters and Heroes!\n");
-        LMH game = new LMH();
-        game.start();
+        Game.gameMenuAndStart();
     }
 }
