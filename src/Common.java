@@ -193,10 +193,10 @@ public class Common extends Space implements Accessible{
      */
     private DataList<Monster> generateMonsters(DataList<Hero> heroes) {
         int maxLevel = getMaxLevel(heroes);
-        DataList<Monster> monsters = new DataList<>(LMH.maxHeroes);
+        DataList<Monster> monsters = new DataList<>(LMH_Game.maxHeroes);
         do {
             monsters.add(Monster.monsterCreator(maxLevel));
-        } while (Math.random() < (0.8 - (Math.pow(0.4, heroes.size()))) && monsters.size() < LMH.maxHeroes);
+        } while (Math.random() < (0.8 - (Math.pow(0.4, heroes.size()))) && monsters.size() < LMH_Game.maxHeroes);
         return monsters;
 
     }

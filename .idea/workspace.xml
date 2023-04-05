@@ -4,14 +4,65 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b94e2a1e-a692-417a-bf44-de44ac3f5b39" name="Changes" comment="Add part1 files" />
+    <list default="true" id="b94e2a1e-a692-417a-bf44-de44ac3f5b39" name="Changes" comment="Add part1 files">
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Game.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/LMH_Map.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Common.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Common.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DataLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataLoader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GameEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GameEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/LMH.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/LMH_Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Map.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Space.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Space.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/Armory.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/Dragons.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/Exoskeletons.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/FireSpells.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/IceSpells.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/LightningSpells.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/Paladins.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/Potions.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/Sorcerers.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/Spirits.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/Warriors.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/Weaponry.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/instructions.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/LMH_instructions.md" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="0bbecda7-c6c7-4399-b22e-b0455cb1a2f1" />
+        <option name="url" value="https://github.com/rithvik-doshi/CS611_LegendsOfValor.git" />
+      </UrlAndAccount>
+    </option>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -26,6 +77,7 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -39,6 +91,11 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/data" />
+    </key>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -49,6 +106,7 @@
       <updated>1680363005077</updated>
       <workItem from="1680363006848" duration="442000" />
       <workItem from="1680368269164" duration="430000" />
+      <workItem from="1680660112120" duration="4938000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <created>1680363062452</created>
@@ -91,6 +149,34 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="CUSTOM_BOOLEAN_PROPERTIES">
+                <map>
+                  <entry key="Show.Git.Branches" value="true" />
+                </map>
+              </option>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="rithvik-workspace" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="init" />
     <MESSAGE value="Readme" />
@@ -98,5 +184,15 @@
     <MESSAGE value="Readme with tasks to-do" />
     <MESSAGE value="Add part1 files" />
     <option name="LAST_COMMIT_MESSAGE" value="Add part1 files" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.ArrayIndexOutOfBoundsException" package="java.lang" />
+          <option name="timeStamp" value="2" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

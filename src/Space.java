@@ -1,7 +1,7 @@
 import java.io.FileNotFoundException;
 
 /**
- * This class is the parent class of all the spaces in the game. It contains the
+ * This class is the parent class of all the spaces in the games. It contains the
  * basic information of a space.
  */
 public abstract class Space {
