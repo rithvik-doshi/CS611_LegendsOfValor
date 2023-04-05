@@ -25,13 +25,11 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
     &quot;state&quot;: &quot;OPEN&quot;
   }
 }</component>
-
   <component name="GithubPullRequestsUISettings">
     <option name="selectedUrlAndAccountId">
       <UrlAndAccount>
@@ -97,6 +95,7 @@
       <workItem from="1680363006848" duration="442000" />
       <workItem from="1680368269164" duration="430000" />
       <workItem from="1680660112120" duration="5323000" />
+      <workItem from="1680700244612" duration="322000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <created>1680363062452</created>
