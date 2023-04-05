@@ -4,33 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b94e2a1e-a692-417a-bf44-de44ac3f5b39" name="Changes" comment="Add part1 files">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Game.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/LMH_Map.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Common.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Common.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DataLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataLoader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GameEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GameEngine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/LMH.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/LMH_Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Map.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Space.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Space.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/Armory.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/Dragons.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/Exoskeletons.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/FireSpells.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/IceSpells.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/LightningSpells.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/Paladins.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/Potions.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/Sorcerers.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/Spirits.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/Warriors.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/Weaponry.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/instructions.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/LMH_instructions.md" afterDir="false" />
-    </list>
+    <list default="true" id="b94e2a1e-a692-417a-bf44-de44ac3f5b39" name="Changes" comment="Minor refactoring, added some abstract classes" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -106,7 +80,7 @@
       <updated>1680363005077</updated>
       <workItem from="1680363006848" duration="442000" />
       <workItem from="1680368269164" duration="430000" />
-      <workItem from="1680660112120" duration="4938000" />
+      <workItem from="1680660112120" duration="5323000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <created>1680363062452</created>
@@ -143,7 +117,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680368613718</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Minor refactoring, added some abstract classes">
+      <created>1680665195960</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1680665195960</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -183,7 +164,8 @@
     <MESSAGE value="Language level set to 8" />
     <MESSAGE value="Readme with tasks to-do" />
     <MESSAGE value="Add part1 files" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add part1 files" />
+    <MESSAGE value="Minor refactoring, added some abstract classes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Minor refactoring, added some abstract classes" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
