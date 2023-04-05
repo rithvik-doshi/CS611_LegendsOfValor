@@ -14,7 +14,7 @@ Huy
 - Items as their own class, other items extend (similar in Rithvik's)
 
 
-## To-Do List
+## [To-Do List](https://www.notion.so/CS-611-Legends-of-Valor-81ad3d4b26c542e99239ed8c1947e3c6?pvs=4)
 - Rithvik
 	- Import my assignment 2
 	- Allow monsters to move to spaces
