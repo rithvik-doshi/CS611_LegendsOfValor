@@ -45,6 +45,6 @@ public class Cave extends Space implements Accessible, AttributeAffectable {
 
     @Override
     public String toString() {
-        return (heroes != null) ? Color.color(Color.bgCyan , "C") : Color.color(Color.bgBrightCyan, (getSymbol() + ""));
+        return (heroes != null) ? Color.color(Color.magenta , "C") : Color.color(Color.magenta, (getSymbol() + ""));
     }
 }

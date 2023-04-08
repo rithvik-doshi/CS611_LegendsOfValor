@@ -26,6 +26,7 @@ public class LMH_Game extends Game{
      */
     public LMH_Game() throws FileNotFoundException {
 
+        System.out.println(ArtMessages.getWelcomeToMH());
         System.out.println("Welcome to Legends: Heroes and Monsters! Do you want to see the instructions? (Y/N)");
         String printInst = GameEngine.getOption(new String[]{"Y", "N"});
         if (printInst.equals("Y")) printInstructions();

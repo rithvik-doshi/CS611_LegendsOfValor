@@ -42,6 +42,6 @@ public class Koulou extends Space implements Accessible, AttributeAffectable {
 
     @Override
     public String toString() {
-        return (heroes != null) ? Color.color(Color.bgBlue , "K") : Color.color(Color.bgBrightBlue, (getSymbol() + ""));
+        return (heroes != null) ? Color.color(Color.blue , "K") : Color.color(Color.blue, (getSymbol() + ""));
     }
 }

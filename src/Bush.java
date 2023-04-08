@@ -43,6 +43,6 @@ public class Bush extends Space implements Accessible, AttributeAffectable{
 
     @Override
     public String toString() {
-        return (heroes != null) ? Color.color(Color.bgGreen , "B") : Color.color(Color.bgBrightGreen, (getSymbol() + ""));
+        return (heroes != null) ? Color.color(Color.green , "B") : Color.color(Color.green, (getSymbol() + ""));
     }
 }
