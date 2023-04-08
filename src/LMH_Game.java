@@ -4,7 +4,7 @@ import java.io.FileNotFoundException;
  * This class is the main class of the game. It handles the game logic and the
  * game loop.
  */
-public class LMH_Game extends Game{
+public class LMH_Game extends Game implements UsesHeroes{
     /**
      * LMH_Map of the game.
      */
@@ -30,12 +30,12 @@ public class LMH_Game extends Game{
         String printInst = GameEngine.getOption(new String[]{"Y", "N"});
         if (printInst.equals("Y")) printInstructions();
 
-        System.out.println("Select a LMHMap to play on: ");
+        System.out.println("Select a map to play on: ");
         while (true){
-            System.out.println("Generating LMHMap...");
+            System.out.println("Generating map...");
             LMH_Map tempLMHMap = new LMH_Map(8);
             System.out.println(tempLMHMap);
-            System.out.println("Confirm this LMHMap? (1 for Yes, 2 for No)");
+            System.out.println("Confirm this map? (1 for Yes, 2 for No)");
             String input = GameEngine.getOption(new String[]{"Y", "N"});
             if (input.equals("Y")) {
                 this.LMHMap = tempLMHMap;
@@ -50,7 +50,7 @@ public class LMH_Game extends Game{
      * Adds a hero to the list of heroes.
      * @param hero Hero to be added.
      */
-    private void addHero(Hero hero){
+    public void addHero(Hero hero){
         heroes.add(hero);
     }
 
@@ -71,7 +71,7 @@ public class LMH_Game extends Game{
             DataMap<String, String> heroData = DataLoader.dl.getInnerMap(classOption, heroOption);
             this.addHero(new Hero(heroOption, heroData, classOption));
         }
-        LMHMap.heroInitialPlace(heroes);
+        LMHMap.heroesInitialPlace(heroes);
     }
 
     /**
