@@ -33,31 +33,7 @@ public class LMH_Map extends Map{
         }
     }
 
-    /**
-     * String representation of a map
-     * @return a string
-     */
-    public String toString() {
-        StringBuilder outstring = new StringBuilder();
-        for (Space[] row : matrix) {
-            for (int i = 0; i < R; i++){
-                outstring.append("+---");
-            }
-            outstring.append("+\n");
-            for (Space cell : row) {
-                outstring.append("| ").append(cell.toString()).append(" ");
-            }
-            outstring.append("|\n");
-        }
 
-        for (int i = 0; i < R; i++){
-            outstring.append("+---");
-        }
-        outstring.append("+");
-
-        return outstring.toString();
-
-    }
 
     /**
      * Moves the heroes on the map
