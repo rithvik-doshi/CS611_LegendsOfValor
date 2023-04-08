@@ -11,14 +11,15 @@ public abstract class Game {
 
     public static void gameMenuAndStart() throws FileNotFoundException {
         do {
-            System.out.println("Welcome to the Nintendo 42069! Select a game to play: ");
-            String option = GameEngine.getOption(new String[]{"LMH_Game", "LegendsOfValor"});
-            if (option.equals("LMH_Game")) {
+            System.out.println(ArtMessages.getWelcomeToGameCenter());
+            System.out.println("Which game would you like to play? \n");
+            String option = GameEngine.getOption(new String[]{"Legends of Monsters and Heroes", "Legends Of Valor"});
+            if (option.equals("Legends of Monsters and Heroes")) {
                 LMH_Game game = new LMH_Game();
                 game.start();
-            } else if (option.equals("LegendsOfValor")) {
-            LOV_Game game = new LOV_Game();
-            game.start();
+            } else if (option.equals("Legends Of Valor")) {
+//            LegendsOfValor game = new LegendsOfValor();
+//            game.start();
                 return;
             }
             System.out.println("Do you want to play another game? (Y/N)");

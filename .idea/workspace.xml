@@ -5,15 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b94e2a1e-a692-417a-bf44-de44ac3f5b39" name="Changes" comment="Minor refactoring, added some abstract classes">
-      <change afterPath="$PROJECT_DIR$/src/LOV_Game.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/LOV_Map.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/UsesHeroes.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ArtMessages.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/LV_Map.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Nexus.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Bush.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Bush.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Cave.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Cave.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Koulou.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Koulou.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/LMH_Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/LMH_Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/LMH_Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/LMH_Map.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Map.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Plain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Plain.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,6 +24,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="Class" />
         <option value="Interface" />
       </list>
@@ -75,7 +77,7 @@
     &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -84,7 +86,28 @@
       <recent name="$PROJECT_DIR$/src/data" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.Main">
+    <configuration name="ArtMessages" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ArtMessages" />
+      <module name="CS611_LegendsOfValor" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="LMH_Map" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="LMH_Map" />
+      <module name="CS611_LegendsOfValor" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="LV_Map" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="LV_Map" />
+      <module name="CS611_LegendsOfValor" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="CS611_LegendsOfValor" />
@@ -95,6 +118,9 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
+        <item itemvalue="Application.ArtMessages" />
+        <item itemvalue="Application.LV_Map" />
+        <item itemvalue="Application.LMH_Map" />
       </list>
     </recent_temporary>
   </component>
@@ -109,7 +135,8 @@
       <workItem from="1680363006848" duration="442000" />
       <workItem from="1680368269164" duration="430000" />
       <workItem from="1680660112120" duration="5323000" />
-      <workItem from="1680700244612" duration="322000" />
+      <workItem from="1680724215502" duration="2040000" />
+      <workItem from="1680737789717" duration="6568000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <created>1680363062452</created>
