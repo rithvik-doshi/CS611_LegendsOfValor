@@ -100,7 +100,7 @@ public class LMH_Map extends Map{
      * @param heroes the list of heroes
      * @throws FileNotFoundException if the file is not found
      */
-    public void heroInitialPlace(DataList<Hero> heroes) throws FileNotFoundException {
+    public void heroesInitialPlace(DataList<Hero> heroes) throws FileNotFoundException {
         matrix[row][col].tryAccess(heroes);
     }
 

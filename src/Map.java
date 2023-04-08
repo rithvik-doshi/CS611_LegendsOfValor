@@ -1,3 +1,5 @@
+import java.io.FileNotFoundException;
+
 public abstract class Map {
 
     /**
@@ -14,4 +16,6 @@ public abstract class Map {
         R = C = n;
         matrix = new Space[this.R][this.C];
     }
+
+    public abstract void heroesInitialPlace(DataList<Hero> heroes) throws FileNotFoundException;
 }
