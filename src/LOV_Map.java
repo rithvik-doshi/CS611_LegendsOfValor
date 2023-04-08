@@ -1,8 +1,9 @@
+import java.io.FileNotFoundException;
 
-public class LV_Map extends Map {
+public class LOV_Map extends Map{
     public int row, col;
-    public LV_Map(int N) {
-        super(N);
+    protected LOV_Map() {
+        super(8);
         row = matrix.length - 1;
         col = 0;
         for (int i = 0; i < matrix.length; i++) {
@@ -24,29 +25,21 @@ public class LV_Map extends Map {
                     matrix[i][j] = new Cave();
                 } else if (rand < 0.8) {
                     matrix[i][j] = new Koulou();
-                }
-                else {
+                } else {
                     matrix[i][j] = new Bush();
                 }
             }
+
         }
     }
-    public String toString() {
-        StringBuilder outstring = new StringBuilder();
-        for (Space[] row : matrix) {
-            for (int i = 0; i < R; i++){
-                outstring.append("+---");
-            }
-            outstring.append("+\n");
-            for (Space cell : row) {
-                outstring.append("| ").append(cell.toString()).append(" ");
-            }
-            outstring.append("|\n");
-        }
-        for (int i = 0; i < R; i++){
-            outstring.append("+---");
-        }
-        outstring.append("+");
-        return outstring.toString();
+
+    @Override
+    public void heroesInitialPlace(DataList<Hero> heroes) throws FileNotFoundException {
+
     }
+
+    public void monstersInitialPlace(DataList<Monster> monsters) throws FileNotFoundException {
+
+    }
+
 }
