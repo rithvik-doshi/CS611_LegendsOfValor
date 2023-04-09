@@ -42,4 +42,30 @@ public abstract class Map {
         return outstring.toString();
     }
 
+    public String toString(boolean cellNums) {
+        StringBuilder outstring = new StringBuilder();
+        int rowNum = 0, colNum = 0;
+        for (Space[] row : matrix) {
+            outstring.append("\t");
+            for (int i = 0; i < R; i++){
+                outstring.append("+---");
+            }
+            outstring.append("+\n");
+            outstring.append(" ").append(rowNum++).append("\t");
+            for (Space cell : row) {
+                outstring.append("| ").append(cell.toString()).append(" ");
+            }
+            outstring.append("|\n");
+        }
+        outstring.append("\t");
+        for (int i = 0; i < R; i++){
+            outstring.append("+---");
+        }
+        outstring.append("+\n\t");
+        for (int i = 0; i < R; i++){
+            outstring.append("  ").append(colNum++).append(" ");
+        }
+        return outstring.toString();
+    }
+
 }

@@ -1,6 +1,4 @@
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-
 public class LOV_Game extends Game implements UsesHeroes{
 
     private final LOV_Map LOVMap;
@@ -11,7 +9,7 @@ public class LOV_Game extends Game implements UsesHeroes{
 
     private DataList<Monster> monsters = new DataList<>();
 
-    public LOV_Game() throws FileNotFoundException {
+    public LOV_Game() {
         System.out.println("Welcome to Legends of Valor! Do you want to see the instructions? (Y/N)");
         String printInst = GameEngine.getOption(new String[]{"Y", "N"});
         if (printInst.equals("Y")) printInstructions();
@@ -28,15 +26,118 @@ public class LOV_Game extends Game implements UsesHeroes{
             }
         }
         makeHeroes();
+        initMonsters();
+        LOVMap.heroesInitialPlace(heroes);
+        LOVMap.monstersInitialPlace(monsters);
+        LOVMap.printLocations();
+//        put heroes, monsters in the right places
+    }
+
+    private void initMonsters() {
+        int maxLevel = getMaxLevel(heroes);
+        for (int i = 0; i < maxHeroes; i++) {
+            monsters.add(Monster.monsterCreator(maxLevel));
+        }
+    }
+
+    private void addMonster(){
+        int maxLevel = getMaxLevel(heroes);
+        monsters.add(Monster.monsterCreator(maxLevel));
+    }
+
+    private int getMaxLevel(DataList<? extends Legend> legends){
+        int maxLevel = 0;
+        for (Legend legend : legends){
+            if (legend.getLevel() > maxLevel){
+                maxLevel = legend.getLevel();
+            }
+        }
+        return maxLevel;
     }
 
     @Override
-    public void start() throws FileNotFoundException {
+    public void start() {
+        while (true) {
+            if (checkGameOver()){
+//                Check who won
+//                Print game status
+//                Exit game
+                System.exit(0);
+            }
+            for (Hero hero: heroes){
+/**             If hero is dead respawn at nexus
+                Determine hero's next move from choice of:
+                - Move (if move is not possible, choose another option) (WASD)
+                - Teleport (if teleport is not possible, choose another option) (T)
+                - Recall (teleport to spawn nexus) (R)
+                - Attack (only one monster should be affected even if multiple monsters are in range) (Z)
+                - Change Weapon or Armor (E)
+                - Use Potion (P)
+                - Cast Spell (X)
+                - If on nexus, M for market
+                - Print any information (does not consume turn) (I)
+ */
+                System.out.println(this.LOVMap);
+                System.out.println("Player " + hero.name + "'s turn: ");
+                int[] location = LOVMap.legendLocations.get(hero);
+                char control;
+                boolean validMove = true;
+                do {
+                    while ((control = GameEngine.LOV_getPlayerControl(LOVMap.matrix[location[0]][location[1]].getSymbol())) == 'I') {
+                        GameEngine.printInfo(heroes, monsters);
+                        System.out.println(this.LOVMap);
+                        System.out.println("Player " + hero.name + "'s turn: ");
+                    }
+                    if (control == 'Q') {
+                        System.out.println("Exiting game...");
+                        System.exit(0);
+                    } else if (control == 'T') {
+                        System.out.println("Teleporting...");
+                    } else if (control == 'R') {
+                        System.out.println("Recalling...");
+                    } else if (control == 'Z') {
+                        System.out.println("Attacking...");
+                    } else if (control == 'E') {
+                        System.out.println("Changing equipment...");
+                    } else if (control == 'P') {
+                        System.out.println("Using potion...");
+                    } else if (control == 'X') {
+                        System.out.println("Casting spell...");
+                    } else if (control == 'M') {
+                        System.out.println("Entering market...");
+                    } else {
+                        if (!(validMove = LOVMap.moveLegend(hero, control))) {
+                            System.out.println("You cannot access this space.");
+                        }
+                    }
+                } while (!validMove);
 
+            }
+            System.out.println("Monsters' turns!");
+//            Filter dead monsters from list
+            for (Monster monster: monsters) {
+/**
+ *              If monster is in range to attack a hero, attack. Else move forward
+ */
+                System.out.println(monster.name + "'s turn: ");
+                boolean success = LOVMap.moveLegend(monster, 'S');
+                if (success){
+                    System.out.println(monster.name + " moved forward!");
+                }
+            }
+//            Every 8 turns, add three monsters to the map
+
+//            Exit for debugging purposes
+            System.out.println(this.LOVMap);
+            System.out.println("Exit?");
+            if (GameEngine.getOption(new String[]{"Y", "N"}).equals("Y")){
+                System.exit(0);
+            }
+        }
     }
 
     @Override
-    void makeHeroes() throws FileNotFoundException {
+    void makeHeroes() {
         String[] heroClasses = {"Paladins", "Sorcerers", "Warriors"};
         DataLoader.dl.printInnerMaps(heroClasses);
         for (int i = 0; i < maxHeroes; i++){
@@ -53,6 +154,7 @@ public class LOV_Game extends Game implements UsesHeroes{
 
     @Override
     public boolean checkGameOver() {
+//        If a monster or hero reaches the opponents nexus, return true
         return false;
     }
 

@@ -18,9 +18,8 @@ public abstract class Game {
                 LMH_Game game = new LMH_Game();
                 game.start();
             } else if (option.equals("Legends Of Valor")) {
-//            LegendsOfValor game = new LegendsOfValor();
-//            game.start();
-                return;
+                LOV_Game game = new LOV_Game();
+                game.start();
             }
             System.out.println("Do you want to play another game? (Y/N)");
         } while (GameEngine.getOption(new String[]{"Y", "N"}).equals("Y"));

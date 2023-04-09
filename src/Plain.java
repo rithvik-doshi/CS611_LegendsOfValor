@@ -2,19 +2,10 @@
  * Plain spaces have no special attributes
  */
 
-public class Plain extends Space implements Accessible {
-    private DataList<Hero> heroes;
+public class Plain extends LOV_Space {
+
     public Plain() {
         super('P');
-    }
-    @Override
-    public void holdHeroes(DataList<Hero> heroes) {
-        this.heroes = heroes;
-        markVisited();
-    }
-    @Override
-    public void leaveHeroes() {
-        heroes = null;
     }
 
     @Override
@@ -23,14 +14,8 @@ public class Plain extends Space implements Accessible {
     }
 
     @Override
-    public boolean tryAccess(DataList<Hero> heroes) {
-        holdHeroes(heroes);
-        System.out.println(Color.color(Color.bgBrightWhite, "PLAIN!"));
-        return true;
+    public String toString() {
+        return (hero != null || monster != null) ? Color.color(Color.bgYellow , "P") : Color.color(Color.yellow, (getSymbol() + ""));
     }
 
-    @Override
-    public String toString() {
-        return (heroes != null) ? Color.color(Color.yellow , "P") : Color.color(Color.yellow, (getSymbol() + ""));
-    }
 }

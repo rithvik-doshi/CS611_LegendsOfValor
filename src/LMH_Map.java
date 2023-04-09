@@ -40,9 +40,8 @@ public class LMH_Map extends Map{
      * @param heroes the list of heroes
      * @param control the control character
      * @return true if the move was successful
-     * @throws FileNotFoundException if the file is not found
      */
-    public boolean moveHeroes(DataList<Hero> heroes, char control) throws FileNotFoundException {
+    public boolean moveHeroes(DataList<Hero> heroes, char control) {
         int newrow = row, newcol = col;
         switch (control){
             case 'W':
@@ -62,7 +61,7 @@ public class LMH_Map extends Map{
             return false;
         }
         if (matrix[newrow][newcol].tryAccess(heroes)){
-            Accessible currentSpace = (Accessible) matrix[row][col];
+            LMH_Accessible currentSpace = (LMH_Accessible) matrix[row][col];
             currentSpace.leaveHeroes();
             row = newrow;
             col = newcol;
@@ -74,9 +73,8 @@ public class LMH_Map extends Map{
     /**
      * Places the heroes on the map at the start of the game
      * @param heroes the list of heroes
-     * @throws FileNotFoundException if the file is not found
      */
-    public void heroesInitialPlace(DataList<Hero> heroes) throws FileNotFoundException {
+    public void heroesInitialPlace(DataList<Hero> heroes) {
         matrix[row][col].tryAccess(heroes);
     }
 

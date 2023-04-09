@@ -3,5 +3,7 @@
  */
 
 public interface AttributeAffectable {
-    void increaseAttribute(DataList<Hero> heroes);
+    void increaseAttribute();
+
+    void decreaseAttribute();
 }
