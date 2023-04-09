@@ -2,19 +2,12 @@
  * Plain spaces have no special attributes
  */
 
-public class Plain extends Space implements Accessible {
-    private DataList<Hero> heroes;
+public class Plain extends Space implements LOV_Accessible {
+    private Hero hero;
+    private Monster monster;
+
     public Plain() {
         super('P');
-    }
-    @Override
-    public void holdHeroes(DataList<Hero> heroes) {
-        this.heroes = heroes;
-        markVisited();
-    }
-    @Override
-    public void leaveHeroes() {
-        heroes = null;
     }
 
     @Override
@@ -24,13 +17,36 @@ public class Plain extends Space implements Accessible {
 
     @Override
     public boolean tryAccess(DataList<Hero> heroes) {
-        holdHeroes(heroes);
-        System.out.println(Color.color(Color.bgBrightWhite, "PLAIN!"));
-        return true;
+        return false;
+    }
+
+    @Override
+    public boolean tryAccess(Legend legend) {
+        return false;
     }
 
     @Override
     public String toString() {
-        return (heroes != null) ? Color.color(Color.yellow , "P") : Color.color(Color.yellow, (getSymbol() + ""));
+        return (hero != null || monster != null) ? Color.color(Color.yellow , "P") : Color.color(Color.yellow, (getSymbol() + ""));
+    }
+
+    /**
+     * Holds a legend in the space
+     *
+     * @param legend to hold
+     */
+    @Override
+    public void holdLegend(Legend legend) {
+
+    }
+
+    /**
+     * Removes a legend from the space
+     *
+     * @param legend to remove
+     */
+    @Override
+    public void removeLegend(Legend legend) {
+
     }
 }

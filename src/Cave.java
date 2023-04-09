@@ -1,22 +1,30 @@
-import javax.print.attribute.Attribute;
-
 /**
  * Cave spaces increase hero agility
  */
 
-public class Cave extends Space implements Accessible, AttributeAffectable {
-    private DataList<Hero> heroes;
+public class Cave extends Space implements LOV_Accessible, AttributeAffectable {
+    private Hero hero;
+    private Monster monster;
     public Cave() {
         super('C');
     }
+
+    /**
+     * Holds a legend in the space
+     * @param legend to hold
+     */
     @Override
-    public void holdHeroes(DataList<Hero> heroes) {
-        this.heroes = heroes;
-        markVisited();
+    public void holdLegend(Legend legend) {
+
     }
+
+    /**
+     * Removes a legend from the space
+     * @param legend to remove
+     */
     @Override
-    public void leaveHeroes() {
-        heroes = null;
+    public void removeLegend(Legend legend) {
+
     }
 
     @Override
@@ -26,25 +34,26 @@ public class Cave extends Space implements Accessible, AttributeAffectable {
 
     @Override
     public boolean tryAccess(DataList<Hero> heroes) {
-        holdHeroes(heroes);
-        System.out.println(Color.color(Color.bgBrightCyan, "CAVE!"));
-        return true;
+        return false;
+    }
+
+    @Override
+    public boolean tryAccess(Legend legend) {
+        return false;
     }
 
     /**
      * Caves increase hero agility by 10%
-     * @param heroes
      */
     @Override
-    public void increaseAttribute(DataList<Hero> heroes) {
-        for (Hero h: heroes) {
-            int currentAgility = h.getAgility();
-            h.setAgility((int) (currentAgility * 1.1));
-        }
+    public void increaseAttribute() {
+        int currentAgility = hero.getAgility();
+        hero.setAgility((int) (currentAgility * 1.1));
     }
 
     @Override
     public String toString() {
-        return (heroes != null) ? Color.color(Color.magenta , "C") : Color.color(Color.magenta, (getSymbol() + ""));
+        return (hero != null || monster != null) ? Color.color(Color.magenta , "C") : Color.color(Color.magenta, (getSymbol() + ""));
     }
+
 }

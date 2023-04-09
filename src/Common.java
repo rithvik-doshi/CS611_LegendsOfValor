@@ -1,7 +1,7 @@
 /**
  * Common (battle) space, where heroes can fight monsters.
  */
-public class Common extends Space implements Accessible{
+public class Common extends Space implements LMH_Accessible {
 
     /**
      * List of heroes
@@ -56,6 +56,11 @@ public class Common extends Space implements Accessible{
         }
         holdHeroes(heroes);
         return true;
+    }
+
+    @Override
+    public boolean tryAccess(Legend legend) {
+        return false;
     }
 
     /**

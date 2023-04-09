@@ -2,19 +2,30 @@
  * Koulou spaces increase hero strength
  */
 
-public class Koulou extends Space implements Accessible, AttributeAffectable {
-    private DataList<Hero> heroes;
+public class Koulou extends Space implements LOV_Accessible, AttributeAffectable {
+    private Hero hero;
+    private Monster monster;
     public Koulou() {
         super('K');
     }
+    /**
+     * Holds a legend in the space
+     *
+     * @param legend to hold
+     */
     @Override
-    public void holdHeroes(DataList<Hero> heroes) {
-        this.heroes = heroes;
-        markVisited();
+    public void holdLegend(Legend legend) {
+
     }
+
+    /**
+     * Removes a legend from the space
+     *
+     * @param legend to remove
+     */
     @Override
-    public void leaveHeroes() {
-        heroes = null;
+    public void removeLegend(Legend legend) {
+
     }
 
     @Override
@@ -24,24 +35,27 @@ public class Koulou extends Space implements Accessible, AttributeAffectable {
 
     @Override
     public boolean tryAccess(DataList<Hero> heroes) {
-        holdHeroes(heroes);
-        System.out.println(Color.color(Color.bgBrightBlue, "KOULOU!"));
-        return true;
+        return false;
+    }
+
+    @Override
+    public boolean tryAccess(Legend legend) {
+        return false;
     }
 
     /**
      * Koulous increase hero strength by 10%
-     * @param heroes
      */
-    public void increaseAttribute(DataList<Hero> heroes) {
-        for (Hero h: heroes) {
-            int currentStrength = h.getStrength();
-            h.setStrength((int) (currentStrength * 1.1));
-        }
+    @Override
+    public void increaseAttribute() {
+        int currentStrength = hero.getStrength();
+        hero.setStrength((int) (currentStrength * 1.1));
     }
 
     @Override
     public String toString() {
-        return (heroes != null) ? Color.color(Color.blue , "K") : Color.color(Color.blue, (getSymbol() + ""));
+        return (hero != null || monster != null) ? Color.color(Color.blue , "K") : Color.color(Color.blue, (getSymbol() + ""));
     }
+
+
 }

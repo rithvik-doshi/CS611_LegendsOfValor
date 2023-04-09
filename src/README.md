@@ -21,7 +21,7 @@ Files
   - Warriors.ldf
   - Weaponry.ldf
 - UML.png - UML diagram of project
-- Accessible.java - interface for accessible objects
+- LMH_Accessible.java - interface for accessible objects
 - Color.java
 - Consumable.java - interface for consumable objects
 - DataList.java - class to store data
@@ -169,7 +169,7 @@ The party size is between 1-3 players.
       2. Created a static method that takes in a string and a color, and returns a string with the color code at the beginning and the reset code at the end.
    3. Use of interfaces to specify specialized behavior for certain classes.
       1. Consumable interface for potions and spells
-      2. Accessible interface for market and common spaces
+      2. LMH_Accessible interface for market and common spaces
 3. 
 
 ## How to compile and run

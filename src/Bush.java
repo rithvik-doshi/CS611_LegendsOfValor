@@ -2,19 +2,29 @@
  * Bush spaces increase hero dexterity
  */
 
-public class Bush extends Space implements Accessible, AttributeAffectable{
-    private DataList<Hero> heroes;
+public class Bush extends Space implements LOV_Accessible, AttributeAffectable{
+    private Hero hero;
+    private Monster monster;
     public Bush() {
         super('B');
     }
+
+    /**
+     * Holds a legend in the space
+     * @param legend to hold
+     */
     @Override
-    public void holdHeroes(DataList<Hero> heroes) {
-        this.heroes = heroes;
-        markVisited();
+    public void holdLegend(Legend legend) {
+
     }
+
+    /**
+     * Removes a legend from the space
+     * @param legend to remove
+     */
     @Override
-    public void leaveHeroes() {
-        heroes = null;
+    public void removeLegend(Legend legend) {
+
     }
 
     @Override
@@ -24,25 +34,27 @@ public class Bush extends Space implements Accessible, AttributeAffectable{
 
     @Override
     public boolean tryAccess(DataList<Hero> heroes) {
-        holdHeroes(heroes);
-        System.out.println(Color.color(Color.bgBrightGreen, "BUSH!"));
-        return true;
+        return false;
+    }
+
+    @Override
+    public boolean tryAccess(Legend legend) {
+        return false;
     }
 
     /**
      * Bushes increase hero dexterity by 10%
-     * @param heroes
      */
     @Override
-    public void increaseAttribute(DataList<Hero> heroes) {
-        for (Hero h: heroes) {
-            int currentDexterity = h.getDexterity();
-            h.setDexterity((int) (currentDexterity * 1.1));
-        }
+    public void increaseAttribute() {
+        int currentDexterity = hero.getDexterity();
+        hero.setDexterity((int) (currentDexterity * 1.1));
     }
 
     @Override
     public String toString() {
-        return (heroes != null) ? Color.color(Color.green , "B") : Color.color(Color.green, (getSymbol() + ""));
+        return (hero != null || monster != null) ? Color.color(Color.green , "B") : Color.color(Color.green, (getSymbol() + ""));
     }
+
+
 }

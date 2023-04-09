@@ -1,6 +1,4 @@
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-
 public class LOV_Game extends Game implements UsesHeroes{
 
     private final LOV_Map LOVMap;
@@ -28,6 +26,8 @@ public class LOV_Game extends Game implements UsesHeroes{
             }
         }
         makeHeroes();
+//        monsters
+//        put heroes, monsters in the right places
     }
 
     @Override

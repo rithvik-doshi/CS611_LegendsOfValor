@@ -1,7 +1,7 @@
 /**
- * Accessible space that allows heroes to buy and sell items.
+ * LMH_Accessible space that allows heroes to buy and sell items.
  */
-public class Market extends Space implements Accessible {
+public class Market extends Space implements LMH_Accessible {
 
     /**
      * List of heroes in the market
@@ -51,6 +51,11 @@ public class Market extends Space implements Accessible {
         holdHeroes(heroes);
         System.out.println(Color.color(Color.green, "Market!"));
         return true;
+    }
+
+    @Override
+    public boolean tryAccess(Legend legend) {
+        return false;
     }
 
     /**
