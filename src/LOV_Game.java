@@ -26,13 +26,64 @@ public class LOV_Game extends Game implements UsesHeroes{
             }
         }
         makeHeroes();
-//        monsters
+        initMonsters();
 //        put heroes, monsters in the right places
+    }
+
+    private void initMonsters() {
+        int maxLevel = getMaxLevel(heroes);
+        for (int i = 0; i < maxHeroes; i++) {
+            monsters.add(Monster.monsterCreator(maxLevel));
+        }
+    }
+
+    private void addMonster(){
+        int maxLevel = getMaxLevel(heroes);
+        monsters.add(Monster.monsterCreator(maxLevel));
+    }
+
+    private int getMaxLevel(DataList<? extends Legend> legends){
+        int maxLevel = 0;
+        for (Legend legend : legends){
+            if (legend.getLevel() > maxLevel){
+                maxLevel = legend.getLevel();
+            }
+        }
+        return maxLevel;
     }
 
     @Override
     public void start() throws FileNotFoundException {
-
+        while (true) {
+            if (checkGameOver()){
+//                Check who won
+//                Print game status
+//                Exit game
+                System.exit(0);
+            }
+            for (Hero hero: heroes){
+/**             If hero is dead respawn at nexus
+                Determine hero's next move from choice of:
+                - Move (if move is not possible, choose another option) (WASD)
+                - Teleport (if teleport is not possible, choose another option) (T)
+                - Recall (teleport to spawn nexus) (R)
+                - Attack (only one monster should be affected even if multiple monsters are in range) (Z)
+                - Change Weapon or Armor (E)
+                - Use Potion (P)
+                - Cast Spell (X)
+                - Print any information (does not consume turn) (I)
+ */
+                System.out.println(this.LOVMap);
+                System.out.println("Player " + hero.name + "'s turn: ");
+            }
+//            Filter dead monsters from list
+            for (Monster monster: monsters){
+/**
+ *              If monster is in range to attack a hero, attack. Else move forward
+ */
+            }
+//            Every 8 turns, add three monsters to the map
+        }
     }
 
     @Override
@@ -53,6 +104,7 @@ public class LOV_Game extends Game implements UsesHeroes{
 
     @Override
     public boolean checkGameOver() {
+//        If a monster or hero reaches the opponents nexus, return true
         return false;
     }
 

@@ -17,9 +17,7 @@ public class LOV_Map extends Map{
                     continue;
                 }
                 double rand = Math.random();
-                if (rand < 0.2) {
-                    matrix[i][j] = new Inaccessible();
-                } else if (rand < 0.4) {
+                if (rand < 0.4) {
                     matrix[i][j] = new Plain();
                 } else if (rand < 0.6) {
                     matrix[i][j] = new Cave();

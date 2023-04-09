@@ -86,7 +86,7 @@ public class LMH_Game extends Game implements UsesHeroes{
                 System.exit(0);
             }
             System.out.println(this.LMHMap);
-            char control = GameEngine.getControl(LMHMap.getSpace().getSymbol());
+            char control = GameEngine.LMH_getControl(LMHMap.getSpace().getSymbol());
             if (control == 'Q') {
                 System.out.println(Color.color(Color.bold, "Thanks for playing!"));
                 System.exit(0);
