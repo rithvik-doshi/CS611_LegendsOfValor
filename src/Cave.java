@@ -2,44 +2,14 @@
  * Cave spaces increase hero agility
  */
 
-public class Cave extends Space implements LOV_Accessible, AttributeAffectable {
-    private Hero hero;
-    private Monster monster;
+public class Cave extends LOV_Space implements AttributeAffectable {
     public Cave() {
         super('C');
-    }
-
-    /**
-     * Holds a legend in the space
-     * @param legend to hold
-     */
-    @Override
-    public void holdLegend(Legend legend) {
-
-    }
-
-    /**
-     * Removes a legend from the space
-     * @param legend to remove
-     */
-    @Override
-    public void removeLegend(Legend legend) {
-
     }
 
     @Override
     public void markVisited() {
         visited = true;
-    }
-
-    @Override
-    public boolean tryAccess(DataList<Hero> heroes) {
-        return false;
-    }
-
-    @Override
-    public boolean tryAccess(Legend legend) {
-        return false;
     }
 
     /**
@@ -49,11 +19,19 @@ public class Cave extends Space implements LOV_Accessible, AttributeAffectable {
     public void increaseAttribute() {
         int currentAgility = hero.getAgility();
         hero.setAgility((int) (currentAgility * 1.1));
+        System.out.println("Hero agility increased to " + hero.getAgility());
+    }
+
+    @Override
+    public void decreaseAttribute() {
+        int currentAgility = hero.getAgility();
+        hero.setAgility((int) (currentAgility / 1.1));
+        System.out.println("Hero agility decreased to normal");
     }
 
     @Override
     public String toString() {
-        return (hero != null || monster != null) ? Color.color(Color.magenta , "C") : Color.color(Color.magenta, (getSymbol() + ""));
+        return (hero != null || monster != null) ? Color.color(Color.bgMagenta , "C") : Color.color(Color.magenta, (getSymbol() + ""));
     }
 
 }

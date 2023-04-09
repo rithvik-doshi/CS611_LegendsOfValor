@@ -43,7 +43,7 @@ public class GameEngine {
             System.out.print(": ");
             String input = scanner.nextLine();
             try{
-                if (spaceType == 'M'){
+                if (spaceType == 'N'){
                     if (input.matches("[WwAaSsDdQqIiMmTtRrZzEePp]")) return Character.toUpperCase(input.charAt(0));
                 } else {
                     if (input.matches("[WwAaSsDdQqIiTtRrZzEePp]")) return Character.toUpperCase(input.charAt(0));
@@ -163,5 +163,30 @@ public class GameEngine {
     public static void printFile(String filename) {
         System.out.println(DataLoader.dl.getInstructions(filename));
                 System.out.println("________________________________________________________________________________\n");
+    }
+
+    /**
+     * Get a legend by name
+     * @param legends List of legends
+     * @param name Name of legend
+     * @return Legend selected
+     */
+    public static Legend getByName(DataList<? extends Legend> legends, String name){
+        for (Legend legend : legends){
+            if (legend.name.equals(name)){
+                return legend;
+            }
+        }
+        return null;
+    }
+
+    public static void printInfo(DataList<Hero> heroes, DataList<Monster> monsters) {
+        if (GameEngine.getOption(new String[]{"Heroes", "Monsters"}).equals("Heroes")){
+            String heroOption = GameEngine.chooseLegend(heroes);
+            System.out.println(GameEngine.getByName(heroes, heroOption));
+        } else {
+            String monsterOption = GameEngine.chooseLegend(monsters);
+            System.out.println(GameEngine.getByName(monsters, monsterOption));
+        }
     }
 }

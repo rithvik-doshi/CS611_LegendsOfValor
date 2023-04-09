@@ -4,4 +4,6 @@
 
 public interface AttributeAffectable {
     void increaseAttribute();
+
+    void decreaseAttribute();
 }
