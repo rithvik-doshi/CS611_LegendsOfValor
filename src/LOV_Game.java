@@ -9,6 +9,8 @@ public class LOV_Game extends Game implements UsesHeroes{
     private DataList<Monster> monsters = new DataList<>();
 
     public LOV_Game() {
+        // NOTE: should we separate this from the constructor and make it a method? call it initLOVGame()?
+        System.out.println(ArtMessages.getWelcomeToLOV());
         System.out.println("Welcome to Legends of Valor! Do you want to see the instructions? (Y/N)");
         String printInst = GameEngine.getOption(new String[]{"Y", "N"});
         if (printInst.equals("Y")) printInstructions();
@@ -102,8 +104,10 @@ public class LOV_Game extends Game implements UsesHeroes{
                         System.out.println("Using potion...");
                     } else if (control == 'X') {
                         System.out.println("Casting spell...");
-                    } else if (control == 'M') {
+                    } else if (control == 'M' && LOVMap.matrix[location[0]][location[1]].getSymbol() == 'N') {
+                        Market market = new Market();
                         System.out.println("Entering market...");
+                        market.oneGoToMarket(hero);
                     } else {
                         if (!(validMove = LOVMap.moveLegend(hero, control))) {
                             System.out.println("You cannot access this space.");
@@ -151,15 +155,20 @@ public class LOV_Game extends Game implements UsesHeroes{
         LOVMap.heroesInitialPlace(heroes);
     }
 
+    /**
+     * TODO:
+     *
+     */
+
     @Override
     public boolean checkGameOver() {
-//        If a monster or hero reaches the opponents nexus, return true
+//        If a monster or hero reaches the opponent's nexus, return true
         return false;
     }
 
     @Override
     public void printInstructions() {
-
+        GameEngine.printFile("src/data/LOV_instructions.md");
     }
 
     @Override
