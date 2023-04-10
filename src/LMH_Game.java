@@ -128,6 +128,7 @@ public class LMH_Game extends Game implements UsesHeroes{
     /**
      * Prints the instructions of the game from LMH_instructions.md
      */
+    @Override
     public void printInstructions() {
 
         GameEngine.printFile("src/data/LMH_instructions.md");

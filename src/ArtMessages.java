@@ -56,6 +56,14 @@ public class ArtMessages {
             "                                                                                                \n";
 
 
+    private static final String WELCOME_TO_LOV = "\n" +
+            "H@b                 ,H@@______________________________________________________\n" +
+            "H@@EEEEEEEEEEEEEEEEEEEH@@                                                    /\n" +
+            "H@@EEEEEEEEEEEEEEEEEEEH@@            WELCOME TO LEGENDS OF VALOR            /\n" +
+            "H@@EEEEEEEEEEEEEEEEEEEH@@__________________________________________________/\n" +
+            "H@P                  `H@@\n" +
+            "                      T@\n";
+
     private static final String WELCOME_TO_MARKET = "                                                            __\n" +
             "                                                              \\\n" +
             "                                                              ||        _\n" +
@@ -96,5 +104,9 @@ public class ArtMessages {
 
     public static String getTimeForBattle() {
         return TIME_FOR_BATTLE;
+    }
+
+    public static String getWelcomeToLOV() {
+        return WELCOME_TO_LOV;
     }
 }
