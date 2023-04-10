@@ -2,19 +2,13 @@
  * Koulou spaces increase hero strength
  */
 
-public class Koulou extends Space implements Accessible, AttributeAffectable {
-    private DataList<Hero> heroes;
+public class Koulou extends LOV_Space implements AttributeAffectable {
+
+    /**
+     * Constructor for Space
+     */
     public Koulou() {
         super('K');
-    }
-    @Override
-    public void holdHeroes(DataList<Hero> heroes) {
-        this.heroes = heroes;
-        markVisited();
-    }
-    @Override
-    public void leaveHeroes() {
-        heroes = null;
     }
 
     @Override
@@ -22,26 +16,27 @@ public class Koulou extends Space implements Accessible, AttributeAffectable {
         visited = true;
     }
 
-    @Override
-    public boolean tryAccess(DataList<Hero> heroes) {
-        holdHeroes(heroes);
-        System.out.println(Color.color(Color.bgBrightBlue, "KOULOU!"));
-        return true;
-    }
-
     /**
      * Koulous increase hero strength by 10%
-     * @param heroes
      */
-    public void increaseAttribute(DataList<Hero> heroes) {
-        for (Hero h: heroes) {
-            int currentStrength = h.getStrength();
-            h.setStrength((int) (currentStrength * 1.1));
-        }
+    @Override
+    public void increaseAttribute() {
+        int currentStrength = hero.getStrength();
+        hero.setStrength((int) (currentStrength * 1.1));
+        System.out.println("Hero strength increased to " + hero.getAgility());
+    }
+
+    @Override
+    public void decreaseAttribute() {
+        int currentStrength = hero.getStrength();
+        hero.setStrength((int) (currentStrength / 1.1));
+        System.out.println("Hero strength decreased to normal");
     }
 
     @Override
     public String toString() {
-        return (heroes != null) ? Color.color(Color.blue , "K") : Color.color(Color.blue, (getSymbol() + ""));
+        return (hero != null || monster != null) ? Color.color(Color.bgBlue , "K") : Color.color(Color.blue, (getSymbol() + ""));
     }
+
+
 }

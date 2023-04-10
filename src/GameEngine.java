@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 /**
- * This class contains input/output methods that are used throughout the game.
+ * This class contains input/output methods that are used throughout the games.
  */
 public class GameEngine {
 
@@ -10,7 +10,7 @@ public class GameEngine {
      * @param spaceType the type of space the player is on
      * @return the control the player entered
      */
-    public static char getControl(char spaceType){
+    public static char LMH_getControl(char spaceType){
         Scanner scanner = new Scanner(System.in);
         while(true){
             System.out.print("Make a move: WASD to move, Q to quit, I for info");
@@ -22,6 +22,31 @@ public class GameEngine {
                     if (input.matches("[WwAaSsDdQqIiMm]")) return Character.toUpperCase(input.charAt(0));
                 } else {
                     if (input.matches("[WwAaSsDdQqIi]")) return Character.toUpperCase(input.charAt(0));
+                }
+                throw new IllegalArgumentException();
+            } catch(IllegalArgumentException e){
+                System.out.println("Invalid entry.");
+            }
+        }
+    }
+
+    /**
+     * Takes user input and returns a valid control
+     * @param spaceType the type of space the player is on
+     * @return the control the player entered
+     */
+    public static char LOV_getPlayerControl(char spaceType){
+        Scanner scanner = new Scanner(System.in);
+        while(true){
+            System.out.print("Make a move: WASD to move, Q to quit, I for info");
+            if (spaceType == 'N') System.out.print(", M for market");
+            System.out.print(": ");
+            String input = scanner.nextLine();
+            try{
+                if (spaceType == 'N'){
+                    if (input.matches("[WwAaSsDdQqIiMmTtRrZzEePp]")) return Character.toUpperCase(input.charAt(0));
+                } else {
+                    if (input.matches("[WwAaSsDdQqIiTtRrZzEePp]")) return Character.toUpperCase(input.charAt(0));
                 }
                 throw new IllegalArgumentException();
             } catch(IllegalArgumentException e){
@@ -138,5 +163,30 @@ public class GameEngine {
     public static void printFile(String filename) {
         System.out.println(DataLoader.dl.getInstructions(filename));
                 System.out.println("________________________________________________________________________________\n");
+    }
+
+    /**
+     * Get a legend by name
+     * @param legends List of legends
+     * @param name Name of legend
+     * @return Legend selected
+     */
+    public static Legend getByName(DataList<? extends Legend> legends, String name){
+        for (Legend legend : legends){
+            if (legend.name.equals(name)){
+                return legend;
+            }
+        }
+        return null;
+    }
+
+    public static void printInfo(DataList<Hero> heroes, DataList<Monster> monsters) {
+        if (GameEngine.getOption(new String[]{"Heroes", "Monsters"}).equals("Heroes")){
+            String heroOption = GameEngine.chooseLegend(heroes);
+            System.out.println(GameEngine.getByName(heroes, heroOption));
+        } else {
+            String monsterOption = GameEngine.chooseLegend(monsters);
+            System.out.println(GameEngine.getByName(monsters, monsterOption));
+        }
     }
 }

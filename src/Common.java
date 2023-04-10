@@ -1,7 +1,7 @@
 /**
  * Common (battle) space, where heroes can fight monsters.
  */
-public class Common extends Space implements Accessible{
+public class Common extends Space implements LMH_Accessible {
 
     /**
      * List of heroes
@@ -58,6 +58,11 @@ public class Common extends Space implements Accessible{
         return true;
     }
 
+    @Override
+    public boolean tryAccess(Legend legend) {
+        return false;
+    }
+
     /**
      * Battle method
      * @param heroes List of heroes before battle
@@ -75,7 +80,7 @@ public class Common extends Space implements Accessible{
                     String playerOption;
                     String[] playerOptions = {"Attack with weapon", "Cast a spell", "Use a potion", "Equip weapon/armor", "Info"};
                     while ((playerOption = GameEngine.getOption(playerOptions)).equals("Info")) {
-                        printInfo(heroes, monsters);
+                        GameEngine.printInfo(heroes, monsters);
                         System.out.println("Hero " + hero.name + "'s turn: ");
                     }
                     switch (playerOption){
@@ -147,30 +152,9 @@ public class Common extends Space implements Accessible{
      * @param heroes List of heroes
      * @param monsters List of monsters
      */
-    private void printInfo(DataList<Hero> heroes, DataList<Monster> monsters) {
-        if (GameEngine.getOption(new String[]{"Heroes", "Monsters"}).equals("Heroes")){
-            String heroOption = GameEngine.chooseLegend(heroes);
-            System.out.println(getByName(heroes, heroOption));
-        } else {
-            String monsterOption = GameEngine.chooseLegend(monsters);
-            System.out.println(getByName(monsters, monsterOption));
-        }
-    }
 
-    /**
-     * Get a legend by name
-     * @param legends List of legends
-     * @param name Name of legend
-     * @return Legend selected
-     */
-    private Legend getByName(DataList<? extends Legend> legends, String name){
-        for (Legend legend : legends){
-            if (legend.name.equals(name)){
-                return legend;
-            }
-        }
-        return null;
-    }
+
+
 
     /**
      * Check if any legends are alive

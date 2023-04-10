@@ -1,5 +1,3 @@
-import java.io.FileNotFoundException;
-
 /**
  * This class is the parent class of all the spaces in the games. It contains the
  * basic information of a space.
@@ -46,5 +44,7 @@ public abstract class Space {
      * Method to hold heroes in a space
      * @param heroes List of heroes to be held.
      */
-    public abstract boolean tryAccess(DataList<Hero> heroes) throws FileNotFoundException;
+    public abstract boolean tryAccess(DataList<Hero> heroes);
+
+    public abstract boolean tryAccess(Legend legend);
 }
