@@ -91,7 +91,7 @@ public class LOV_Game extends Game implements UsesHeroes{
                     }
                     if (control == 'Q') {
                         System.out.println("Exiting game...");
-                        System.exit(0);
+                        return;
                     } else if (control == 'T') {
                         System.out.println("Teleporting...");
                     } else if (control == 'R') {
@@ -131,11 +131,11 @@ public class LOV_Game extends Game implements UsesHeroes{
 //            Every 8 turns, add three monsters to the map
 
 //            Exit for debugging purposes
-            System.out.println(this.LOVMap);
-            System.out.println("Exit?");
-            if (GameEngine.getOption(new String[]{"Y", "N"}).equals("Y")){
-                System.exit(0);
-            }
+//            System.out.println(this.LOVMap);
+//            System.out.println("Exit?");
+//            if (GameEngine.getOption(new String[]{"Y", "N"}).equals("Y")){
+//                return;
+//            }
         }
     }
 
