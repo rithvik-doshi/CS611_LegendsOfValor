@@ -1,4 +1,3 @@
-import java.io.FileNotFoundException;
 public class LOV_Game extends Game implements UsesHeroes{
 
     private final LOV_Map LOVMap;
