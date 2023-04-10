@@ -17,6 +17,14 @@ public abstract class LOV_Space extends Space implements LOV_Accessible{
         visited = true;
     }
 
+    public boolean hasHero(){
+        return hero != null;
+    }
+
+    public boolean hasMonster(){
+        return monster != null;
+    }
+
     @Override
     public boolean tryAccess(Legend legend) {
         return holdLegend(legend);

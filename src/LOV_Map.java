@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
@@ -72,6 +73,9 @@ public class LOV_Map extends Map{
     public boolean moveLegend(Legend legend, char control) {
         int[] location = legendLocations.get(legend);
         int newrow = location[0], newcol = location[1];
+
+        ArrayList<int[]> possibleMoves = getPossibleMoves(legend, location);
+
         switch (control){
             case 'W':
                 newrow--;
@@ -86,9 +90,12 @@ public class LOV_Map extends Map{
                 newcol++;
                 break;
         }
-        if (newrow < 0 || newrow >= R || newcol < 0 || newcol >= C){
+
+        if (!locationInBounds(new int[]{newrow, newcol})) return false;
+        if (!containsLocation(possibleMoves, new int[]{newrow, newcol})){
             return false;
         }
+
         if (matrix[newrow][newcol].tryAccess(legend) && matrix[location[0]][location[1]] instanceof LOV_Accessible){
             ((LOV_Accessible) matrix[location[0]][location[1]]).removeLegend(legend);
             location[0] = newrow;
@@ -98,6 +105,63 @@ public class LOV_Map extends Map{
         } else {
             return false;
         }
+    }
+
+    private boolean containsLocation(ArrayList<int[]> possibleMoves, int[] ints) {
+        for (int[] possibleMove : possibleMoves) {
+            if (Arrays.equals(possibleMove, ints)) return true;
+        }
+        return false;
+    }
+
+    private ArrayList<int[]> getPossibleMoves(Legend legend, int[] location) {
+
+        ArrayList<int[]> out = new ArrayList<>();
+
+        int[]   TL = {location[0] - 1, location[1] - 1},
+                TM = {location[0] - 1, location[1]},
+                TR = {location[0] - 1, location[1] + 1},
+                ML = {location[0], location[1] - 1},
+                MR = {location[0], location[1] + 1},
+                C = {location[0], location[1]},
+                BL = {location[0] + 1, location[1] - 1},
+                BM = {location[0] + 1, location[1]},
+                BR = {location[0] + 1, location[1] + 1};
+
+        int[] side;
+        if (locationInBounds(ML) && (matrix[ML[0]][ML[1]] instanceof LOV_Space)){
+            side = ML;
+        } else side = MR;
+
+        LOV_Space sideSpace, centerSpace;
+        sideSpace = (LOV_Space) matrix[side[0]][side[1]];
+        centerSpace = (LOV_Space) matrix[C[0]][C[1]];
+
+        if (legend instanceof Hero){
+            LOV_Space topSpace = (LOV_Space) matrix[TM[0]][TM[1]];
+            if (!sideSpace.hasHero()){
+                out.add(side);
+            }
+            if (!sideSpace.hasMonster() && !centerSpace.hasMonster() && !topSpace.hasHero()) {
+                out.add(TM);
+            }
+            out.add(BM);
+        } else if (legend instanceof Monster){
+            LOV_Space bottomSpace = (LOV_Space) matrix[BM[0]][BM[1]];
+            if (!sideSpace.hasMonster()){
+                out.add(side);
+            }
+            if (!sideSpace.hasHero() && !centerSpace.hasHero() && !bottomSpace.hasMonster()) {
+                out.add(BM);
+            }
+            out.add(TM);
+        }
+
+        return out;
+    }
+
+    public boolean locationInBounds(int[] location){
+        return location[0] >= 0 && location[0] < R && location[1] >= 0 && location[1] < C;
     }
 
     @Override
