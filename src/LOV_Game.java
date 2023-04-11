@@ -108,6 +108,13 @@ public class LOV_Game extends Game implements UsesHeroes{
                         Monster monsterInLane = LOVMap.getMonsterAt(monsterLaneLocation);
 
                         hero.attackMonsterInLane(monsterInLane);
+//
+//                        //check if the monster is dead, if so remove it from the map
+//                        if (monsterInLane.getHp() <= 0){
+//                            System.out.println(monsterInLane.name + " has been slain!");
+//                            ((LOV_Accessible) LOVMap.matrix[location[0]][location[1]]).removeLegend(monsterInLane);
+//                            monsters.remove(monsterInLane);
+//                        }
 
                     } else if (control == 'E') {
                         System.out.println("Changing equipment...");
@@ -124,7 +131,11 @@ public class LOV_Game extends Game implements UsesHeroes{
                         System.out.println("Using potion...");
                     } else if (control == 'X' && inRange(hero)) {
                         System.out.println("Casting spell...");
-                        hero.castSpellOnMonster(monsters);
+
+                        int[] monsterLaneLocation = getMonsterLaneLocation(hero);
+                        Monster monsterInLane = LOVMap.getMonsterAt(monsterLaneLocation);
+
+                        hero.castSpellOnOneMonster(monsterInLane);
 
                     } else if (control == 'M' && LOVMap.matrix[location[0]][location[1]].getSymbol() == 'N') {
                         Market market = new Market();
@@ -152,13 +163,12 @@ public class LOV_Game extends Game implements UsesHeroes{
             }
 
 //            Every 8 turns, add three monsters to the map
-            monsterSpawnRate++;
-            if (monsterSpawnRate % 8 == 0){
-                monsterSpawnRate = 1;
-                for (int i = 0; i < 3; i++){
-                    addMonster();
-                }
-            }
+//            monsterSpawnRate++;
+//            if (monsterSpawnRate % 8 == 0){
+//                monsterSpawnRate = 1;
+//                initMonsters();
+//
+//            }
 
 //            Exit for debugging purposes
 //            System.out.println(this.LOVMap);
@@ -233,6 +243,7 @@ public class LOV_Game extends Game implements UsesHeroes{
             }
         }
 
+        System.out.println("No monster in range");
         return false;
     }
 

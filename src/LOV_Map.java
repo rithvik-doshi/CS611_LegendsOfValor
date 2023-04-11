@@ -50,10 +50,10 @@ public class LOV_Map extends Map{
         for (Monster monster : monsters){
             int[] location = new int[2];
             location[1] = monsters.indexOf(monster) * 3 + 1;
-            legendLocations.put(monster, location);
             if (matrix[location[0]][location[1]].tryAccess(monster)){
                 System.out.println("Placed " + monster.name + " at " + Arrays.toString(location));
             }
+            legendLocations.put(monster, location);
         }
     }
 
