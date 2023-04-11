@@ -93,24 +93,27 @@ public class LOV_Game extends Game implements UsesHeroes{
                         return;
                     } else if (control == 'T') {
                         System.out.println("Teleporting...");
-
                         if (!(validMove = LOVMap.teleportHero(hero))) {
-                            System.out.println("You cannot teleport to this space.");
+                            System.out.println("You cannot teleport. Check the board for valid moves and try again.");
                         }
-
                     } else if (control == 'R') {
                         System.out.println("Recalling...");
-
                         if (!(validMove = LOVMap.recallHero(hero))) {
                             System.out.println("You cannot recall because your nexus is occupied!");
                         }
-
                     } else if (control == 'Z') {
                         System.out.println("Attacking...");
                     } else if (control == 'E') {
                         System.out.println("Changing equipment...");
                     } else if (control == 'P') {
-                        System.out.println("Using potion...");
+                        int changeAttr;
+                        if ((changeAttr = hero.usePotion()) > 0){
+                            for (Hero healed : heroes) {
+                                healed.setHp(healed.getHp() + changeAttr);
+                                System.out.println(Color.color(Color.bgGreen, healed.name + " healed by " + changeAttr + " health!"));
+                            }
+                        }
+                        validMove = true;
                     } else if (control == 'X') {
                         System.out.println("Casting spell...");
                     } else if (control == 'M' && LOVMap.matrix[location[0]][location[1]].getSymbol() == 'N') {

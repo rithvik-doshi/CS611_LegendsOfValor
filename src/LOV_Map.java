@@ -179,6 +179,7 @@ public class LOV_Map extends Map{
         int[] location = legendLocations.get(legend);
         ArrayList<int[]> possibleTeleports = getPossibleTeleports(legend);
         if (possibleTeleports.size() == 0) return false;
+        System.out.println("Choose a location to teleport to:");
         int option = GameEngine.getIntOption(possibleTeleports.stream().map(Arrays::toString).toArray(String[]::new));
         int newrow = possibleTeleports.get(option)[0], newcol = possibleTeleports.get(option)[1];
         return placeLegend(legend, location, newrow, newcol);
