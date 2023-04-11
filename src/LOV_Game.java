@@ -59,13 +59,12 @@ public class LOV_Game extends Game implements UsesHeroes{
     @Override
     public void start() {
         while (true) {
-            if (checkGameOver()){
-//                Check who won
-//                Print game status
-//                Exit game
-                System.exit(0);
-            }
             for (Hero hero: heroes){
+
+                if (checkGameOver()){
+                    return;
+                }
+
 /**             If hero is dead respawn at nexus
                 Determine hero's next move from choice of:
                 - Move (if move is not possible, choose another option) (WASD)
@@ -119,6 +118,10 @@ public class LOV_Game extends Game implements UsesHeroes{
             System.out.println("Monsters' turns!");
 //            Filter dead monsters from list
             for (Monster monster: monsters) {
+
+                if (checkGameOver()){
+                    return;
+                }
 /**
  *              If monster is in range to attack a hero, attack. Else move forward
  */
@@ -155,14 +158,25 @@ public class LOV_Game extends Game implements UsesHeroes{
         LOVMap.heroesInitialPlace(heroes);
     }
 
-    /**
-     * TODO:
-     *
-     */
-
     @Override
     public boolean checkGameOver() {
-//        If a monster or hero reaches the opponent's nexus, return true
+
+        for (Legend legend: LOVMap.legendLocations.keySet()){
+            if (legend instanceof Hero){
+                if (LOVMap.legendLocations.get(legend)[0] == 0){
+                    System.out.println("Heroes win!");
+                    System.out.println(LOVMap);
+                    return true;
+                }
+            } else if (legend instanceof Monster){
+                if (LOVMap.legendLocations.get(legend)[0] == 7){
+                    System.out.println("Monsters win!");
+                    System.out.println(LOVMap);
+                    return true;
+                }
+            }
+        }
+
         return false;
     }
 
