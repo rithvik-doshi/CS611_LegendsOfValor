@@ -45,9 +45,9 @@ public class GameEngine {
             String input = scanner.nextLine();
             try{
                 if (spaceType == 'N'){
-                    if (input.matches("[WwAaSsDdQqIiMmTtRrZzEePp]")) return Character.toUpperCase(input.charAt(0));
+                    if (input.matches("[WwAaSsDdQqIiMmTtRrZzEePpXx]")) return Character.toUpperCase(input.charAt(0));
                 } else {
-                    if (input.matches("[WwAaSsDdQqIiTtRrZzEePp]")) return Character.toUpperCase(input.charAt(0));
+                    if (input.matches("[WwAaSsDdQqIiTtRrZzEePpXx]")) return Character.toUpperCase(input.charAt(0));
                 }
                 throw new IllegalArgumentException();
             } catch(IllegalArgumentException e){

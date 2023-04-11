@@ -349,6 +349,30 @@ public class Hero extends Legend{
         return monsters;
     }
 
+    public Monster castSpellOnOneMonster(Monster monster) {
+        DataList<Spell> spellList = getItemsByType(Spell.class);
+        if (spellList.isEmpty()){
+            System.out.println("You have no spells to cast!");
+            return monster;
+        }
+        String spellOption = getItemOption(spellList);
+        Spell spell = spellList.get(getIndexItem(spellList, spellOption));
+        if (spell.getMpCost() > mp){
+            System.out.println("You don't have enough MP to cast this spell!");
+            heroInventory.add(spell);
+            return monster;
+        }
+        mp -= spell.getMpCost();
+        int statusEffect = monster.applyEffect(spell);
+        System.out.println(name + " cast " + spell.name + " on " + monster.name + "!");
+        System.out.println(monster.name + "'s " + spell.getSpellEffectName() + " went down by " + statusEffect + "!");
+        int inDamage = spell.getDamageAmount() + (dexterity/10000)*spell.getDamageAmount();
+        int damageGiven = monster.takeDamage(inDamage);
+        System.out.println(name + " dealt " + damageGiven + " damage to " + monster.name + "!");
+        heroInventory.use(spell);
+        return monster;
+    }
+
     /**
      * Removes an item from the hero's inventory and returns its index in the list.
      * @param itemList The list of items to remove from.
