@@ -8,7 +8,7 @@ public class GameCenter {
 
     public static void GamePrompter() throws FileNotFoundException {
         do {
-            System.out.println(ArtMessages.getWelcomeToGameCenter());
+            System.out.println(Color.yellow + ArtMessages.getWelcomeToGameCenter() + Color.reset);
             System.out.println("Which game would you like to play? \n");
             String option = GameEngine.getOption(new String[]{"Legends of Monsters and Heroes", "Legends Of Valor"});
             if (option.equals("Legends of Monsters and Heroes")) {
@@ -21,5 +21,9 @@ public class GameCenter {
             System.out.println("Do you want to play another game? (1 for Y, 2 for N)");
         } while (GameEngine.getOption(new String[]{"Y", "N"}).equals("Y"));
         System.out.println("Thanks for playing! Goodbye!");
+    }
+
+    public static void main(String[] args) throws FileNotFoundException {
+        GamePrompter();
     }
 }

@@ -88,6 +88,15 @@ public class Monster extends Legend{
         return heroes;
     }
 
+    public Hero attackHeroInLane(Hero hero) {
+        int damageDealt = hero.takeDamage((int) (damage * 0.05));
+        System.out.println(name + " dealt " + damageDealt + " damage to " + hero.name + "!");
+        if (hero.getStatus() == LegendStatus.DEAD) {
+            System.out.println(hero.name + " has been defeated!");
+        }
+        return hero;
+    }
+
     /**
      * Apply effect of spell
      * @param spell Spell to be applied

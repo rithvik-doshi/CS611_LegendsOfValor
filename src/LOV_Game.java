@@ -1,5 +1,3 @@
-
-import java.util.*;
 public class LOV_Game extends Game implements UsesHeroes{
 
     private final LOV_Map LOVMap;
@@ -14,7 +12,7 @@ public class LOV_Game extends Game implements UsesHeroes{
 
     public LOV_Game() {
         // NOTE: should we separate this from the constructor and make it a method? call it initLOVGame()?
-        System.out.println(ArtMessages.getWelcomeToLOV());
+        System.out.println(Color.magenta + ArtMessages.getWelcomeToLOV() + Color.reset);
         System.out.println("Welcome to Legends of Valor! Do you want to see the instructions? (Y/N)");
         String printInst = GameEngine.getOption(new String[]{"Y", "N"});
         if (printInst.equals("Y")) printInstructions();
@@ -82,7 +80,7 @@ public class LOV_Game extends Game implements UsesHeroes{
                 - Print any information (does not consume turn) (I)
  */
                 System.out.println(this.LOVMap);
-                System.out.println("Player " + hero.name + "'s turn: ");
+                System.out.println(Color.blue + "Player " + hero.name + "'s turn: " + Color.reset);
                 int[] location = LOVMap.legendLocations.get(hero);
                 char control;
                 boolean validMove = false;
@@ -105,23 +103,21 @@ public class LOV_Game extends Game implements UsesHeroes{
                         if (!(validMove = LOVMap.recallHero(hero))) {
                             System.out.println("You cannot recall because your nexus is occupied!");
                         }
-                    } else if (control == 'Z' && inRange(hero)) {
-                        System.out.println("Attacking...");
+                    } else if (control == 'Z' && monsterInRange(hero)) {
+                        System.out.println("Attacking...\n");
 
                         int[] monsterLaneLocation = getMonsterLaneLocation(hero);
                         Monster monsterInLane = LOVMap.getMonsterAt(monsterLaneLocation);
-
                         hero.attackMonsterInLane(monsterInLane);
-
                         validMove = true;
 
-//
-//                        //check if the monster is dead, if so remove it from the map
-//                        if (monsterInLane.getHp() <= 0){
-//                            System.out.println(monsterInLane.name + " has been slain!");
-//                            ((LOV_Accessible) LOVMap.matrix[location[0]][location[1]]).removeLegend(monsterInLane);
-//                            monsters.remove(monsterInLane);
-//                        }
+                        //check if the monster is dead, if so remove it from the map
+                        if (monsterInLane.getStatus() == LegendStatus.DEAD) {
+                            System.out.println(Color.red + monsterInLane.name + " has been slain!" + Color.reset);
+                            ((LOV_Space) LOVMap.matrix[monsterLaneLocation[0]][monsterLaneLocation[1]]).removeLegend(monsterInLane);
+                            monsters.remove(monsterInLane);
+                            LOVMap.legendLocations.remove(monsterInLane);
+                        }
 
                     } else if (control == 'E') {
                         System.out.println("Changing equipment...");
@@ -144,7 +140,7 @@ public class LOV_Game extends Game implements UsesHeroes{
                         } else if (changeAttr == 0) {
                             validMove = true;
                         }
-                    } else if (control == 'X' && inRange(hero)) {
+                    } else if (control == 'X' && monsterInRange(hero)) {
                         System.out.println("Casting spell...");
                         int[] monsterLaneLocation = getMonsterLaneLocation(hero);
                         Monster monsterInLane = LOVMap.getMonsterAt(monsterLaneLocation);
@@ -154,6 +150,8 @@ public class LOV_Game extends Game implements UsesHeroes{
                         Market market = new Market();
                         System.out.println("Entering market...");
                         market.oneGoToMarket(hero);
+                        //print board again after exiting market
+                        System.out.println(this.LOVMap);
                     } else {
                         if (!(validMove = LOVMap.moveLegend(hero, control))) {
                             System.out.println("You cannot access this space.");
@@ -162,7 +160,7 @@ public class LOV_Game extends Game implements UsesHeroes{
                 } while (!validMove);
 
             }
-            System.out.println("Monsters' turns!");
+            System.out.println("\n" + Color.red + "Monsters' turns!" + Color.reset);
 //            Filter dead monsters from list
             for (Monster monster: monsters) {
 
@@ -172,10 +170,17 @@ public class LOV_Game extends Game implements UsesHeroes{
 /**
  *              If monster is in range to attack a hero, attack. Else move forward
  */
-                System.out.println(monster.name + "'s turn: ");
-                boolean success = LOVMap.moveLegend(monster, 'S');
-                if (success){
-                    System.out.println(monster.name + " moved forward!");
+                if (heroInRange(monster)){
+                    System.out.println("\n" + monster.name + " is attacking!\n");
+                    int[] heroLocation = getHeroLaneLocation(monster);
+                    Hero heroInLane = LOVMap.getHeroAt(heroLocation);
+                    monster.attackHeroInLane(heroInLane);
+                } else {
+                    System.out.println(monster.name + "'s turn: ");
+                    boolean success = LOVMap.moveLegend(monster, 'S');
+                    if (success){
+                        System.out.println(monster.name + " moved forward!\n");
+                    }
                 }
             }
 
@@ -253,14 +258,8 @@ public class LOV_Game extends Game implements UsesHeroes{
         heroes.add(hero);
     }
 
-    /**
-     * TODO: for attacks and item usage, make a function called inRange to check if a monster is in range for the hero to attack (weapon + spell)
-     *
-     */
-
-    public boolean inRange(Hero hero){
+    public boolean monsterInRange(Hero hero){
         int[] heroLocation = LOVMap.legendLocations.get(hero);
-        System.out.println("Hero location: " + "[" + heroLocation[0] + ", " + heroLocation[1] + "]");
 
         // check 360 degrees around the hero location to find the monster, return true if found
         int[][] directions = { {0,0}, {-1,0}, {0,-1}, {0,1}, {1,0}, {1,1}, {1,-1}, {-1,1}, {-1,-1} };
@@ -270,17 +269,37 @@ public class LOV_Game extends Game implements UsesHeroes{
             newLocation[0] += direction[0];
             newLocation[1] += direction[1];
             if (LOVMap.containsMonster(newLocation)){
+                System.out.println("Monster found in range!");
                 return true;
             }
         }
 
-        System.out.println("No monster in range");
+        System.out.println("No monster found in range");
+        return false;
+    }
+
+    public boolean heroInRange(Monster monster) {
+        int[] monsterLocation = LOVMap.legendLocations.get(monster);
+
+        // check 360 degrees around the hero location to find the monster, return true if found
+        int[][] directions = { {0,0}, {-1,0}, {0,-1}, {0,1}, {1,0}, {1,1}, {1,-1}, {-1,1}, {-1,-1} };
+        for (int[] direction: directions){
+            int[] newLocation = {monsterLocation[0], monsterLocation[1]};
+
+            newLocation[0] += direction[0];
+            newLocation[1] += direction[1];
+            if (LOVMap.containsHero(newLocation)){
+                System.out.println("Hero found in range!");
+                return true;
+            }
+        }
+
+        System.out.println("No hero found in range!");
         return false;
     }
 
     public int[] getMonsterLaneLocation(Hero hero){
         int[] heroLocation = LOVMap.legendLocations.get(hero);
-        System.out.println("Hero location: " + "[" + heroLocation[0] + ", " + heroLocation[1] + "]");
 
         // check 360 degrees around the hero location to find the monster, return true if found
         int[][] directions = { {0,0}, {-1,0}, {0,-1}, {0,1}, {1,0}, {1,1}, {1,-1}, {-1,1}, {-1,-1} };
@@ -293,9 +312,23 @@ public class LOV_Game extends Game implements UsesHeroes{
                 return newLocation;
             }
         }
-
         return null;
     }
 
+    public int[] getHeroLaneLocation(Monster monster){
+        int[] monsterLocation = LOVMap.legendLocations.get(monster);
 
+        // check 360 degrees around the hero location to find the monster, return true if found
+        int[][] directions = { {0,0}, {-1,0}, {0,-1}, {0,1}, {1,0}, {1,1}, {1,-1}, {-1,1}, {-1,-1} };
+        for (int[] direction: directions){
+            int[] newLocation = {monsterLocation[0], monsterLocation[1]};
+
+            newLocation[0] += direction[0];
+            newLocation[1] += direction[1];
+            if (LOVMap.containsHero(newLocation)){
+                return newLocation;
+            }
+        }
+        return null;
+    }
 }
