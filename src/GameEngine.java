@@ -38,9 +38,9 @@ public class GameEngine {
     public static char LOV_getPlayerControl(char spaceType){
         Scanner scanner = new Scanner(System.in);
         while(true){
-            System.out.print("Make a move: WASD to move, Q to quit, I for info");
+            System.out.print("Make a move: WASD to move, Q to quit, I for info, T to teleport,\nR to recall, Z to attack, E to change equipment, P to use potion");
             if (spaceType == 'N') System.out.print(", M for market");
-            System.out.print(": ");
+            System.out.print(":\n");
             String input = scanner.nextLine();
             try{
                 if (spaceType == 'N'){

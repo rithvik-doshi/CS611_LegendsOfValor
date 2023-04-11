@@ -81,7 +81,7 @@ public class LOV_Game extends Game implements UsesHeroes{
                 System.out.println("Player " + hero.name + "'s turn: ");
                 int[] location = LOVMap.legendLocations.get(hero);
                 char control;
-                boolean validMove = true;
+                boolean validMove = false;
                 do {
                     while ((control = GameEngine.LOV_getPlayerControl(LOVMap.matrix[location[0]][location[1]].getSymbol())) == 'I') {
                         GameEngine.printInfo(heroes, monsters);
@@ -93,8 +93,18 @@ public class LOV_Game extends Game implements UsesHeroes{
                         return;
                     } else if (control == 'T') {
                         System.out.println("Teleporting...");
+
+                        if (!(validMove = LOVMap.teleportHero(hero))) {
+                            System.out.println("You cannot teleport to this space.");
+                        }
+
                     } else if (control == 'R') {
                         System.out.println("Recalling...");
+
+                        if (!(validMove = LOVMap.recallHero(hero))) {
+                            System.out.println("You cannot recall because your nexus is occupied!");
+                        }
+
                     } else if (control == 'Z') {
                         System.out.println("Attacking...");
                     } else if (control == 'E') {
@@ -106,7 +116,7 @@ public class LOV_Game extends Game implements UsesHeroes{
                     } else if (control == 'M' && LOVMap.matrix[location[0]][location[1]].getSymbol() == 'N') {
                         Market market = new Market();
                         System.out.println("Entering market...");
-                        market.oneGoToMarket(hero);
+                        hero = market.oneGoToMarket(hero);
                     } else {
                         if (!(validMove = LOVMap.moveLegend(hero, control))) {
                             System.out.println("You cannot access this space.");
