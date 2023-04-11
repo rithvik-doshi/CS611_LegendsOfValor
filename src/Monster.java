@@ -5,12 +5,12 @@ public class Monster extends Legend{
     /**
      * Attribute buff for monster type
      */
-    private static final double attrBuff = 1.2;
+    protected static final double attrBuff = 1.2;
 
     /**
      * Damage, defense, and dodge of monster
      */
-    private int damage, defense, dodge;
+    protected int damage, defense, dodge;
 
     /**
      * Constructor for Monster
@@ -19,24 +19,13 @@ public class Monster extends Legend{
      * @param monsterType Type of monster
      * @param heroMaxLevel Maximum level of heroes
      */
-    private Monster(String name, DataMap<String, String> monsterData, String monsterType, int heroMaxLevel){
+    public Monster(String name, DataMap<String, String> monsterData, String monsterType, int heroMaxLevel){
         super(name, Integer.parseInt(monsterData.get("level")), monsterType);
         int selfLevel = Integer.parseInt(monsterData.get("level"));
         setLevel(heroMaxLevel*getLevel()/selfLevel);
         this.damage = Integer.parseInt(monsterData.get("damage"))*heroMaxLevel/selfLevel;
         this.defense = Integer.parseInt(monsterData.get("defense"))*heroMaxLevel/selfLevel;
         this.dodge = Integer.parseInt(monsterData.get("dodge chance"))*heroMaxLevel/selfLevel;
-        switch (monsterType) {
-            case "Dragons":
-                this.damage *= (attrBuff);
-                break;
-            case "Exoskeletons":
-                this.defense *= (attrBuff);
-                break;
-            case "Spirits":
-                this.dodge *= (attrBuff);
-                break;
-        }
     }
 
     /**
@@ -49,7 +38,15 @@ public class Monster extends Legend{
         String typeChoice = GameEngine.makeRandomChoice(monsterTypes);
         String monsterChoice = GameEngine.makeRandomChoice(DataLoader.dl.getInnerMapKeys(typeChoice));
         DataMap<String, String> monsterData = DataLoader.dl.getInnerMap(typeChoice, monsterChoice);
-        return new Monster(monsterChoice, monsterData, typeChoice, maxLevel);
+
+        switch (typeChoice) {
+            case "Dragons":
+                return new Dragon(monsterChoice, monsterData, typeChoice, maxLevel);
+            case "Exoskeletons":
+                return new Exoskeleton(monsterChoice, monsterData, typeChoice, maxLevel);
+            default:
+                return new Spirit(monsterChoice, monsterData, typeChoice, maxLevel);
+        }
     }
 
     /**

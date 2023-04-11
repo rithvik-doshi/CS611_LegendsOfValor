@@ -122,39 +122,46 @@ public class Market extends Space implements LMH_Accessible {
      */
 
     public Hero oneGoToMarket(Hero hero) {
-        String[] itemTypes = {"Potions", "Weaponry", "Armory", "FireSpells", "IceSpells", "LightningSpells"};
-        DataLoader.dl.printInnerMaps(itemTypes);
-        System.out.println(hero);
-        System.out.println(hero.name + ", would you like to buy or sell items?");
-        String buyOrSell = GameEngine.getOption(new String[]{"Buy", "Sell", "Skip"});
-        if (buyOrSell.equals("Buy")) {
-            System.out.println("Select an item class to buy from: ");
-            String itemType = GameEngine.getOption(itemTypes);
-            System.out.println("Select an item to buy: ");
-            String itemName = GameEngine.getOption(DataLoader.dl.getInnerMapKeys(itemType));
-            System.out.println("You have selected: " + itemName);
-            System.out.println("Buy " + itemName + " for " + DataLoader.dl.getInnerMap(itemType, itemName).get("cost") + "? " + hero.name + " has " + hero.getMoney() + " gold.");
-            if (GameEngine.getOption(new String[]{"Yes", "No"}).equals("No")) {
-                return hero;
+        do {
+            String[] itemTypes = {"Potions", "Weaponry", "Armory", "FireSpells", "IceSpells", "LightningSpells"};
+            DataLoader.dl.printInnerMaps(itemTypes);
+            System.out.println(hero);
+            System.out.println(hero.name + ", would you like to buy or sell items?");
+            String buyOrSell = GameEngine.getOption(new String[]{"Buy", "Sell", "Skip"});
+            if (buyOrSell.equals("Buy")) {
+                System.out.println("Select an item class to buy from: ");
+                String itemType = GameEngine.getOption(itemTypes);
+                System.out.println("Select an item to buy: ");
+                String itemName = GameEngine.getOption(DataLoader.dl.getInnerMapKeys(itemType));
+                System.out.println("You have selected: " + itemName);
+                System.out.println("Buy " + itemName + " for " + DataLoader.dl.getInnerMap(itemType, itemName).get("cost") + "? " + hero.name + " has " + hero.getMoney() + " gold.");
+                if (GameEngine.getOption(new String[]{"Yes", "No"}).equals("No")) {
+                    return hero;
+                }
+                if (!hero.buyItem(Item.itemCreator(itemType, itemName, DataLoader.dl.getInnerMap(itemType, itemName)))) {
+                    System.out.println(Color.color(Color.brightYellow, "Failed to buy " + itemName));
+                } else {
+                    System.out.println(Color.color(Color.cyan, "Successfully bought " + itemName));
+                }
             }
-            if (!hero.buyItem(Item.itemCreator(itemType, itemName, DataLoader.dl.getInnerMap(itemType, itemName)))) {
-                System.out.println(Color.color(Color.brightYellow, "Failed to buy " + itemName));
-            } else {
-                System.out.println(Color.color(Color.cyan, "Successfully bought " + itemName));
+            if (buyOrSell.equals("Sell")) {
+                System.out.println("Select an item to sell: ");
+                if (hero.getInventoryNames().length == 0) {
+                    System.out.println(Color.color(Color.brightYellow, "You have no items to sell."));
+                    break;
+                }
+                String itemName = GameEngine.getOption(hero.getInventoryNames());
+                System.out.println("You have selected: " + itemName);
+                System.out.println("Sell " + itemName + " for " + hero.getItem(itemName).purchasePrice / 2 + "? " + hero.name + " has " + hero.getMoney() + " gold.");
+                if (GameEngine.getOption(new String[]{"Yes", "No"}).equals("No")) {
+                    return hero;
+                }
+                if (!hero.sellItem(itemName)) {
+                    System.out.println(Color.color(Color.brightYellow, "You cannot sell this item."));
+                }
             }
-        }
-        if (buyOrSell.equals("Sell")) {
-            System.out.println("Select an item to sell: ");
-            String itemName = GameEngine.getOption(hero.getInventoryNames());
-            System.out.println("You have selected: " + itemName);
-            System.out.println("Sell " + itemName + " for " + hero.getItem(itemName).purchasePrice / 2 + "? " + hero.name + " has " + hero.getMoney() + " gold.");
-            if (GameEngine.getOption(new String[]{"Yes", "No"}).equals("No")) {
-                return hero;
-            }
-            if (!hero.sellItem(itemName)) {
-                System.out.println(Color.color(Color.brightYellow, "You cannot sell this item."));
-            }
-        }
+            System.out.println(hero + "would you like to continue shopping?");
+        } while (!GameEngine.getOption(new String[]{"Yes", "No"}).equals("No"));
         return hero;
     }
 

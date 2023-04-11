@@ -50,10 +50,10 @@ public class LOV_Map extends Map{
         for (Monster monster : monsters){
             int[] location = new int[2];
             location[1] = monsters.indexOf(monster) * 3 + 1;
-            legendLocations.put(monster, location);
             if (matrix[location[0]][location[1]].tryAccess(monster)){
                 System.out.println("Placed " + monster.name + " at " + Arrays.toString(location));
             }
+            legendLocations.put(monster, location);
         }
     }
 
@@ -74,6 +74,33 @@ public class LOV_Map extends Map{
             locations.append(appendStr);
         }
         return locations.toString();
+    }
+
+    public Legend getLegendAt(int[] location){
+        for (Legend legend : legendLocations.keySet()){
+            if (Arrays.equals(legendLocations.get(legend), location)){
+                return legend;
+            }
+        }
+        return null;
+    }
+
+    public Monster getMonsterAt(int[] location){
+        for (Legend legend : legendLocations.keySet()){
+            if (Arrays.equals(legendLocations.get(legend), location) && legend instanceof Monster){
+                return (Monster) legend;
+            }
+        }
+        return null;
+    }
+
+    public boolean containsMonster(int[] location){
+        for (Legend legend : legendLocations.keySet()){
+            if (Arrays.equals(legendLocations.get(legend), location) && legend instanceof Monster){
+                return true;
+            }
+        }
+        return false;
     }
 
     public boolean moveLegend(Legend legend, char control) {
