@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 /**
  * Legend class that describes an entity in the world of Heroes and Monsters.
  */
@@ -22,6 +24,10 @@ public abstract class Legend {
      * Type of the Legend.
      */
     final String type;
+    /**
+     * Starting location of the Legend.
+     */
+    private int[] startingLocation;
 
     /**
      * Constructor for the Legend class.
@@ -138,4 +144,14 @@ public abstract class Legend {
      * @return the damage taken
      */
     public abstract int takeDamage(int damage);
+
+    public void setStartingLocation(int[] startingLocation) {
+        this.startingLocation = startingLocation;
+        System.out.println("Changed starting location: " + Arrays.toString(this.startingLocation));
+    }
+
+    public int[] getStartingLocation() {
+        System.out.println("Current starting location: " + Arrays.toString(this.startingLocation));
+        return this.startingLocation;
+    }
 }
