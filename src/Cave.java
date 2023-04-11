@@ -2,14 +2,9 @@
  * Cave spaces increase hero agility
  */
 
-public class Cave extends LOV_Space implements AttributeAffectable {
+public class Cave extends HeroEffectSpace {
     public Cave() {
         super('C');
-    }
-
-    @Override
-    public void markVisited() {
-        visited = true;
     }
 
     /**
@@ -17,16 +12,15 @@ public class Cave extends LOV_Space implements AttributeAffectable {
      */
     @Override
     public void increaseAttribute() {
-        int currentAgility = hero.getAgility();
-        hero.setAgility((int) (currentAgility * 1.1));
-        System.out.println("Hero agility increased to " + hero.getAgility());
+        currHeroBaseStat = hero.getAgility();
+        hero.setAgility((int) (currHeroBaseStat * 1.1));
+        System.out.println(hero.name + "'s agility increased to " + hero.getAgility());
     }
 
     @Override
     public void decreaseAttribute() {
-        int currentAgility = hero.getAgility();
-        hero.setAgility((int) (currentAgility / 1.1));
-        System.out.println("Hero agility decreased to normal");
+        hero.setAgility(currHeroBaseStat);
+        System.out.println(hero.name + "'s agility decreased to normal");
     }
 
     @Override

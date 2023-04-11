@@ -2,7 +2,7 @@
  * Koulou spaces increase hero strength
  */
 
-public class Koulou extends LOV_Space implements AttributeAffectable {
+public class Koulou extends HeroEffectSpace {
 
     /**
      * Constructor for Space
@@ -11,26 +11,20 @@ public class Koulou extends LOV_Space implements AttributeAffectable {
         super('K');
     }
 
-    @Override
-    public void markVisited() {
-        visited = true;
-    }
-
     /**
      * Koulous increase hero strength by 10%
      */
     @Override
     public void increaseAttribute() {
-        int currentStrength = hero.getStrength();
-        hero.setStrength((int) (currentStrength * 1.1));
-        System.out.println("Hero strength increased to " + hero.getAgility());
+        currHeroBaseStat = hero.getStrength();
+        hero.setStrength((int) (currHeroBaseStat * 1.1));
+        System.out.println(hero.name + "'s strength increased to " + hero.getAgility());
     }
 
     @Override
     public void decreaseAttribute() {
-        int currentStrength = hero.getStrength();
-        hero.setStrength((int) (currentStrength / 1.1));
-        System.out.println("Hero strength decreased to normal");
+        hero.setStrength(currHeroBaseStat);
+        System.out.println(hero.name + "'s strength decreased to normal");
     }
 
     @Override

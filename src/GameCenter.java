@@ -22,9 +22,4 @@ public class GameCenter {
         } while (GameEngine.getOption(new String[]{"Y", "N"}).equals("Y"));
         System.out.println("Thanks for playing! Goodbye!");
     }
-
-    public static void main(String[] args) throws FileNotFoundException {
-        GamePrompter();
-    }
-
 }

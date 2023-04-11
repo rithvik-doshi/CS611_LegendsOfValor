@@ -63,14 +63,12 @@ public class LOV_Game extends Game implements UsesHeroes{
     @Override
     public void start() {
         while (true) {
-            if (checkGameOver()){
-//                Check who won
-//                Print game status
-//                Exit game
-                System.exit(0);
-            }
-
             for (Hero hero: heroes){
+
+                if (checkGameOver()){
+                    return;
+                }
+
 /**             If hero is dead respawn at nexus
                 Determine hero's next move from choice of:
                 - Move (if move is not possible, choose another option) (WASD)
@@ -87,7 +85,7 @@ public class LOV_Game extends Game implements UsesHeroes{
                 System.out.println("Player " + hero.name + "'s turn: ");
                 int[] location = LOVMap.legendLocations.get(hero);
                 char control;
-                boolean validMove = true;
+                boolean validMove = false;
                 do {
                     while ((control = GameEngine.LOV_getPlayerControl(LOVMap.matrix[location[0]][location[1]].getSymbol())) == 'I') {
                         GameEngine.printInfo(heroes, monsters);
@@ -99,8 +97,14 @@ public class LOV_Game extends Game implements UsesHeroes{
                         return;
                     } else if (control == 'T') {
                         System.out.println("Teleporting...");
+                        if (!(validMove = LOVMap.teleportHero(hero))) {
+                            System.out.println("You cannot teleport. Check the board for valid moves and try again.");
+                        }
                     } else if (control == 'R') {
                         System.out.println("Recalling...");
+                        if (!(validMove = LOVMap.recallHero(hero))) {
+                            System.out.println("You cannot recall because your nexus is occupied!");
+                        }
                     } else if (control == 'Z' && inRange(hero)) {
                         System.out.println("Attacking...");
 
@@ -128,15 +132,19 @@ public class LOV_Game extends Game implements UsesHeroes{
                         }
 
                     } else if (control == 'P') {
-                        System.out.println("Using potion...");
+                        int changeAttr;
+                        if ((changeAttr = hero.usePotion()) > 0){
+                            for (Hero healed : heroes) {
+                                healed.setHp(healed.getHp() + changeAttr);
+                                System.out.println(Color.color(Color.bgGreen, healed.name + " healed by " + changeAttr + " health!"));
+                            }
+                        }
+                        validMove = true;
                     } else if (control == 'X' && inRange(hero)) {
                         System.out.println("Casting spell...");
-
                         int[] monsterLaneLocation = getMonsterLaneLocation(hero);
                         Monster monsterInLane = LOVMap.getMonsterAt(monsterLaneLocation);
-
                         hero.castSpellOnOneMonster(monsterInLane);
-
                     } else if (control == 'M' && LOVMap.matrix[location[0]][location[1]].getSymbol() == 'N') {
                         Market market = new Market();
                         System.out.println("Entering market...");
@@ -152,6 +160,10 @@ public class LOV_Game extends Game implements UsesHeroes{
             System.out.println("Monsters' turns!");
 //            Filter dead monsters from list
             for (Monster monster: monsters) {
+
+                if (checkGameOver()){
+                    return;
+                }
 /**
  *              If monster is in range to attack a hero, attack. Else move forward
  */
@@ -208,7 +220,21 @@ public class LOV_Game extends Game implements UsesHeroes{
 
     @Override
     public boolean checkGameOver() {
-//        If a monster or hero reaches the opponent's nexus, return true
+        for (Legend legend: LOVMap.legendLocations.keySet()){
+            if (legend instanceof Hero){
+                if (LOVMap.legendLocations.get(legend)[0] == 0){
+                    System.out.println("Heroes win!");
+                    System.out.println(LOVMap);
+                    return true;
+                }
+            } else if (legend instanceof Monster){
+                if (LOVMap.legendLocations.get(legend)[0] == 7){
+                    System.out.println("Monsters win!");
+                    System.out.println(LOVMap);
+                    return true;
+                }
+            }
+        }
         return false;
     }
 

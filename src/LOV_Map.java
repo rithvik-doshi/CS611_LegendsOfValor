@@ -63,7 +63,13 @@ public class LOV_Map extends Map{
 
     private String getLocations(){
         StringBuilder locations = new StringBuilder();
-        for (Legend legend : legendLocations.keySet()){
+        locations.append("Heroes: \n");
+        for (Legend legend : legendLocations.keySet().stream().filter(legend -> legend instanceof Hero).toArray(Legend[]::new)){
+            String appendStr = legend.name + " (" + legend.type.substring(0, legend.type.length() - 1) + ") @ " + Arrays.toString(legendLocations.get(legend)) + "\n";
+            locations.append(appendStr);
+        }
+        locations.append("\nMonsters: \n");
+        for (Legend legend : legendLocations.keySet().stream().filter(legend -> legend instanceof Monster).toArray(Legend[]::new)){
             String appendStr = legend.name + " (" + legend.type.substring(0, legend.type.length() - 1) + ") @ " + Arrays.toString(legendLocations.get(legend)) + "\n";
             locations.append(appendStr);
         }
@@ -123,6 +129,10 @@ public class LOV_Map extends Map{
             return false;
         }
 
+        return placeLegend(legend, location, newrow, newcol);
+    }
+
+    private boolean placeLegend(Legend legend, int[] location, int newrow, int newcol) {
         if (matrix[newrow][newcol].tryAccess(legend) && matrix[location[0]][location[1]] instanceof LOV_Accessible){
             ((LOV_Accessible) matrix[location[0]][location[1]]).removeLegend(legend);
             location[0] = newrow;
@@ -145,16 +155,11 @@ public class LOV_Map extends Map{
 
         ArrayList<int[]> out = new ArrayList<>();
 
-        int[]   TL = {location[0] - 1, location[1] - 1},
-                TM = {location[0] - 1, location[1]},
-                TR = {location[0] - 1, location[1] + 1},
+        int[] TM = {location[0] - 1, location[1]},
                 ML = {location[0], location[1] - 1},
                 MR = {location[0], location[1] + 1},
                 C = {location[0], location[1]},
-                BL = {location[0] + 1, location[1] - 1},
-                BM = {location[0] + 1, location[1]},
-                BR = {location[0] + 1, location[1] + 1};
-
+                BM = {location[0] + 1, location[1]};
         int[] side;
         if (locationInBounds(ML) && (matrix[ML[0]][ML[1]] instanceof LOV_Space)){
             side = ML;
@@ -194,5 +199,47 @@ public class LOV_Map extends Map{
     @Override
     public String toString() {
         return super.toString(true) + "\n" + getLocations();
+    }
+
+
+    public boolean teleportHero(Hero legend) {
+        int[] location = legendLocations.get(legend);
+        ArrayList<int[]> possibleTeleports = getPossibleTeleports(legend);
+        if (possibleTeleports.size() == 0) return false;
+        System.out.println("Choose a location to teleport to:");
+        int option = GameEngine.getIntOption(possibleTeleports.stream().map(Arrays::toString).toArray(String[]::new));
+        int newrow = possibleTeleports.get(option)[0], newcol = possibleTeleports.get(option)[1];
+        return placeLegend(legend, location, newrow, newcol);
+    }
+
+    private ArrayList<int[]> getPossibleTeleports(Hero legend) {
+        ArrayList<int[]> out = new ArrayList<>();
+        ArrayList<int[]> heroLocations = new ArrayList<>();
+        for (Hero hero : legendLocations.keySet().stream().filter(legnd -> (legnd instanceof Hero)).toArray(Hero[]::new)){
+            if (!hero.equals(legend)){
+                heroLocations.add(legendLocations.get(hero));
+            }
+        }
+        for (int[] locs : heroLocations) {
+            int[] ML = {locs[0], locs[1] - 1},
+                    MR = {locs[0], locs[1] + 1},
+                    BM = {locs[0] + 1, locs[1]};
+            int[] side;
+            if (locationInBounds(ML) && (matrix[ML[0]][ML[1]] instanceof LOV_Space)){
+                side = ML;
+            } else side = MR;
+            LOV_Space sideSpace = (LOV_Space) matrix[side[0]][side[1]];
+            if (!sideSpace.hasHero()) {
+                out.add(side);
+            }
+            if (locationInBounds(BM) && !((LOV_Space) matrix[BM[0]][BM[1]]).hasHero()) {
+                out.add(BM);
+            }
+        }
+        return out;
+    }
+
+    public boolean recallHero(Hero hero) {
+        return false;
     }
 }
