@@ -2,14 +2,9 @@
  * Bush spaces increase hero dexterity
  */
 
-public class Bush extends LOV_Space implements AttributeAffectable{
+public class Bush extends HeroEffectSpace{
     public Bush() {
         super('B');
-    }
-
-    @Override
-    public void markVisited() {
-        visited = true;
     }
 
     /**
@@ -17,14 +12,15 @@ public class Bush extends LOV_Space implements AttributeAffectable{
      */
     @Override
     public void increaseAttribute() {
-        int currentDexterity = hero.getDexterity();
-        hero.setDexterity((int) (currentDexterity * 1.1));
+        currHeroBaseStat = hero.getDexterity();
+        hero.setDexterity((int) (currHeroBaseStat * 1.1));
+        System.out.println(hero.name + "'s dexterity increased to " + hero.getDexterity());
     }
 
     @Override
     public void decreaseAttribute() {
-        int currentDexterity = hero.getDexterity();
-        hero.setDexterity((int) (currentDexterity / 1.1));
+        hero.setDexterity(currHeroBaseStat);
+        System.out.println(hero.name + "'s dexterity decreased to normal");
     }
 
     @Override
