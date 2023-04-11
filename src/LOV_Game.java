@@ -1,3 +1,5 @@
+
+import java.util.*;
 public class LOV_Game extends Game implements UsesHeroes{
 
     private final LOV_Map LOVMap;
@@ -7,6 +9,8 @@ public class LOV_Game extends Game implements UsesHeroes{
     private final DataList<Hero> heroes = new DataList<>(maxHeroes);
 
     private DataList<Monster> monsters = new DataList<>();
+
+    private int monsterSpawnRate = 1;
 
     public LOV_Game() {
         // NOTE: should we separate this from the constructor and make it a method? call it initLOVGame()?
@@ -65,6 +69,7 @@ public class LOV_Game extends Game implements UsesHeroes{
 //                Exit game
                 System.exit(0);
             }
+
             for (Hero hero: heroes){
 /**             If hero is dead respawn at nexus
                 Determine hero's next move from choice of:
@@ -96,14 +101,31 @@ public class LOV_Game extends Game implements UsesHeroes{
                         System.out.println("Teleporting...");
                     } else if (control == 'R') {
                         System.out.println("Recalling...");
-                    } else if (control == 'Z') {
+                    } else if (control == 'Z' && inRange(hero)) {
                         System.out.println("Attacking...");
+
+                        int[] monsterLaneLocation = getMonsterLaneLocation(hero);
+                        Monster monsterInLane = LOVMap.getMonsterAt(monsterLaneLocation);
+
+                        hero.attackMonsterInLane(monsterInLane);
+
                     } else if (control == 'E') {
                         System.out.println("Changing equipment...");
+                        System.out.println("What would you like to equip?");
+                        String equipOption = GameEngine.getOption(new String[]{"Weapon", "Armor"});
+                        if (equipOption.equals("Weapon")) {
+                            hero.equipWeapon();
+                        }
+                        else {
+                            hero.equipArmor();
+                        }
+
                     } else if (control == 'P') {
                         System.out.println("Using potion...");
-                    } else if (control == 'X') {
+                    } else if (control == 'X' && inRange(hero)) {
                         System.out.println("Casting spell...");
+                        hero.castSpellOnMonster(monsters);
+
                     } else if (control == 'M' && LOVMap.matrix[location[0]][location[1]].getSymbol() == 'N') {
                         Market market = new Market();
                         System.out.println("Entering market...");
@@ -128,7 +150,15 @@ public class LOV_Game extends Game implements UsesHeroes{
                     System.out.println(monster.name + " moved forward!");
                 }
             }
+
 //            Every 8 turns, add three monsters to the map
+            monsterSpawnRate++;
+            if (monsterSpawnRate % 8 == 0){
+                monsterSpawnRate = 1;
+                for (int i = 0; i < 3; i++){
+                    addMonster();
+                }
+            }
 
 //            Exit for debugging purposes
 //            System.out.println(this.LOVMap);
@@ -150,15 +180,21 @@ public class LOV_Game extends Game implements UsesHeroes{
             System.out.println("You have chosen: " + heroOption);
             DataMap<String, String> heroData = DataLoader.dl.getInnerMap(classOption, heroOption);
             // ArrayList of objects that contains heroOption, heroData and classOption to be passed to addHero
-            addHero(new Hero(heroOption, heroData, classOption));
+
+            switch (classOption) {
+                case "Paladins":
+                    addHero(new Paladin(heroOption, heroData, classOption));
+                    break;
+                case "Sorcerers":
+                    addHero(new Sorcerer(heroOption, heroData, classOption));
+                    break;
+                default:
+                    addHero(new Warrior(heroOption, heroData, classOption));
+                    break;
+            }
         }
         LOVMap.heroesInitialPlace(heroes);
     }
-
-    /**
-     * TODO:
-     *
-     */
 
     @Override
     public boolean checkGameOver() {
@@ -175,4 +211,49 @@ public class LOV_Game extends Game implements UsesHeroes{
     public void addHero(Hero hero) {
         heroes.add(hero);
     }
+
+    /**
+     * TODO: for attacks and item usage, make a function called inRange to check if a monster is in range for the hero to attack (weapon + spell)
+     *
+     */
+
+    public boolean inRange(Hero hero){
+        int[] heroLocation = LOVMap.legendLocations.get(hero);
+        System.out.println("Hero location: " + "[" + heroLocation[0] + ", " + heroLocation[1] + "]");
+
+        // check 360 degrees around the hero location to find the monster, return true if found
+        int[][] directions = { {0,0}, {-1,0}, {0,-1}, {0,1}, {1,0}, {1,1}, {1,-1}, {-1,1}, {-1,-1} };
+        for (int[] direction: directions){
+            int[] newLocation = {heroLocation[0], heroLocation[1]};
+
+            newLocation[0] += direction[0];
+            newLocation[1] += direction[1];
+            if (LOVMap.containsMonster(newLocation)){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public int[] getMonsterLaneLocation(Hero hero){
+        int[] heroLocation = LOVMap.legendLocations.get(hero);
+        System.out.println("Hero location: " + "[" + heroLocation[0] + ", " + heroLocation[1] + "]");
+
+        // check 360 degrees around the hero location to find the monster, return true if found
+        int[][] directions = { {0,0}, {-1,0}, {0,-1}, {0,1}, {1,0}, {1,1}, {1,-1}, {-1,1}, {-1,-1} };
+        for (int[] direction: directions){
+            int[] newLocation = {heroLocation[0], heroLocation[1]};
+
+            newLocation[0] += direction[0];
+            newLocation[1] += direction[1];
+            if (LOVMap.containsMonster(newLocation)){
+                return newLocation;
+            }
+        }
+
+        return null;
+    }
+
+
 }

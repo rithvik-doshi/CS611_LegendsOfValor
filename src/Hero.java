@@ -8,57 +8,57 @@ public class Hero extends Legend{
     /**
      * The multiplier for the hero's attributes.
      */
-    private static final double attrBuff = 1.2;
+    protected static final double attrBuff = 1.2;
 
     /**
      * The hero's mana points.
      */
-    private int mp;
+    protected int mp;
 
     /**
      * The hero's base mana points.
      */
-    private final int baseMp;
+    protected final int baseMp;
 
     /**
      * The hero's experience points.
      */
-    private int exp = 0;
+    protected int exp = 0;
 
     /**
      * The hero's strength.
      */
-    private int strength;
+    protected int strength;
 
     /**
      * The hero's agility.
      */
-    private int agility;
+    protected int agility;
 
     /**
      * The hero's dexterity.
      */
-    private int dexterity;
+    protected int dexterity;
 
     /**
      * The hero's money.
      */
-    private int money;
+    protected int money;
 
     /**
      * The hero's inventory.
      */
-    private final HeroInventory heroInventory;
+    protected final HeroInventory heroInventory;
 
     /**
      * The hero's weapon.
      */
-    private Weapon weapon;
+    protected Weapon weapon;
 
     /**
      * The hero's armor.
      */
-    private Armor armor;
+    protected Armor armor;
 
     /**
      * Creates a new Hero object.
@@ -74,20 +74,6 @@ public class Hero extends Legend{
         this.dexterity = Integer.parseInt(heroData.get("dexterity"));
         this.money = Integer.parseInt(heroData.get("starting money"));
         this.heroInventory = new HeroInventory();
-        switch (classType) {
-            case "Warriors":
-                this.strength *= (attrBuff);
-                this.agility *= (attrBuff);
-                break;
-            case "Sorcerers":
-                this.agility *= (attrBuff);
-                this.dexterity *= (attrBuff);
-                break;
-            case "Paladins":
-                this.strength *= (attrBuff);
-                this.dexterity *= (attrBuff);
-                break;
-        }
     }
 
     /**
@@ -222,7 +208,7 @@ public class Hero extends Legend{
     /**
      * Equips a weapon.
      */
-    private void equipWeapon(){
+    public void equipWeapon(){
         DataList<Weapon> weaponList = getItemsByType(Weapon.class);
         if (weaponList.isEmpty()){
             System.out.println("You have no weapons to equip!");
@@ -236,7 +222,7 @@ public class Hero extends Legend{
     /**
      * Equips armor.
      */
-    private void equipArmor(){
+    public void equipArmor(){
         DataList<Armor> armorList = getItemsByType(Armor.class);
         if (armorList.isEmpty()){
             System.out.println("You have no armor to equip!");
@@ -287,6 +273,22 @@ public class Hero extends Legend{
             System.out.println(monsters.get(index).name + " has been defeated!");
         }
         return monsters;
+    }
+
+    public Monster attackMonsterInLane(Monster monster) {
+        if (weapon == null) {
+            int damageGiven = monster.takeDamage((int) (strength * 0.1));
+            System.out.println(name + " dealt " + damageGiven + " damage to " + monster.name + "!");
+            return monster;
+        }
+        else {
+            int damageGiven = monster.takeDamage((int) ((weapon.getDamage() + strength) * 0.1));
+            System.out.println(name + " dealt " + damageGiven + " damage to " + monster.name + "!");
+        }
+        if (monster.getStatus() == LegendStatus.DEAD) {
+            System.out.println(monster.name + " has been defeated!");
+        }
+        return monster;
     }
 
     /**

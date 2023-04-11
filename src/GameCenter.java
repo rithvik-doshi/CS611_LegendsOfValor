@@ -23,4 +23,8 @@ public class GameCenter {
         System.out.println("Thanks for playing! Goodbye!");
     }
 
+    public static void main(String[] args) throws FileNotFoundException {
+        GamePrompter();
+    }
+
 }
