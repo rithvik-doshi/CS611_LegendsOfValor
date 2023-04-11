@@ -6,9 +6,9 @@ public class LOV_Game extends Game implements UsesHeroes{
 
     private final DataList<Hero> heroes = new DataList<>(maxHeroes);
 
-    private DataList<Monster> monsters = new DataList<>();
+    private final DataList<Monster> monsters = new DataList<>();
 
-    private int monsterSpawnRate = 1;
+    private int monsterSpawnRate = 0;
 
     public LOV_Game() {
         // NOTE: should we separate this from the constructor and make it a method? call it initLOVGame()?
@@ -41,11 +41,6 @@ public class LOV_Game extends Game implements UsesHeroes{
         for (int i = 0; i < maxHeroes; i++) {
             monsters.add(Monster.monsterCreator(maxLevel));
         }
-    }
-
-    private void addMonster(){
-        int maxLevel = getMaxLevel(heroes);
-        monsters.add(Monster.monsterCreator(maxLevel));
     }
 
     private int getMaxLevel(DataList<? extends Legend> legends){
@@ -103,20 +98,24 @@ public class LOV_Game extends Game implements UsesHeroes{
                         if (!(validMove = LOVMap.recallHero(hero))) {
                             System.out.println("You cannot recall because your nexus is occupied!");
                         }
-                    } else if (control == 'Z' && monsterInRange(hero)) {
-                        System.out.println("Attacking...\n");
+                    } else if (control == 'Z') {
+                        if (monsterInRange(hero)) {
+                            System.out.println("Attacking...");
 
-                        int[] monsterLaneLocation = getMonsterLaneLocation(hero);
-                        Monster monsterInLane = LOVMap.getMonsterAt(monsterLaneLocation);
-                        hero.attackMonsterInLane(monsterInLane);
-                        validMove = true;
+                            int[] monsterLaneLocation = getMonsterLaneLocation(hero);
+                            Monster monsterInLane = LOVMap.getMonsterAt(monsterLaneLocation);
 
-                        //check if the monster is dead, if so remove it from the map
-                        if (monsterInLane.getStatus() == LegendStatus.DEAD) {
-                            System.out.println(Color.red + monsterInLane.name + " has been slain!" + Color.reset);
-                            ((LOV_Space) LOVMap.matrix[monsterLaneLocation[0]][monsterLaneLocation[1]]).removeLegend(monsterInLane);
-                            monsters.remove(monsterInLane);
-                            LOVMap.legendLocations.remove(monsterInLane);
+                            hero.attackMonsterInLane(monsterInLane);
+
+                            validMove = true;
+                            
+                            if (monsterInLane.getStatus() == LegendStatus.DEAD) {
+                                System.out.println(Color.red + monsterInLane.name + " has been slain!" + Color.reset);
+                                ((LOV_Space) LOVMap.matrix[monsterLaneLocation[0]][monsterLaneLocation[1]]).removeLegend(monsterInLane);
+                                monsters.remove(monsterInLane);
+                                LOVMap.legendLocations.remove(monsterInLane);
+                            }
+                            
                         }
 
                     } else if (control == 'E') {
@@ -140,19 +139,24 @@ public class LOV_Game extends Game implements UsesHeroes{
                         } else if (changeAttr == 0) {
                             validMove = true;
                         }
-                    } else if (control == 'X' && monsterInRange(hero)) {
-                        System.out.println("Casting spell...");
-                        int[] monsterLaneLocation = getMonsterLaneLocation(hero);
-                        Monster monsterInLane = LOVMap.getMonsterAt(monsterLaneLocation);
-                        hero.castSpellOnOneMonster(monsterInLane);
-                        validMove = true;
-                    } else if (control == 'M' && LOVMap.matrix[location[0]][location[1]].getSymbol() == 'N') {
-                        Market market = new Market();
-                        System.out.println("Entering market...");
-                        market.oneGoToMarket(hero);
-                        //print board again after exiting market
-                        System.out.println(this.LOVMap);
+                    } else if (control == 'X') {
+                        if (monsterInRange(hero)) {
+                            System.out.println("Casting spell...");
+                            int[] monsterLaneLocation = getMonsterLaneLocation(hero);
+                            Monster monsterInLane = LOVMap.getMonsterAt(monsterLaneLocation);
+                            hero.castSpellOnOneMonster(monsterInLane);
+                            validMove = true;
+                        }
+                    } else if (control == 'M') {
+                        if (LOVMap.matrix[location[0]][location[1]].getSymbol() == 'N') {
+                            Market market = new Market();
+                            System.out.println("Entering market...");
+                            market.oneGoToMarket(hero);
+                            //print board again after exiting market
+                            System.out.println(this.LOVMap);
+                        }
                     } else {
+                        System.out.println(Arrays.toString(LOVMap.initialHeroLocations.get(hero)));
                         if (!(validMove = LOVMap.moveLegend(hero, control))) {
                             System.out.println("You cannot access this space.");
                         }
@@ -185,12 +189,15 @@ public class LOV_Game extends Game implements UsesHeroes{
             }
 
 //            Every 8 turns, add three monsters to the map
-//            monsterSpawnRate++;
-//            if (monsterSpawnRate % 8 == 0){
-//                monsterSpawnRate = 1;
-//                initMonsters();
-//
-//            }
+            if (++monsterSpawnRate % 8 == 0){
+                System.out.println("Spawning new monsters!");
+                for (int i = 0; i < 3; i++){
+                    Monster monster = Monster.monsterCreator(getMaxLevel(heroes));
+                    if (LOVMap.addMonsterToNexus(monster, i)){
+                        monsters.add(monster);
+                    }
+                }
+            }
 
 //            Exit for debugging purposes
 //            System.out.println(this.LOVMap);
@@ -225,7 +232,6 @@ public class LOV_Game extends Game implements UsesHeroes{
                     break;
             }
         }
-        LOVMap.heroesInitialPlace(heroes);
     }
 
     @Override

@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 public class LOV_Map extends Map{
     public HashMap<Legend, int[]> legendLocations = new HashMap<>();
+    public HashMap<Hero, int[]> initialHeroLocations = new HashMap<>();
     protected LOV_Map() {
         super(8);
         for (int i = 0; i < matrix.length; i++) {
@@ -38,9 +39,10 @@ public class LOV_Map extends Map{
             int[] location = new int[2];
             location[0] = 7;
             location[1] = heroes.indexOf(hero) * 3;
-            legendLocations.put(hero, location);
+            hero.setStartingLocation(location.clone());
             if (matrix[location[0]][location[1]].tryAccess(hero)){
                 System.out.println("Placed " + hero.name + " at " + Arrays.toString(location));
+                legendLocations.put(hero, location);
             }
         }
     }
@@ -50,10 +52,25 @@ public class LOV_Map extends Map{
         for (Monster monster : monsters){
             int[] location = new int[2];
             location[1] = monsters.indexOf(monster) * 3 + 1;
-            if (matrix[location[0]][location[1]].tryAccess(monster)){
-                System.out.println("Placed " + monster.name + " at " + Arrays.toString(location));
-            }
+            placeMonster(monster, location);
+        }
+    }
+
+    public boolean addMonsterToNexus(Monster monster, int nexusIndex){
+        int[] location = new int[2];
+        location[0] = 0;
+        location[1] = nexusIndex * 3 + 1;
+        return placeMonster(monster, location);
+    }
+
+    private boolean placeMonster(Monster monster, int[] location) {
+        if (matrix[location[0]][location[1]].tryAccess(monster)){
+            System.out.println("Placed " + monster.name + " at " + Arrays.toString(location));
             legendLocations.put(monster, location);
+            return true;
+        } else {
+            System.out.println("Failed to place " + monster.name + " at " + Arrays.toString(location));
+            return false;
         }
     }
 
@@ -151,6 +168,8 @@ public class LOV_Map extends Map{
     }
 
     private boolean placeLegend(Legend legend, int[] location, int newrow, int newcol) {
+//        check newrow and newcol are in bounds:
+        if (!locationInBounds(new int[]{newrow, newcol})) return false;
         if (matrix[newrow][newcol].tryAccess(legend) && matrix[location[0]][location[1]] instanceof LOV_Accessible){
             ((LOV_Accessible) matrix[location[0]][location[1]]).removeLegend(legend);
             location[0] = newrow;
@@ -258,6 +277,9 @@ public class LOV_Map extends Map{
     }
 
     public boolean recallHero(Hero hero) {
-        return false;
+        int[] homeLocation  = hero.getStartingLocation();
+//        System.out.println(hero + " " + Arrays.toString(legendLocations.get(hero)) + " " + homeLocation[0] + " " + homeLocation[1]);
+//        int [] homeLocation = new int[]{-1, -1};
+        return placeLegend(hero, legendLocations.get(hero), homeLocation[0], homeLocation[1]);
     }
 }
