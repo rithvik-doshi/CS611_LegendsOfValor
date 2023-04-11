@@ -112,6 +112,9 @@ public class LOV_Game extends Game implements UsesHeroes{
                         Monster monsterInLane = LOVMap.getMonsterAt(monsterLaneLocation);
 
                         hero.attackMonsterInLane(monsterInLane);
+
+                        validMove = true;
+
 //
 //                        //check if the monster is dead, if so remove it from the map
 //                        if (monsterInLane.getHp() <= 0){
@@ -138,13 +141,15 @@ public class LOV_Game extends Game implements UsesHeroes{
                                 healed.setHp(healed.getHp() + changeAttr);
                                 System.out.println(Color.color(Color.bgGreen, healed.name + " healed by " + changeAttr + " health!"));
                             }
+                        } else if (changeAttr == 0) {
+                            validMove = true;
                         }
-                        validMove = true;
                     } else if (control == 'X' && inRange(hero)) {
                         System.out.println("Casting spell...");
                         int[] monsterLaneLocation = getMonsterLaneLocation(hero);
                         Monster monsterInLane = LOVMap.getMonsterAt(monsterLaneLocation);
                         hero.castSpellOnOneMonster(monsterInLane);
+                        validMove = true;
                     } else if (control == 'M' && LOVMap.matrix[location[0]][location[1]].getSymbol() == 'N') {
                         Market market = new Market();
                         System.out.println("Entering market...");

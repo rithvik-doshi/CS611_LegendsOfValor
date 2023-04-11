@@ -410,7 +410,7 @@ public class Hero extends Legend{
         DataList<Potion> potionList = getItemsByType(Potion.class);
         if (potionList.isEmpty()){
             System.out.println("You have no potions to use!");
-            return 0;
+            return -1;
         }
         String potionOption = getItemOption(potionList);
         Potion potion = potionList.get(getIndexItem(potionList, potionOption));
