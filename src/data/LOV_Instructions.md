@@ -8,6 +8,16 @@ Legends of Valor is a MOBA-like game. The player will control a team of 3 heroes
 
 Use W/A/S/D to move the heroes around the map. The heroes can only move one space at a time. The heroes can only move to a space that is adjacent to their current position.
 
+- Q: Quit
+- T: Teleport
+- R: Recall
+- Z: Attack
+- E: Change equipment
+- P: Use potion
+- X: Cast spell
+- M: Enter Market
+- I: Info
+
 ## 2. Spaces
 
 LOV is played in an 8x8 grid of spaces. The grid is split into 3 lanes, each separated by a column of inaccessible and impassible spaces. There are 6 different types of spaces:
@@ -81,5 +91,25 @@ Potions and spells are consumable items. Potions can only be drunk once, and spe
 These items can be bought at a market. For some items, you may have to be at a certain level to be able to use them, so be careful!
 
 ## 7. Stat Calculations
+
+Spell damage = `spell_base_damage + (hero dexterity/10000) * spell_base_damage`
+
+Starting HP for Legend: `100 * starting level`
+
+At every new level, Hero's HP is set to `100 * level` and MP is doubled
+
+Hero's attack damage (with a weapon, hero cannot attack without a weapon) = `(strength + weapon damage) * 0.1`
+
+Legend dodge chance = `(1 - Math.pow(dodgeFactor, legend dodgeAmt))` (dodgeFactor is 0.99 for heroes, 0.999 for monsters)
+
+Exp needed to level up: `10 * current level`
+
+Players and monsters never regain health/mp during a battle.
+
+Hero gold gain = `100 * max level of monsters defeated`
+
+Hero exp gain = `size of monster party + level of monsters defeated * 10`
+
+Hero hp/mp gain = `baseHP or baseMP stat * 1.1`
 
 ## 8. GLHF!

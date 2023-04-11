@@ -70,6 +70,33 @@ public class LOV_Map extends Map{
         return locations.toString();
     }
 
+    public Legend getLegendAt(int[] location){
+        for (Legend legend : legendLocations.keySet()){
+            if (Arrays.equals(legendLocations.get(legend), location)){
+                return legend;
+            }
+        }
+        return null;
+    }
+
+    public Monster getMonsterAt(int[] location){
+        for (Legend legend : legendLocations.keySet()){
+            if (Arrays.equals(legendLocations.get(legend), location) && legend instanceof Monster){
+                return (Monster) legend;
+            }
+        }
+        return null;
+    }
+
+    public boolean containsMonster(int[] location){
+        for (Legend legend : legendLocations.keySet()){
+            if (Arrays.equals(legendLocations.get(legend), location) && legend instanceof Monster){
+                return true;
+            }
+        }
+        return false;
+    }
+
     public boolean moveLegend(Legend legend, char control) {
         int[] location = legendLocations.get(legend);
         int newrow = location[0], newcol = location[1];
