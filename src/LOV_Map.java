@@ -111,9 +111,27 @@ public class LOV_Map extends Map{
         return null;
     }
 
+    public Hero getHeroAt(int[] location){
+        for (Legend legend : legendLocations.keySet()){
+            if (Arrays.equals(legendLocations.get(legend), location) && legend instanceof Hero){
+                return (Hero) legend;
+            }
+        }
+        return null;
+    }
+
     public boolean containsMonster(int[] location){
         for (Legend legend : legendLocations.keySet()){
             if (Arrays.equals(legendLocations.get(legend), location) && legend instanceof Monster){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean containsHero(int[] location){
+        for (Legend legend : legendLocations.keySet()){
+            if (Arrays.equals(legendLocations.get(legend), location) && legend instanceof Hero){
                 return true;
             }
         }

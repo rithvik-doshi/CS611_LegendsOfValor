@@ -1,3 +1,5 @@
+import org.w3c.dom.ls.LSOutput;
+
 public abstract class LOV_Space extends Space implements LOV_Accessible{
 
     protected Hero hero;
@@ -65,10 +67,13 @@ public abstract class LOV_Space extends Space implements LOV_Accessible{
      */
     @Override
     public void removeLegend(Legend legend) {
+        System.out.println("Removing legend" + legend.name + legend.type);
+        System.out.println("Legend is instance of Monster: " + (legend instanceof Monster));
         if (legend instanceof Hero){
             hero = null;
-        } else if (legend instanceof Monster){
+        } else {
             monster = null;
         }
+        System.out.println(hasMonster());
     }
 }

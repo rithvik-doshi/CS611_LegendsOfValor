@@ -277,12 +277,12 @@ public class Hero extends Legend{
 
     public Monster attackMonsterInLane(Monster monster) {
         if (weapon == null) {
-            int damageGiven = monster.takeDamage((int) (strength * 0.1));
+            int damageGiven = monster.takeDamage((int) (strength * 100));
             System.out.println(name + " dealt " + damageGiven + " damage to " + monster.name + "!");
             return monster;
         }
         else {
-            int damageGiven = monster.takeDamage((int) ((weapon.getDamage() + strength) * 0.1));
+            int damageGiven = monster.takeDamage((int) ((weapon.getDamage() + strength) * 100));
             System.out.println(name + " dealt " + damageGiven + " damage to " + monster.name + "!");
         }
         if (monster.getStatus() == LegendStatus.DEAD) {

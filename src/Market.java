@@ -148,21 +148,21 @@ public class Market extends Space implements LMH_Accessible {
                 System.out.println("Select an item to sell: ");
                 if (hero.getInventoryNames().length == 0) {
                     System.out.println(Color.color(Color.brightYellow, "You have no items to sell."));
-                    break;
                 }
-                String itemName = GameEngine.getOption(hero.getInventoryNames());
-                System.out.println("You have selected: " + itemName);
-                System.out.println("Sell " + itemName + " for " + hero.getItem(itemName).purchasePrice / 2 + "? " + hero.name + " has " + hero.getMoney() + " gold.");
-                if (GameEngine.getOption(new String[]{"Yes", "No"}).equals("No")) {
-                    return hero;
-                }
-                if (!hero.sellItem(itemName)) {
-                    System.out.println(Color.color(Color.brightYellow, "You cannot sell this item."));
+                else {
+                    String itemName = GameEngine.getOption(hero.getInventoryNames());
+                    System.out.println("You have selected: " + itemName);
+                    System.out.println("Sell " + itemName + " for " + hero.getItem(itemName).purchasePrice / 2 + "? " + hero.name + " has " + hero.getMoney() + " gold.");
+                    if (GameEngine.getOption(new String[]{"Yes", "No"}).equals("No")) {
+                        return hero;
+                    }
+                    if (!hero.sellItem(itemName)) {
+                        System.out.println(Color.color(Color.brightYellow, "You cannot sell this item."));
+                    }
                 }
             }
             System.out.println(hero + "would you like to continue shopping?");
         } while (!GameEngine.getOption(new String[]{"Yes", "No"}).equals("No"));
         return hero;
     }
-
 }
