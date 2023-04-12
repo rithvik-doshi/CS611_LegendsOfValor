@@ -117,7 +117,7 @@ public class LOV_Game extends Game implements UsesHeroes{
                                     ((LOV_Space) LOVMap.matrix[monsterLaneLocation[0]][monsterLaneLocation[1]]).removeLegend(monsterInLane);
                                     monsters.remove(monsterInLane);
                                     LOVMap.legendLocations.remove(monsterInLane);
-                                    
+
                                     // if the hero slays the monster, reward the hero with money and EXP
                                     hero.setHp(hero.getLevel() * 100);
                                     hero.setMoney(hero.getMoney() + (hero.getLevel() * 100));
@@ -129,6 +129,7 @@ public class LOV_Game extends Game implements UsesHeroes{
                                         hero.setExp(0);
                                     }
                                 }
+                            }
                             break;
                         case 'E':
                             System.out.println("Changing equipment...");

@@ -28,8 +28,8 @@ public class Koulou extends HeroEffectSpace {
     }
 
     @Override
-    public String toString() {
-        return (hero != null || monster != null) ? Color.color(Color.bgBlue , "K") : Color.color(Color.blue, (getSymbol() + ""));
+    public String spaceSpecificString() {
+        return Color.color(Color.blue, (getSymbol() + ""));
     }
 
 
