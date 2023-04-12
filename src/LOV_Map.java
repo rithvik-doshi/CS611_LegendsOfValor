@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.*;
 
 public class LOV_Map extends Map{
     public HashMap<Legend, int[]> legendLocations = new HashMap<>();
@@ -91,15 +89,6 @@ public class LOV_Map extends Map{
             locations.append(appendStr);
         }
         return locations.toString();
-    }
-
-    public Legend getLegendAt(int[] location){
-        for (Legend legend : legendLocations.keySet()){
-            if (Arrays.equals(legendLocations.get(legend), location)){
-                return legend;
-            }
-        }
-        return null;
     }
 
     public Monster getMonsterAt(int[] location){
@@ -241,7 +230,7 @@ public class LOV_Map extends Map{
 
     public boolean teleportHero(Hero legend) {
         int[] location = legendLocations.get(legend);
-        ArrayList<int[]> possibleTeleports = getPossibleTeleports(legend);
+        ArrayList<int[]> possibleTeleports = getPossibleTeleports(legend, location);
         if (possibleTeleports.size() == 0) return false;
         System.out.println("Choose a location to teleport to:");
         int option = GameEngine.getIntOption(possibleTeleports.stream().map(Arrays::toString).toArray(String[]::new));
@@ -249,7 +238,7 @@ public class LOV_Map extends Map{
         return placeLegend(legend, location, newrow, newcol);
     }
 
-    private ArrayList<int[]> getPossibleTeleports(Hero legend) {
+    private ArrayList<int[]> getPossibleTeleports(Hero legend, int[] location) {
         ArrayList<int[]> out = new ArrayList<>();
         ArrayList<int[]> heroLocations = new ArrayList<>();
         for (Hero hero : legendLocations.keySet().stream().filter(legnd -> (legnd instanceof Hero)).toArray(Hero[]::new)){
@@ -272,14 +261,25 @@ public class LOV_Map extends Map{
             if (locationInBounds(BM) && !((LOV_Space) matrix[BM[0]][BM[1]]).hasHero()) {
                 out.add(BM);
             }
+
+            Set<int[]> set = new HashSet<>(out);
+            out.clear();
+            out.addAll(set);
+
+            for (int i = 0; i < out.size(); i++) {
+                if (out.get(i)[1] / 3 == location[1] / 3) {
+                    out.remove(i);
+                    i--;
+                }
+            }
+
         }
         return out;
     }
 
     public boolean recallHero(Hero hero) {
         int[] homeLocation  = hero.getStartingLocation();
-//        System.out.println(hero + " " + Arrays.toString(legendLocations.get(hero)) + " " + homeLocation[0] + " " + homeLocation[1]);
-//        int [] homeLocation = new int[]{-1, -1};
-        return placeLegend(hero, legendLocations.get(hero), homeLocation[0], homeLocation[1]);
+        boolean validPlace = placeLegend(hero, legendLocations.get(hero), homeLocation[0], homeLocation[1]);
+        return (validPlace) ? validPlace : placeLegend(hero, legendLocations.get(hero), homeLocation[0], homeLocation[1] + 1);
     }
 }

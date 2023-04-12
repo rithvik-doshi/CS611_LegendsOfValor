@@ -175,8 +175,12 @@ The party size is between 1-3 players.
 ## How to compile and run
 
 1. Make sure that the text configfiles are located in ``src/data/`` and all other files in ``src``.
-2. Run Main.java using javac
-3. Enjoy!
+2. Load src into a new Intellij project.
+   1. If you choose to compile and run from the command line, make sure that you are in the ``src`` directory.
+   2. Note that it will be necessary to change all the file paths referenced in the codebase to be direct paths to the files on your machine, as opposed to relative paths.
+3. Compile and run the Main class
+   1. If you choose to run from command line, run: ``javac Main.java -Xlint:unchecked`` and then ``java Main.java``
+4. Follow the instructions on the screen to play the game!
 
 ## Input/Output Example
 
