@@ -98,17 +98,19 @@ Starting HP for Legend: `100 * starting level`
 
 At every new level, Hero's HP is set to `100 * level` and MP is doubled
 
-Hero's attack damage (with a weapon, hero cannot attack without a weapon) = `(strength + weapon damage) * 0.1`
+Hero's attack damage (with a weapon, hero cannot attack without a weapon) = `(strength + weapon damage) * 0.4`
 
-Legend dodge chance = `(1 - Math.pow(dodgeFactor, legend dodgeAmt))` (dodgeFactor is 0.99 for heroes, 0.999 for monsters)
+Monster's attack damage = `monster damage * 0.005`
+
+Legend dodge chance = `0.001 * legend dodgeAmt`
 
 Exp needed to level up: `10 * current level`
 
 Players and monsters never regain health/mp during a battle.
 
-Hero gold gain = `100 * max level of monsters defeated`
+Hero gold gain = `current gold += 100 * hero level`
 
-Hero exp gain = `size of monster party + level of monsters defeated * 10`
+Hero exp gain = `current EXP += 2 * hero level`
 
 Hero hp/mp gain = `baseHP or baseMP stat * 1.1`
 

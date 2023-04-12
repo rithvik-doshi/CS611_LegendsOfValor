@@ -122,14 +122,14 @@ public abstract class Legend {
 
     /**
      * Allows legend to take damage
-     * @param dodgeFactor the factor to determine the chance of dodging
+     *
      * @param dodgeAmt the dodge stat of the legend
-     * @param damage the initial damage to be taken from the adversary
-     * @param defense the defense stat of the legend
-     * @return the damage taken
+     * @param damage   the initial damage to be taken from the adversary
+     * @param defense  the defense stat of the legend
+     * @return the damage taken$
      */
-    public int takeDamage(double dodgeFactor, int dodgeAmt, int damage, int defense) {
-        if (Math.random() < (1 - Math.pow(dodgeFactor, dodgeAmt))){
+    public int takeDamage(int dodgeAmt, int damage, int defense) {
+        if (Math.random() < (dodgeAmt * 0.001)){
             System.out.println(name + " dodged the attack!");
             return 0;
         }

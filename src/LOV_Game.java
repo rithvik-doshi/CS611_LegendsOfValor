@@ -13,7 +13,6 @@ public class LOV_Game extends Game implements UsesHeroes{
     private int monsterSpawnRate = 0;
 
     public LOV_Game() {
-        // NOTE: should we separate this from the constructor and make it a method? call it initLOVGame()?
         System.out.println(Color.magenta + ArtMessages.getWelcomeToLOV() + Color.reset);
         System.out.println("Welcome to Legends of Valor! Do you want to see the instructions? (Y/N)");
         String printInst = GameEngine.getOption(new String[]{"Y", "N"});
@@ -131,54 +130,54 @@ public class LOV_Game extends Game implements UsesHeroes{
                                 }
                             }
                             break;
-                        case 'E':
-                            System.out.println("Changing equipment...");
-                            System.out.println("What would you like to equip?");
-                            String equipOption = GameEngine.getOption(new String[]{"Weapon", "Armor"});
-                            if (equipOption.equals("Weapon")) {
-                                hero.equipWeapon();
-                            } else {
-                                hero.equipArmor();
-                            }
-
-                            break;
-                        case 'P':
-                            int changeAttr;
-                            if ((changeAttr = hero.usePotion()) > 0) {
-                                for (Hero healed : heroes) {
-                                    healed.setHp(healed.getHp() + changeAttr);
-                                    System.out.println(Color.color(Color.bgGreen, healed.name + " healed by " + changeAttr + " health!"));
+                            case 'E':
+                                System.out.println("Changing equipment...");
+                                System.out.println("What would you like to equip?");
+                                String equipOption = GameEngine.getOption(new String[]{"Weapon", "Armor"});
+                                if (equipOption.equals("Weapon")) {
+                                    hero.equipWeapon();
+                                } else {
+                                    hero.equipArmor();
                                 }
-                            } else if (changeAttr == 0) {
+
+                                break;
+                            case 'P':
+                                int changeAttr;
+                                if ((changeAttr = hero.usePotion()) > 0) {
+                                    for (Hero healed : heroes) {
+                                        healed.setHp(healed.getHp() + changeAttr);
+                                        System.out.println(Color.color(Color.bgGreen, healed.name + " healed by " + changeAttr + " health!"));
+                                    }
+                                } else if (changeAttr == 0) {
+                                    validMove = true;
+                                }
+                                break;
+                            case 'X':
+                                if (monsterInRange(hero)) {
+                                    System.out.println("Casting spell...");
+                                    int[] monsterLaneLocation = getMonsterLaneLocation(hero);
+                                    Monster monsterInLane = LOVMap.getMonsterAt(monsterLaneLocation);
+                                    hero.castSpellOnOneMonster(monsterInLane);
+                                    validMove = true;
+                                }
+                                break;
+                            case 'M':
+                                if (LOVMap.matrix[location[0]][location[1]].getSymbol() == 'N') {
+                                    Market market = new Market();
+                                    System.out.println("Entering market...");
+                                    market.oneGoToMarket(hero);
+                                }
+                                break;
+                            case 'F':
                                 validMove = true;
+                                break;
+                            default:
+                                System.out.println(Arrays.toString(LOVMap.initialHeroLocations.get(hero)));
+                                if (!(validMove = LOVMap.moveLegend(hero, control))) {
+                                    System.out.println("You cannot access this space.");
+                                }
+                                break;
                             }
-                            break;
-                        case 'X':
-                            if (monsterInRange(hero)) {
-                                System.out.println("Casting spell...");
-                                int[] monsterLaneLocation = getMonsterLaneLocation(hero);
-                                Monster monsterInLane = LOVMap.getMonsterAt(monsterLaneLocation);
-                                hero.castSpellOnOneMonster(monsterInLane);
-                                validMove = true;
-                            }
-                            break;
-                        case 'M':
-                            if (LOVMap.matrix[location[0]][location[1]].getSymbol() == 'N') {
-                                Market market = new Market();
-                                System.out.println("Entering market...");
-                                market.oneGoToMarket(hero);
-                            }
-                            break;
-                        case 'F':
-                            validMove = true;
-                            break;
-                        default:
-                            System.out.println(Arrays.toString(LOVMap.initialHeroLocations.get(hero)));
-                            if (!(validMove = LOVMap.moveLegend(hero, control))) {
-                                System.out.println("You cannot access this space.");
-                            }
-                            break;
-                    }
                 } while (!validMove);
 
             }
@@ -292,7 +291,6 @@ public class LOV_Game extends Game implements UsesHeroes{
             newLocation[0] += direction[0];
             newLocation[1] += direction[1];
             if (LOVMap.containsMonster(newLocation)){
-                System.out.println("Monster found in range!");
                 return true;
             }
         }
@@ -312,7 +310,6 @@ public class LOV_Game extends Game implements UsesHeroes{
             newLocation[0] += direction[0];
             newLocation[1] += direction[1];
             if (LOVMap.containsHero(newLocation)){
-                System.out.println("Hero found in range!");
                 return true;
             }
         }

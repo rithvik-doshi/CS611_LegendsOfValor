@@ -38,7 +38,19 @@ public class GameEngine {
     public static char LOV_getPlayerControl(char spaceType){
         Scanner scanner = new Scanner(System.in);
         while(true){
-            System.out.print("Make a move: WASD to move, Q to quit, I for info\nT to teleport, R to recall, Z to attack, E to change equipment\nP to use potion, X to cast spell, F to skip turn");
+            System.out.print(
+                    Color.bold + Color.green + "Make a move: \n" + Color.reset +
+                    Color.bold + Color.green + "\n'WASD' " + Color.reset  + "for movement" +
+                    Color.bold + Color.green + "\n'Q' " + Color.reset  + "to quit" +
+                    Color.bold + Color.green + "\n'I' " + Color.reset + "for info" +
+                    Color.bold + Color.green + "\n'T' " + Color.reset + "to teleport" +
+                    Color.bold + Color.green + "\n'R' " + Color.reset + "to recall" +
+                    Color.bold + Color.green + "\n'Z' " + Color.reset + "to attack" +
+                    Color.bold + Color.green + "\n'E' " + Color.reset + "to change equipment" +
+                    Color.bold + Color.green + "\n'P' " + Color.reset + "to use potion" +
+                    Color.bold + Color.green + "\n'X' " + Color.reset + "to cast spell" +
+                    Color.bold + Color.green + "\n'F' " + Color.reset + "to skip turn"
+            );
             if (spaceType == 'N') System.out.print(" M for market");
             System.out.print(":\n");
             String input = scanner.nextLine();
