@@ -35,7 +35,6 @@ public class LOV_Game extends Game implements UsesHeroes{
         LOVMap.heroesInitialPlace(heroes);
         LOVMap.monstersInitialPlace(monsters);
         LOVMap.printLocations();
-//        put heroes, monsters in the right places
     }
 
     private void initMonsters() {
@@ -76,108 +75,114 @@ public class LOV_Game extends Game implements UsesHeroes{
                 - If on nexus, M for market
                 - Print any information (does not consume turn) (I)
  */
-                System.out.println(this.LOVMap);
-                System.out.println(Color.blue + "Player " + hero.name + "'s turn: " + Color.reset);
+
                 int[] location = LOVMap.legendLocations.get(hero);
                 char control;
                 boolean validMove = false;
                 do {
+                    System.out.println(this.LOVMap);
+                    System.out.println(Color.blue + "Player " + hero.name + "'s turn: " + Color.reset);
                     while ((control = GameEngine.LOV_getPlayerControl(LOVMap.matrix[location[0]][location[1]].getSymbol())) == 'I') {
                         GameEngine.printInfo(heroes, monsters);
                         System.out.println(this.LOVMap);
                         System.out.println("Player " + hero.name + "'s turn: ");
                     }
-                    if (control == 'Q') {
-                        System.out.println("Exiting game...");
-                        return;
-                    } else if (control == 'T') {
-                        System.out.println("Teleporting...");
-                        if (!(validMove = LOVMap.teleportHero(hero))) {
-                            System.out.println("You cannot teleport. Check the board for valid moves and try again.");
-                        }
-                    } else if (control == 'R') {
-                        System.out.println("Recalling...");
-                        if (!(validMove = LOVMap.recallHero(hero))) {
-                            System.out.println("You cannot recall because your nexus is occupied!");
-                        }
-                    } else if (control == 'Z') {
-                        if (monsterInRange(hero)) {
-                            System.out.println("Attacking...");
+                    switch (control) {
+                        case 'Q':
+                            System.out.println("Exiting game...");
+                            return;
+                        case 'T':
+                            System.out.println("Teleporting...");
+                            if (!(validMove = LOVMap.teleportHero(hero))) {
+                                System.out.println("You cannot teleport. Check the board for valid moves and try again.");
+                            }
+                            break;
+                        case 'R':
+                            System.out.println("Recalling...");
+                            if (!(validMove = LOVMap.recallHero(hero))) {
+                                System.out.println("You cannot recall because your nexus is occupied!");
+                            }
+                            break;
+                        case 'Z':
+                            if (monsterInRange(hero)) {
+                                System.out.println("Attacking...");
 
-                            int[] monsterLaneLocation = getMonsterLaneLocation(hero);
-                            Monster monsterInLane = LOVMap.getMonsterAt(monsterLaneLocation);
+                                int[] monsterLaneLocation = getMonsterLaneLocation(hero);
+                                Monster monsterInLane = LOVMap.getMonsterAt(monsterLaneLocation);
+                                hero.attackMonsterInLane(monsterInLane);
+                                validMove = true;
 
-                            hero.attackMonsterInLane(monsterInLane);
-
-                            validMove = true;
-                            
-                            if (monsterInLane.getStatus() == LegendStatus.DEAD) {
-                                System.out.println(Color.red + monsterInLane.name + " has been slain!" + Color.reset);
-                                ((LOV_Space) LOVMap.matrix[monsterLaneLocation[0]][monsterLaneLocation[1]]).removeLegend(monsterInLane);
-                                monsters.remove(monsterInLane);
-                                LOVMap.legendLocations.remove(monsterInLane);
-
-                                // if the hero slays the monster, reward the hero with money and EXP
-                                hero.setHp(hero.getLevel() * 100);
-                                hero.setMoney(hero.getMoney() + (hero.getLevel() * 100));
-                                hero.addExp(hero.getExp() + (hero.getLevel() * 2));
-                                // if hero gains enough exp, level up
-                                if (hero.getExp() >= hero.getExpBound()) {
-                                    hero.setLevel(hero.getLevel() + 1);
-                                    // reset exp to 0
-                                    hero.setExp(0);
+                                if (monsterInLane.getStatus() == LegendStatus.DEAD) {
+                                    System.out.println(Color.red + monsterInLane.name + " has been slain!" + Color.reset);
+                                    ((LOV_Space) LOVMap.matrix[monsterLaneLocation[0]][monsterLaneLocation[1]]).removeLegend(monsterInLane);
+                                    monsters.remove(monsterInLane);
+                                    LOVMap.legendLocations.remove(monsterInLane);
+                                    
+                                    // if the hero slays the monster, reward the hero with money and EXP
+                                    hero.setHp(hero.getLevel() * 100);
+                                    hero.setMoney(hero.getMoney() + (hero.getLevel() * 100));
+                                    hero.addExp(hero.getExp() + (hero.getLevel() * 2));
+                                    // if hero gains enough exp, level up
+                                    if (hero.getExp() >= hero.getExpBound()) {
+                                        hero.setLevel(hero.getLevel() + 1);
+                                        // reset exp to 0
+                                        hero.setExp(0);
+                                    }
                                 }
+                            break;
+                        case 'E':
+                            System.out.println("Changing equipment...");
+                            System.out.println("What would you like to equip?");
+                            String equipOption = GameEngine.getOption(new String[]{"Weapon", "Armor"});
+                            if (equipOption.equals("Weapon")) {
+                                hero.equipWeapon();
+                            } else {
+                                hero.equipArmor();
                             }
-                        }
 
-                    } else if (control == 'E') {
-                        System.out.println("Changing equipment...");
-                        System.out.println("What would you like to equip?");
-                        String equipOption = GameEngine.getOption(new String[]{"Weapon", "Armor"});
-                        if (equipOption.equals("Weapon")) {
-                            hero.equipWeapon();
-                        }
-                        else {
-                            hero.equipArmor();
-                        }
-
-                    } else if (control == 'P') {
-                        int changeAttr;
-                        if ((changeAttr = hero.usePotion()) > 0){
-                            for (Hero healed : heroes) {
-                                healed.setHp(healed.getHp() + changeAttr);
-                                System.out.println(Color.color(Color.bgGreen, healed.name + " healed by " + changeAttr + " health!"));
+                            break;
+                        case 'P':
+                            int changeAttr;
+                            if ((changeAttr = hero.usePotion()) > 0) {
+                                for (Hero healed : heroes) {
+                                    healed.setHp(healed.getHp() + changeAttr);
+                                    System.out.println(Color.color(Color.bgGreen, healed.name + " healed by " + changeAttr + " health!"));
+                                }
+                            } else if (changeAttr == 0) {
+                                validMove = true;
                             }
-                        } else if (changeAttr == 0) {
+                            break;
+                        case 'X':
+                            if (monsterInRange(hero)) {
+                                System.out.println("Casting spell...");
+                                int[] monsterLaneLocation = getMonsterLaneLocation(hero);
+                                Monster monsterInLane = LOVMap.getMonsterAt(monsterLaneLocation);
+                                hero.castSpellOnOneMonster(monsterInLane);
+                                validMove = true;
+                            }
+                            break;
+                        case 'M':
+                            if (LOVMap.matrix[location[0]][location[1]].getSymbol() == 'N') {
+                                Market market = new Market();
+                                System.out.println("Entering market...");
+                                market.oneGoToMarket(hero);
+                            }
+                            break;
+                        case 'F':
                             validMove = true;
-                        }
-                    } else if (control == 'X') {
-                        if (monsterInRange(hero)) {
-                            System.out.println("Casting spell...");
-                            int[] monsterLaneLocation = getMonsterLaneLocation(hero);
-                            Monster monsterInLane = LOVMap.getMonsterAt(monsterLaneLocation);
-                            hero.castSpellOnOneMonster(monsterInLane);
-                            validMove = true;
-                        }
-                    } else if (control == 'M') {
-                        if (LOVMap.matrix[location[0]][location[1]].getSymbol() == 'N') {
-                            Market market = new Market();
-                            System.out.println("Entering market...");
-                            market.oneGoToMarket(hero);
-                            //print board again after exiting market
-                            System.out.println(this.LOVMap);
-                        }
-                    } else {
-                        System.out.println(Arrays.toString(LOVMap.initialHeroLocations.get(hero)));
-                        if (!(validMove = LOVMap.moveLegend(hero, control))) {
-                            System.out.println("You cannot access this space.");
-                        }
+                            break;
+                        default:
+                            System.out.println(Arrays.toString(LOVMap.initialHeroLocations.get(hero)));
+                            if (!(validMove = LOVMap.moveLegend(hero, control))) {
+                                System.out.println("You cannot access this space.");
+                            }
+                            break;
                     }
                 } while (!validMove);
 
             }
             System.out.println("\n" + Color.red + "Monsters' turns!" + Color.reset);
-//            Filter dead monsters from list
+
             for (Monster monster: monsters) {
 
                 if (checkGameOver()){
@@ -186,6 +191,7 @@ public class LOV_Game extends Game implements UsesHeroes{
 /**
  *              If monster is in range to attack a hero, attack. Else move forward
  */
+
                 if (heroInRange(monster)){
                     System.out.println("\n" + monster.name + " is attacking!\n");
                     int[] heroLocation = getHeroLaneLocation(monster);
@@ -199,7 +205,6 @@ public class LOV_Game extends Game implements UsesHeroes{
                     }
                 }
             }
-
             // after every iteration, heroes regain 10% of their HP and Mana
             for (Hero h: heroes) {
                 h.setHp(h.getHp() + (h.getHp() / 10));

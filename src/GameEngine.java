@@ -38,16 +38,15 @@ public class GameEngine {
     public static char LOV_getPlayerControl(char spaceType){
         Scanner scanner = new Scanner(System.in);
         while(true){
-            System.out.print("Make a move: WASD " +
-                    "to move \n Q to quit \n I for info \n T to teleport \n R to recall \n Z to attack \n E to change equipment \n P to use potion \n X to cast spell\n ");
+            System.out.print("Make a move: WASD to move, Q to quit, I for info\nT to teleport, R to recall, Z to attack, E to change equipment\nP to use potion, X to cast spell, F to skip turn");
             if (spaceType == 'N') System.out.print(" M for market");
-            System.out.print(": ");
+            System.out.print(":\n");
             String input = scanner.nextLine();
             try{
                 if (spaceType == 'N'){
-                    if (input.matches("[WwAaSsDdQqIiMmTtRrZzEePpXx]")) return Character.toUpperCase(input.charAt(0));
+                    if (input.matches("[WwAaSsDdQqIiMmTtRrZzEePpXxFf]")) return Character.toUpperCase(input.charAt(0));
                 } else {
-                    if (input.matches("[WwAaSsDdQqIiTtRrZzEePpXx]")) return Character.toUpperCase(input.charAt(0));
+                    if (input.matches("[WwAaSsDdQqIiTtRrZzEePpXxFf]")) return Character.toUpperCase(input.charAt(0));
                 }
                 throw new IllegalArgumentException();
             } catch(IllegalArgumentException e){

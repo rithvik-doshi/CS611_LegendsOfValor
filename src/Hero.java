@@ -324,7 +324,7 @@ public class Hero extends Legend{
      * @return The amount of damage taken.
      */
     public int takeDamage(int damage) {
-        return super.takeDamage(0.99, agility, damage, (armor != null) ? armor.getDefense() : 0);
+        return super.takeDamage(0.999, agility, damage, (armor != null) ? armor.getDefense() : 0);
     }
 
     /**
