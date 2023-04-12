@@ -32,6 +32,14 @@ public class LOV_Map extends Map{
         }
     }
 
+    public void respawnHero(Hero hero){
+        int[] location = initialHeroLocations.get(hero);
+        if (matrix[location[0]][location[1]].tryAccess(hero)){
+            System.out.println("Respawned " + hero.name + " at " + Arrays.toString(location));
+            legendLocations.put(hero, location);
+        }
+    }
+
     @Override
     public void heroesInitialPlace(DataList<Hero> heroes) {
         assert heroes.size() <= 3;

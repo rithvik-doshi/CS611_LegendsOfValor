@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class LOV_Game extends Game implements UsesHeroes{
 
     private final LOV_Map LOVMap;
@@ -114,8 +116,18 @@ public class LOV_Game extends Game implements UsesHeroes{
                                 ((LOV_Space) LOVMap.matrix[monsterLaneLocation[0]][monsterLaneLocation[1]]).removeLegend(monsterInLane);
                                 monsters.remove(monsterInLane);
                                 LOVMap.legendLocations.remove(monsterInLane);
+
+                                // if the hero slays the monster, reward the hero with money and EXP
+                                hero.setHp(hero.getLevel() * 100);
+                                hero.setMoney(hero.getMoney() + (hero.getLevel() * 100));
+                                hero.addExp(hero.getExp() + (hero.getLevel() * 2));
+                                // if hero gains enough exp, level up
+                                if (hero.getExp() >= hero.getExpBound()) {
+                                    hero.setLevel(hero.getLevel() + 1);
+                                    // reset exp to 0
+                                    hero.setExp(0);
+                                }
                             }
-                            
                         }
 
                     } else if (control == 'E') {
@@ -188,7 +200,13 @@ public class LOV_Game extends Game implements UsesHeroes{
                 }
             }
 
-//            Every 8 turns, add three monsters to the map
+            // after every iteration, heroes regain 10% of their HP and Mana
+            for (Hero h: heroes) {
+                h.setHp(h.getHp() + (h.getHp() / 10));
+                h.setMp(h.getMp() + (h.getMp() / 10));
+            }
+
+            // Every 8 turns, add three monsters to the map
             if (++monsterSpawnRate % 8 == 0){
                 System.out.println("Spawning new monsters!");
                 for (int i = 0; i < 3; i++){
@@ -198,13 +216,6 @@ public class LOV_Game extends Game implements UsesHeroes{
                     }
                 }
             }
-
-//            Exit for debugging purposes
-//            System.out.println(this.LOVMap);
-//            System.out.println("Exit?");
-//            if (GameEngine.getOption(new String[]{"Y", "N"}).equals("Y")){
-//                return;
-//            }
         }
     }
 

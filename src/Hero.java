@@ -119,8 +119,16 @@ public class Hero extends Legend{
     /** Gets hero's experience bound before they reach the next level.
      * @return The hero's experience bound.
      */
-    private int getExpBound() {
+    public int getExpBound() {
         return getLevel()*10;
+    }
+
+    public int getExp() {
+        return exp;
+    }
+
+    public void setExp(int exp) {
+        this.exp = exp;
     }
 
     /**
