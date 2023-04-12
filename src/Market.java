@@ -161,7 +161,7 @@ public class Market extends Space implements LMH_Accessible {
                     }
                 }
             }
-            System.out.println(hero + "would you like to continue shopping?");
+            System.out.println(hero + "\n" + hero.name + ", would you like to continue shopping?");
         } while (!GameEngine.getOption(new String[]{"Yes", "No"}).equals("No"));
         return hero;
     }

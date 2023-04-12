@@ -83,7 +83,7 @@ public class LMH_Game extends Game implements UsesHeroes{
 
             if (checkGameOver()) {
                 System.out.println(Color.color(Color.red, "All heroes are dead. Game over!"));
-                System.exit(0);
+                return;
             }
             System.out.println(this.LMHMap);
             char control = GameEngine.LMH_getControl(LMHMap.getSpace().getSymbol());

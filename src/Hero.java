@@ -216,29 +216,31 @@ public class Hero extends Legend{
     /**
      * Equips a weapon.
      */
-    public void equipWeapon(){
+    public boolean equipWeapon(){
         DataList<Weapon> weaponList = getItemsByType(Weapon.class);
         if (weaponList.isEmpty()){
             System.out.println("You have no weapons to equip!");
-            return;
+            return false;
         }
         System.out.println(weaponList);
         String weaponOption = getItemOption(weaponList);
         weapon = weaponList.get(getIndexItem(weaponList, weaponOption));
+        return true;
     }
 
     /**
      * Equips armor.
      */
-    public void equipArmor(){
+    public boolean equipArmor(){
         DataList<Armor> armorList = getItemsByType(Armor.class);
         if (armorList.isEmpty()){
             System.out.println("You have no armor to equip!");
-            return;
+            return false;
         }
         System.out.println(armorList);
         String armorOption = getItemOption(armorList);
         armor = armorList.get(getIndexItem(armorList, armorOption));
+        return true;
     }
 
     /**
@@ -357,18 +359,18 @@ public class Hero extends Legend{
         return monsters;
     }
 
-    public Monster castSpellOnOneMonster(Monster monster) {
+    public boolean castSpellOnOneMonster(Monster monster) {
         DataList<Spell> spellList = getItemsByType(Spell.class);
         if (spellList.isEmpty()){
             System.out.println("You have no spells to cast!");
-            return monster;
+            return false;
         }
         String spellOption = getItemOption(spellList);
         Spell spell = spellList.get(getIndexItem(spellList, spellOption));
         if (spell.getMpCost() > mp){
             System.out.println("You don't have enough MP to cast this spell!");
             heroInventory.add(spell);
-            return monster;
+            return false;
         }
         mp -= spell.getMpCost();
         int statusEffect = monster.applyEffect(spell);
@@ -378,7 +380,7 @@ public class Hero extends Legend{
         int damageGiven = monster.takeDamage(inDamage);
         System.out.println(name + " dealt " + damageGiven + " damage to " + monster.name + "!");
         heroInventory.use(spell);
-        return monster;
+        return true;
     }
 
     /**
