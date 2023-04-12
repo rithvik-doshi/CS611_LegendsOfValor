@@ -14,8 +14,9 @@ public class Plain extends LOV_Space {
     }
 
     @Override
-    public String toString() {
-        return (hero != null || monster != null) ? Color.color(Color.bgYellow , "P") : Color.color(Color.yellow, (getSymbol() + ""));
+    public String spaceSpecificString() {
+        return Color.color(Color.yellow, (getSymbol() + ""));
     }
+
 
 }

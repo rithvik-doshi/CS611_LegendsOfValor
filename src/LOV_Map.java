@@ -30,14 +30,6 @@ public class LOV_Map extends Map{
         }
     }
 
-    public void respawnHero(Hero hero){
-        int[] location = initialHeroLocations.get(hero);
-        if (matrix[location[0]][location[1]].tryAccess(hero)){
-            System.out.println("Respawned " + hero.name + " at " + Arrays.toString(location));
-            legendLocations.put(hero, location);
-        }
-    }
-
     @Override
     public void heroesInitialPlace(DataList<Hero> heroes) {
         assert heroes.size() <= 3;
@@ -86,15 +78,15 @@ public class LOV_Map extends Map{
 
     private String getLocations(){
         StringBuilder locations = new StringBuilder();
-        locations.append("Heroes: \n");
+        locations.append(Color.color(Color.bgBlue, "Heroes:")).append("\n");
         for (Legend legend : legendLocations.keySet().stream().filter(legend -> legend instanceof Hero).toArray(Legend[]::new)){
             String appendStr = legend.name + " (" + legend.type.substring(0, legend.type.length() - 1) + ") @ " + Arrays.toString(legendLocations.get(legend)) + "\n";
-            locations.append(appendStr);
+            locations.append(Color.color(Color.blue, appendStr));
         }
-        locations.append("\nMonsters: \n");
+        locations.append("\n").append(Color.color(Color.bgRed, "Monsters:")).append("\n");
         for (Legend legend : legendLocations.keySet().stream().filter(legend -> legend instanceof Monster).toArray(Legend[]::new)){
             String appendStr = legend.name + " (" + legend.type.substring(0, legend.type.length() - 1) + ") @ " + Arrays.toString(legendLocations.get(legend)) + "\n";
-            locations.append(appendStr);
+            locations.append(Color.color(Color.red, appendStr));
         }
         return locations.toString();
     }
@@ -165,7 +157,6 @@ public class LOV_Map extends Map{
     }
 
     private boolean placeLegend(Legend legend, int[] location, int newrow, int newcol) {
-//        check newrow and newcol are in bounds:
         if (!locationInBounds(new int[]{newrow, newcol})) return false;
         if (matrix[newrow][newcol].tryAccess(legend) && matrix[location[0]][location[1]] instanceof LOV_Accessible){
             ((LOV_Accessible) matrix[location[0]][location[1]]).removeLegend(legend);
@@ -232,7 +223,7 @@ public class LOV_Map extends Map{
 
     @Override
     public String toString() {
-        return super.toString(true) + "\n" + getLocations();
+        return getLocations() + "\n" + super.toString(true);
     }
 
 
@@ -269,25 +260,37 @@ public class LOV_Map extends Map{
             if (locationInBounds(BM) && !((LOV_Space) matrix[BM[0]][BM[1]]).hasHero()) {
                 out.add(BM);
             }
-
-            Set<int[]> set = new HashSet<>(out);
-            out.clear();
-            out.addAll(set);
-
-            for (int i = 0; i < out.size(); i++) {
-                if (out.get(i)[1] / 3 == location[1] / 3) {
-                    out.remove(i);
-                    i--;
-                }
-            }
-
+            removeDuplicates(out);
+            ensureInDifferentLane(location, out);
         }
         return out;
+    }
+
+    private static void ensureInDifferentLane(int[] location, ArrayList<int[]> out) {
+        for (int i = 0; i < out.size(); i++) {
+            if (out.get(i)[1] / 3 == location[1] / 3) {
+                out.remove(i);
+                i--;
+            }
+        }
+    }
+
+    private static void removeDuplicates(ArrayList<int[]> out) {
+        if (out.size() > 1) {
+            for (int i = 0; i < out.size(); i++) {
+                for (int j = i + 1; j < out.size(); j++) {
+                    if (Arrays.equals(out.get(i), out.get(j))) {
+                        out.remove(j);
+                        j--;
+                    }
+                }
+            }
+        }
     }
 
     public boolean recallHero(Hero hero) {
         int[] homeLocation  = hero.getStartingLocation();
         boolean validPlace = placeLegend(hero, legendLocations.get(hero), homeLocation[0], homeLocation[1]);
-        return (validPlace) ? validPlace : placeLegend(hero, legendLocations.get(hero), homeLocation[0], homeLocation[1] + 1);
+        return validPlace || placeLegend(hero, legendLocations.get(hero), homeLocation[0], homeLocation[1] + 1);
     }
 }
