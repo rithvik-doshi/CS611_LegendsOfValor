@@ -24,8 +24,8 @@ public class Cave extends HeroEffectSpace {
     }
 
     @Override
-    public String toString() {
-        return (hero != null || monster != null) ? Color.color(Color.bgMagenta , "C") : Color.color(Color.magenta, (getSymbol() + ""));
+    public String spaceSpecificString() {
+        return Color.color(Color.magenta, (getSymbol() + ""));
     }
 
 }

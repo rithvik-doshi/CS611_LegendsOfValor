@@ -76,4 +76,13 @@ public abstract class LOV_Space extends Space implements LOV_Accessible{
         }
         System.out.println(hasMonster());
     }
+
+    @Override
+    public String toString() {
+        return (hasHero() && hasMonster()) ? Color.color(Color.bgMagenta, getSymbol() + "") :
+                (hasHero()) ? Color.color(Color.bgBlue, (getSymbol() + "")) :
+                        (hasMonster()) ? Color.color(Color.bgRed, (getSymbol() + "")) : spaceSpecificString();
+    }
+
+    public abstract String spaceSpecificString();
 }

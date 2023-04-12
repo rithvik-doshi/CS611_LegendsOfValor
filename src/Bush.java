@@ -24,8 +24,8 @@ public class Bush extends HeroEffectSpace{
     }
 
     @Override
-    public String toString() {
-        return (hero != null || monster != null) ? Color.color(Color.bgGreen , "B") : Color.color(Color.green, (getSymbol() + ""));
+    public String spaceSpecificString() {
+        return Color.color(Color.green, (getSymbol() + ""));
     }
 
 
