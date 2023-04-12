@@ -68,7 +68,7 @@ public class Monster extends Legend{
      * @return the damage taken
      */
     public int takeDamage(int damage) {
-        return super.takeDamage(0.999, dodge, damage, defense);
+        return super.takeDamage(dodge, damage, defense);
     }
 
     /**
@@ -89,7 +89,7 @@ public class Monster extends Legend{
     }
 
     public Hero attackHeroInLane(Hero hero) {
-        int damageDealt = hero.takeDamage((int) (damage * 0.05));
+        int damageDealt = hero.takeDamage((int) (damage * 0.005));
         System.out.println(name + " dealt " + damageDealt + " damage to " + hero.name + "!");
         if (hero.getStatus() == LegendStatus.DEAD) {
             System.out.println(hero.name + " has been defeated!");
