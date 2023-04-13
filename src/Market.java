@@ -120,7 +120,6 @@ public class Market extends Space implements LMH_Accessible {
      * @param hero Hero to be allowed to buy and sell items.
      * @return Hero that has bought and sold items.
      */
-
     public Hero oneGoToMarket(Hero hero) {
         do {
             String[] itemTypes = {"Potions", "Weaponry", "Armory", "FireSpells", "IceSpells", "LightningSpells"};

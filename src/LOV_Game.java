@@ -1,17 +1,38 @@
 import java.util.Arrays;
 
+/**
+ * Legends of Valor game class that holds everything pertaining to the game.
+ */
 public class LOV_Game extends Game implements UsesHeroes{
 
+    /**
+     * LOV_Map of the game.
+     */
     private final LOV_Map LOVMap;
 
+    /**
+     * Maximum number of heroes allowed in the game.
+     */
     static final int maxHeroes = 3;
 
+    /**
+     * List of heroes in the game.
+     */
     private final DataList<Hero> heroes = new DataList<>(maxHeroes);
 
+    /**
+     * List of monsters in the game.
+     */
     private final DataList<Monster> monsters = new DataList<>();
 
+    /**
+     * When a multiple of 8, monsters will spawn.
+     */
     private int monsterSpawnRate = 0;
 
+    /**
+     * Constructor for the LOV_Game class.
+     */
     public LOV_Game() {
         System.out.println(Color.magenta + ArtMessages.getWelcomeToLOV() + Color.reset);
         System.out.println("Welcome to Legends of Valor! Do you want to see the instructions? (Y/N)");
@@ -35,6 +56,9 @@ public class LOV_Game extends Game implements UsesHeroes{
         LOVMap.monstersInitialPlace(monsters);
     }
 
+    /**
+     * Initializes the monsters in the game.
+     */
     private void initMonsters() {
         int maxLevel = getMaxLevel(heroes);
         for (int i = 0; i < maxHeroes; i++) {
@@ -42,6 +66,11 @@ public class LOV_Game extends Game implements UsesHeroes{
         }
     }
 
+    /**
+     * Gets the maximum level among all the heroes.
+     * @param legends List of legends.
+     * @return Maximum level among all the heroes.
+     */
     private int getMaxLevel(DataList<? extends Legend> legends){
         int maxLevel = 0;
         for (Legend legend : legends){
@@ -52,6 +81,11 @@ public class LOV_Game extends Game implements UsesHeroes{
         return maxLevel;
     }
 
+    /**
+     * Main game loop of the game.
+     * Each hero takes a turn. If a monster dies during a turn they are taken out of the game.
+     * Then the monsters take a turn. If a hero dies during a turn they are recalled to their nexus on the start of the next turn.
+     */
     @Override
     public void start() {
         while (true) {
@@ -60,7 +94,6 @@ public class LOV_Game extends Game implements UsesHeroes{
                 if (checkGameOver()){
                     return;
                 }
-
                 int[] location = LOVMap.legendLocations.get(hero);
                 char control;
                 boolean validMove = false;
@@ -154,13 +187,9 @@ public class LOV_Game extends Game implements UsesHeroes{
             System.out.println("\n" + Color.red + "Monsters' turns!" + Color.reset);
 
             for (Monster monster: monsters) {
-
                 if (checkGameOver()){
                     return;
                 }
-/**
- *              If monster is in range to attack a hero, attack. Else move forward
- */
 
                 if (heroInRange(monster)){
                     System.out.println("\n" + monster.name + " is attacking!");
@@ -199,6 +228,12 @@ public class LOV_Game extends Game implements UsesHeroes{
         }
     }
 
+    /**
+     * Checks whether a monster is dead. If it is, remove it from the map and remove it from the list of monsters.
+     * @param hero the hero that killed the monster
+     * @param monsterLaneLocation the location of the monster
+     * @param monsterInLane the monster that is in the lane
+     */
     private void checkMonsterDeath(Hero hero, int[] monsterLaneLocation, Monster monsterInLane) {
         if (monsterInLane.getStatus() == LegendStatus.DEAD) {
             System.out.println(Color.red + monsterInLane.name + " has been slain!" + Color.reset);
@@ -219,10 +254,18 @@ public class LOV_Game extends Game implements UsesHeroes{
         }
     }
 
+    /**
+     * Prints out the hero's name, location.
+     * @param hero the hero
+     * @param idx the index of the hero
+     */
     private void printHeroOut(Hero hero, int idx) {
         System.out.println(Color.blue + "(P" + idx + ") Player " + hero.name + " @ " + Arrays.toString(LOVMap.legendLocations.get(hero)) + " --> your turn: " + Color.reset);
     }
 
+    /**
+     * Makes the heroes for the game
+     */
     @Override
     void makeHeroes() {
         String[] heroClasses = {"Paladins", "Sorcerers", "Warriors"};
@@ -249,6 +292,10 @@ public class LOV_Game extends Game implements UsesHeroes{
         }
     }
 
+    /**
+     * Checks if the game is over. If it is, print out the winner.
+     * @return true if the game is over, false otherwise
+     */
     @Override
     public boolean checkGameOver() {
         for (Legend legend: LOVMap.legendLocations.keySet()){
@@ -269,16 +316,28 @@ public class LOV_Game extends Game implements UsesHeroes{
         return false;
     }
 
+    /**
+     * Prints out the instructions for the game
+     */
     @Override
     public void printInstructions() {
         GameEngine.printFile("src/data/LOV_instructions.md");
     }
 
+    /**
+     * Adds a hero to the list of heroes
+     * @param hero the hero to be added
+     */
     @Override
     public void addHero(Hero hero) {
         heroes.add(hero);
     }
 
+    /**
+     * Checks if there is a monster in range of the hero
+     * @param hero the hero
+     * @return true if there is a monster in range, false otherwise
+     */
     public boolean monsterInRange(Hero hero){
         int[] heroLocation = LOVMap.legendLocations.get(hero);
 
@@ -298,25 +357,32 @@ public class LOV_Game extends Game implements UsesHeroes{
         return false;
     }
 
+    /**
+     * Checks if there is a hero in range of the monster
+     * @param monster the monster
+     * @return true if there is a hero in range, false otherwise
+     */
     public boolean heroInRange(Monster monster) {
         int[] monsterLocation = LOVMap.legendLocations.get(monster);
-
         // check 360 degrees around the hero location to find the monster, return true if found
         int[][] directions = { {0,0}, {-1,0}, {0,-1}, {0,1}, {1,0}, {1,1}, {1,-1}, {-1,1}, {-1,-1} };
         for (int[] direction: directions){
             int[] newLocation = {monsterLocation[0], monsterLocation[1]};
-
             newLocation[0] += direction[0];
             newLocation[1] += direction[1];
             if (LOVMap.containsHero(newLocation)){
                 return true;
             }
         }
-
         System.out.println("No hero found in range!");
         return false;
     }
 
+    /**
+     * Gets the location of the monster in the same lane as the hero
+     * @param hero the hero
+     * @return the location of the monster in the same lane as the hero
+     */
     public int[] getMonsterLaneLocation(Hero hero){
         int[] heroLocation = LOVMap.legendLocations.get(hero);
 
@@ -334,6 +400,11 @@ public class LOV_Game extends Game implements UsesHeroes{
         return null;
     }
 
+    /**
+     * Gets the location of the hero in the same lane as the monster
+     * @param monster the monster
+     * @return the location of the hero in the same lane as the monster
+     */
     public int[] getHeroLaneLocation(Monster monster){
         int[] monsterLocation = LOVMap.legendLocations.get(monster);
 

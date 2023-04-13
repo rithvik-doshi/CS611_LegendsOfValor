@@ -54,7 +54,7 @@ public abstract class Item {
             case "Potions":
                 return new Potion(itemName, itemData);
             default:
-                return new Spell(itemName, itemData, itemType);
+                return Spell.spellCreator(itemType, itemName, itemData);
         }
     }
 

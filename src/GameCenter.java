@@ -1,12 +1,9 @@
-
-import java.io.FileNotFoundException;
-
 /**
  * GameCenter class to instantiate and run Legends-related games
  */
 public class GameCenter {
 
-    public static void GamePrompter() throws FileNotFoundException {
+    public static void GamePrompter() {
         do {
             System.out.println(Color.yellow + ArtMessages.getWelcomeToGameCenter() + Color.reset);
             System.out.println("Which game would you like to play? \n");

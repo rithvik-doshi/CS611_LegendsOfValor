@@ -171,7 +171,10 @@ public class GameEngine {
         return legends.stream().filter(legend -> (legend.getStatus() == LegendStatus.ALIVE)).map(legend -> legend.name).toArray(String[]::new);
     }
 
-
+    /**
+     * Prints contents of file
+     * @param filename the name of the file to print
+     */
     public static void printFile(String filename) {
         System.out.println(DataLoader.dl.getInstructions(filename));
         System.out.println("________________________________________________________________________________\n");
@@ -192,6 +195,11 @@ public class GameEngine {
         return null;
     }
 
+    /**
+     * Prints info about a legend
+     * @param heroes List of heroes to choose from
+     * @param monsters List of monsters to choose from
+     */
     public static void printInfo(DataList<Hero> heroes, DataList<Monster> monsters) {
         if (GameEngine.getOption(new String[]{"Heroes", "Monsters"}).equals("Heroes")){
             String heroOption = GameEngine.chooseLegend(heroes);

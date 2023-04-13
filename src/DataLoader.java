@@ -9,15 +9,13 @@ import java.util.Scanner;
 public class DataLoader {
 
     /**
-     * The static object that is loaded with data from the data directory.
+     * The static object that is loaded with data from the data directory. Below is static block that loads the data
+     * from the data directory into the static object.
      */
     public static DataLoader dl;
 
     public DataMap<String, String> instructionMap = new DataMap<>();
 
-    /**
-     * The static block that loads the data from the data directory into the static object.
-     */
     static {
         try {
             dl = new DataLoader();
@@ -26,6 +24,10 @@ public class DataLoader {
         }
     }
 
+    /**
+     * Gets the data map that contains all the data from the data directory.
+     * @return the data map that contains all the data from the data directory.
+     */
     public String getInstructions(String filename){
         if (!instructionMap.containsKey(filename)) {
             StringBuilder sb = new StringBuilder();

@@ -20,28 +20,36 @@ public class Spell extends Item implements Consumable{
     /**
      * Type of spell
      */
-    private String type;
+    String type;
 
     /**
      * Constructor for Spell
      * @param name Name of spell
      * @param itemData Data for spell
-     * @param type Type of spell
      */
-    public Spell(String name, DataMap<String, String> itemData, String type){
+    public Spell(String name, DataMap<String, String> itemData){
         super(name, itemData);
         this.damageAmount = Integer.parseInt(itemData.get("damage"));
         this.manaCost = Integer.parseInt(itemData.get("mana cost"));
-        switch (type){
+    }
+
+    /**
+     * Factory Method to create a spell based on type
+     * @param spellType Type of spell
+     * @param spellName Name of spell
+     * @param spellData Data for spell
+     * @return Spell created
+     */
+    public static Spell spellCreator(String spellType, String spellName, DataMap<String, String> spellData){
+        switch (spellType) {
             case "FireSpells":
-                this.type = "Fire";
-                break;
+                return new FireSpell(spellName, spellData);
             case "IceSpells":
-                this.type = "Ice";
-                break;
+                return new IceSpell(spellName, spellData);
             case "LightningSpells":
-                this.type = "Lightning";
-                break;
+                return new LightningSpell(spellName, spellData);
+            default:
+                return null;
         }
     }
 

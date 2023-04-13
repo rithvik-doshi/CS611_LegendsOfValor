@@ -22,9 +22,8 @@ public class LMH_Game extends Game implements UsesHeroes{
 
     /**
      * Constructor for the LMH_Game class.
-     * @throws FileNotFoundException If the file is not found.
      */
-    public LMH_Game() throws FileNotFoundException {
+    public LMH_Game() {
 
         System.out.println(Color.cyan + ArtMessages.getWelcomeToMH() + Color.reset);
         System.out.println("Welcome to Legends: Heroes and Monsters! Do you want to see the instructions? (Y/N)");
@@ -57,9 +56,8 @@ public class LMH_Game extends Game implements UsesHeroes{
 
     /**
      * Allows users to create heroes.
-     * @throws FileNotFoundException If the file is not found.
      */
-    void makeHeroes() throws FileNotFoundException {
+    void makeHeroes() {
         System.out.println("Choose the number of heroes to embark on a quest");
         int num = GameEngine.getInt(1, maxHeroes);
         String[] heroClasses = {"Paladins", "Sorcerers", "Warriors"};
@@ -78,7 +76,7 @@ public class LMH_Game extends Game implements UsesHeroes{
     /**
      * Handles the game loop.
      */
-    public void start() throws FileNotFoundException {
+    public void start() {
         while (true) {
 
             if (checkGameOver()) {
