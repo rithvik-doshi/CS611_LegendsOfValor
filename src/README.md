@@ -1,4 +1,4 @@
-# CS611 - Assignment 4
+# CS611 – Assignment 4
 
 ## Legends of Valor (for Legends, Monsters, and Heroes, see Rithvik's A3 README)
 
@@ -7,7 +7,7 @@
 - U98773385 and U99944177
 
 Files
-- data - contains object attributes
+- Data - contains object attributes
   - Armory.ldf
   - Dragons.ldf
   - Exoskeletons.ldf
@@ -20,7 +20,7 @@ Files
   - Spirits.ldf
   - Warriors.ldf
   - Weaponry.ldf
-- UML.png - UML diagram of project
+- LegendsUML.png - UML diagram of project
 - LMH_Accessible.java - interface for accessible objects
 - Color.java
 - Consumable.java - interface for consumable objects
@@ -62,36 +62,58 @@ Files
 
 ## Game Instructions and Information
 
-### 1. The world of Legends: Monsters, and Heroes
-The world of the game is represented by a fixed, square grid of spaces. The grid contains three types of spaces:
-- Inaccessible spaces, which the heroes cannot enter (marked by an X)
-- Market spaces, where items can be bought or sold (marked by an M)
-- Common spaces, where battles have a chance of occurring (marked by an empty yellow space)
+## 1. The world of Legends of Valor
 
-Every time the heroes visit a common tile, there is a chance that they will engage in a battle with the monsters.
+Legends of Valor is a MOBA-like game. The player will control a team of 3 heroes who will attempt to fight their way through to the monsters; Nexus. Heroes win if any of them reach the monsters' Nexus. Heroes lose if vice versa.
+
+#### Controls
 
 Use W/A/S/D to move the heroes around the map. The heroes can only move one space at a time. The heroes can only move to a space that is adjacent to their current position.
 
-Use I to check information about your entire hero party.
+- Q: Quit
+- T: Teleport
+- R: Recall
+- Z: Attack
+- E: Change equipment
+- P: Use potion
+- X: Cast spell
+- M: Enter Market
+- I: Info
 
-The game will progress until all players are dead. If you wish to quit, press Q in the main menu. You cannot flee a battle or quit the game from the market, so be wary of these situations!
+## 2. Spaces
 
-### 2. Battle
-The battle pits the party of heroes against a group of monsters. A battle consists of multiple rounds, where the heroes and monsters each make moves. The fight ends when the HP of either all the monsters or all the heroes is zero. If the heroes win the fight, they earn money and experience, potentially leveling up. If the monsters win the fight, the game is over.
+LOV is played in an 8x8 grid of spaces. The grid is split into 3 lanes, each separated by a column of inaccessible and impassible spaces. There are 6 different types of spaces:
 
-The heroes move first in each round. During the heroes’ turn, the player chooses for each hero whether they will do one of the following:
-- Attack, using the hero’s equipped weapon
-- Cast a spell from the hero’s inventory
-- Use a potion from the hero’s inventory
-- Equip a weapon or piece of armor
+- Nexus (marked by an 'N'): Both heroes and monsters have a Nexus. Heroes win if any of them reach the monsters' Nexus. Heroes lose if vice versa.
+- Inaccessible (marked by an 'X'): Heroes and monsters cannot enter these spaces
+- Plain (marked by a 'P'): These spaces have no special properties
+- Bush (marked by a 'B'): Bushes increase hero's dexterity by 10%
+- Cave (marked by a 'C'): Caves increase hero's agility by 10%
+- Koulou (marked by a 'K'): Koulous increase hero's strength by 10%
 
-In addition, at any time during the heroes’ turn, the player can display the statistics of a hero or a monster. This will not consume the turn
-The heroes win the battle if they defeat all the monsters. If the heroes win, they gain experience and money, and all fainted heroes are revived.
 
-When it is your turn in the battle, select an option from the menu. You will not be able to attack if you do not have a weapon equipped. You will not be able to cast a spell if you do not have any spells in your inventory. You will not be able to use a potion if you do not have any potions in your inventory. You will not be able to equip a weapon or armor if you do not have any in your inventory.
 
-### 3. Heroes and Monsters
-At the beginning of the game, up to three players can select a hero from the provided list. That will be your character for the rest of the game.
+## 3. Gameplay
+
+- The goal of each team is to have one of their members reach the Nexus of the other team
+- Before the game begins, the player chooses the three heroes that will be used and which of the
+  three lanes that hero will start in
+- Heroes and Monsters spawn in their respective Nexus, and move towards the other team's Nexus
+- One hero and monster per lane
+- The game is played in rounds. A round consists of the heroes’ turn followed by the monsters’
+  turn.
+
+#### Valid Hero Actions
+
+- Change Weapon or Armor
+- Use a Potion
+- Attack
+- Cast a Spell
+- Move
+- Teleport
+- Recall
+
+## 4. About Heroes and Monsters
 
 Each hero has a name, a level with experience points, hit points, mana points, a strength, dexterity and agility value, starting money and an inventory that can hold up to 10 items.
 
@@ -100,20 +122,20 @@ In addition to this, you can choose heroes of different classes. The classes are
 - Sorcerers, who are given higher dexterity and agility.
 - Paladins, who are given higher strength and dexterity.
 
-During your travels, you may come across a group of monsters. A monster has a name, a level, hit points, a damage, defense and dodge value.
+A monster has a name, a level, hit points, a damage, defense and dodge value.
 
 You can read up on the kinds of monsters in the provided text files. There are three kinds of monsters:
 - Dragons, who are given higher damage
 - Exoskeletons, who are given higher defense
 - Spirits, who are given higher dodge
 
-### 4. The Market
+## 5. The Market
 
-Heroes can buy or sell items at any market on the map. To access the market, your hero party has to be located on a market space. To access the market, press 'M' on the home screen at the beginning of the turn.
+The market exists and can only be accessed in the Heroes' Nexus. To access the market, the hero must be in a Nexus space. Consequently, press 'M' on the home screen at the beginning of the turn.
 
 Follow the market instructions to buy or sell an item. You can only buy or sell one item per turn. You can only buy items that you have enough money for. You can only sell items that you have in your inventory. If you sell an item, you will get back half of its purchase price as money.
 
-### 5. Items
+## 6. Items
 
 There are four kinds of items in the game:
 
@@ -121,18 +143,16 @@ There are four kinds of items in the game:
 2. Armor: used to defend against an attack from a monster.
 3. Potions: used to restore a certain hero statistic.
 4. Spells: consume mana points and are used to attack a monster and reduce a certain monster statistic.
-   1. Ice spells reduce the defense of the target
-   2. Fire spells reduce the defense of the target
-   3. Lightning spells reduce the dodge chance of the target
+    1. Ice spells reduce the defense of the target
+    2. Fire spells reduce the defense of the target
+    3. Lightning spells reduce the dodge chance of the target
 
 Keep in mind that in order to use a weapon or armor, you must equip it at the beginning of a battle.
 Potions and spells are consumable items. Potions can only be drunk once, and spells can only be cast three times. Make sure that you have enough MP to cast a spell, as it costs a certain amount to be able to cast each time!
 
 These items can be bought at a market. For some items, you may have to be at a certain level to be able to use them, so be careful!
 
-### 6. Stat Calculations
-
-The following are the formulas used to calculate the statistics of a hero or monster:
+## 7. Stat Calculations
 
 Spell damage = `spell_base_damage + (hero dexterity/10000) * spell_base_damage`
 
@@ -140,23 +160,23 @@ Starting HP for Legend: `100 * starting level`
 
 At every new level, Hero's HP is set to `100 * level` and MP is doubled
 
-Hero's attack damage (with a weapon, hero cannot attack without a weapon) = `(strength + weapon damage) * 0.1`
+Hero's attack damage (with a weapon, hero cannot attack without a weapon) = `(strength + weapon damage) * 0.4`
 
-Legend dodge chance = `(1 - Math.pow(dodgeFactor, legend dodgeAmt))` (dodgeFactor is 0.99 for heroes, 0.999 for monsters)
+Monster's attack damage = `monster damage * 0.005`
+
+Legend dodge chance = `0.001 * legend dodgeAmt`
 
 Exp needed to level up: `10 * current level`
 
 Players and monsters never regain health/mp during a battle.
 
-Hero gold gain = `100 * max level of monsters defeated`
+Hero gold gain = `current gold += 100 * hero level`
 
-Hero exp gain = `size of monster party + level of monsters defeated * 10`
+Hero exp gain = `current EXP += 2 * hero level`
 
 Hero hp/mp gain = `baseHP or baseMP stat * 1.1`
 
-Monster level/abilities scale to the highest level among the hero party.
-
-The party size is between 1-3 players.
+## 8. GLHF!
 
 ## Notes
 
@@ -169,12 +189,12 @@ The party size is between 1-3 players.
       2. Created a static method that takes in a string and a color, and returns a string with the color code at the beginning and the reset code at the end.
    3. Use of interfaces to specify specialized behavior for certain classes.
       1. Consumable interface for potions and spells
-      2. LMH_Accessible interface for market and common spaces
+      2. LMH_Accessible + LOV_Accessible interface for market and common spaces
 3. 
 
 ## How to compile and run
 
-1. Make sure that the text configfiles are located in ``src/data/`` and all other files in ``src``.
+1. Make sure that the text config files are located in ``src/data/`` and all other files in ``src``.
 2. Load src into a new Intellij project.
    1. If you choose to compile and run from the command line, make sure that you are in the ``src`` directory.
    2. Note that it will be necessary to change all the file paths referenced in the codebase to be direct paths to the files on your machine, as opposed to relative paths.
