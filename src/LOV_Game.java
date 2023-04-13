@@ -61,19 +61,6 @@ public class LOV_Game extends Game implements UsesHeroes{
                     return;
                 }
 
-/**             If hero is dead respawn at nexus
-                Determine hero's next move from choice of:
-                - Move (if move is not possible, choose another option) (WASD)
-                - Teleport (if teleport is not possible, choose another option) (T)
-                - Recall (teleport to spawn nexus) (R)
-                - Attack (only one monster should be affected even if multiple monsters are in range) (Z)
-                - Change Weapon or Armor (E)
-                - Use Potion (P)
-                - Cast Spell (X)
-                - If on nexus, M for market
-                - Print any information (does not consume turn) (I)
- */
-
                 int[] location = LOVMap.legendLocations.get(hero);
                 char control;
                 boolean validMove = false;
