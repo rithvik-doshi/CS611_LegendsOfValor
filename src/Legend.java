@@ -145,10 +145,18 @@ public abstract class Legend {
      */
     public abstract int takeDamage(int damage);
 
+    /**
+     * Sets the starting location of the Legend.
+     * @param startingLocation Starting location of the Legend.
+     */
     public void setStartingLocation(int[] startingLocation) {
         this.startingLocation = startingLocation;
     }
 
+    /**
+     * Gets the starting location of the Legend.
+     * @return Starting location of the Legend.
+     */
     public int[] getStartingLocation() {
         return this.startingLocation;
     }

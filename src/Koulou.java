@@ -21,16 +21,30 @@ public class Koulou extends HeroEffectSpace {
         System.out.println(hero.name + "'s strength increased to " + hero.getAgility());
     }
 
+    /**
+     * Koulous decrease hero strength to normal
+     */
     @Override
     public void decreaseAttribute() {
         hero.setStrength(currHeroBaseStat);
         System.out.println(hero.name + "'s strength decreased to normal");
     }
 
+    /**
+     * Returns the name of the space
+     * @return the name of the space
+     */
     @Override
     public String spaceSpecificString() {
         return Color.color(Color.blue, (getSymbol() + ""));
     }
 
 
+    /**
+     * Method to try to access a space
+     */
+    @Override
+    public void markVisited() {
+        visited = true;
+    }
 }

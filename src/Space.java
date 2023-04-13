@@ -46,5 +46,9 @@ public abstract class Space {
      */
     public abstract boolean tryAccess(DataList<Hero> heroes);
 
+    /**
+     * Method to hold single legend in a space
+     * @param legend List of heroes to be held.
+     */
     public abstract boolean tryAccess(Legend legend);
 }

@@ -113,6 +113,9 @@ public class Common extends Space implements LMH_Accessible {
             }
             for (Monster monster : monsters){
                 if (monster.getStatus() == LegendStatus.ALIVE){
+                    if (!someAlive(heroes)){
+                        break;
+                    }
                     System.out.println("Monster " + monster.name + "'s turn: ");
                     heroes = monster.attackHero(heroes);
                 }
@@ -146,15 +149,6 @@ public class Common extends Space implements LMH_Accessible {
         }
         return heroes;
     }
-
-    /**
-     * Get info about a hero or monster
-     * @param heroes List of heroes
-     * @param monsters List of monsters
-     */
-
-
-
 
     /**
      * Check if any legends are alive

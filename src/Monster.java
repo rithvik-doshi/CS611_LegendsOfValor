@@ -88,6 +88,11 @@ public class Monster extends Legend{
         return heroes;
     }
 
+    /**
+     * Attack a hero in lane
+     * @param hero Hero to be attacked
+     * @return Hero attacked
+     */
     public Hero attackHeroInLane(Hero hero) {
         int damageDealt = hero.takeDamage((int) (damage * 0.005));
         System.out.println(name + " dealt " + damageDealt + " damage to " + hero.name + "!");

@@ -1,5 +1,8 @@
 import java.io.FileNotFoundException;
 
+/**
+ * Abstract class for any maps used in the games.
+ */
 public abstract class Map {
 
     /**
@@ -12,11 +15,20 @@ public abstract class Map {
      */
     public final Space[][] matrix;
 
+    /**
+     * Constructor for the Map class.
+     * @param n Dimension of square map
+     */
     protected Map(int n) {
         R = C = n;
         matrix = new Space[this.R][this.C];
     }
 
+    /**
+     * Places the heroes on the map initially
+     * @param heroes the list of heroes
+     * @throws FileNotFoundException if the file is not found
+     */
     public abstract void heroesInitialPlace(DataList<Hero> heroes) throws FileNotFoundException;
 
     /**
@@ -42,6 +54,11 @@ public abstract class Map {
         return outstring.toString();
     }
 
+    /**
+     * String representation of a map with cell numbers
+     * @param cellNums whether to include cell numbers
+     * @return a string
+     */
     public String toString(boolean cellNums) {
         StringBuilder outstring = new StringBuilder();
         int rowNum = 0, colNum = 0;

@@ -1,7 +1,17 @@
 import java.util.*;
 
+/**
+ * This class contains the map upon which LOV is played
+ */
 public class LOV_Map extends Map{
+    /**
+     * Stores the locations of the legends on the map
+     */
     public HashMap<Legend, int[]> legendLocations = new HashMap<>();
+
+    /**
+     * Constructor
+     */
     protected LOV_Map() {
         super(8);
         for (int i = 0; i < matrix.length; i++) {
@@ -29,6 +39,10 @@ public class LOV_Map extends Map{
         }
     }
 
+    /**
+     * Places the heroes on the map on initialization
+     * @param heroes the list of heroes to place
+     */
     @Override
     public void heroesInitialPlace(DataList<Hero> heroes) {
         assert heroes.size() <= 3;
@@ -43,6 +57,10 @@ public class LOV_Map extends Map{
         }
     }
 
+    /**
+     * Places the monsters on the map on initialization
+     * @param monsters the list of monsters to place
+     */
     public void monstersInitialPlace(DataList<Monster> monsters) {
         assert monsters.size() <= 3;
         for (Monster monster : monsters){
@@ -52,6 +70,12 @@ public class LOV_Map extends Map{
         }
     }
 
+    /**
+     * Adds a monster to the map
+     * @param monster the monster to add
+     * @param nexusIndex the index of the nexus to add the monster to
+     * @return true if the monster was successfully added
+     */
     public boolean addMonsterToNexus(Monster monster, int nexusIndex){
         int[] location = new int[2];
         location[0] = 0;
@@ -59,6 +83,12 @@ public class LOV_Map extends Map{
         return placeMonster(monster, location);
     }
 
+    /**
+     * Places a monster on the map
+     * @param monster the monster to place
+     * @param location the location to place the monster at
+     * @return true if the monster was successfully placed
+     */
     private boolean placeMonster(Monster monster, int[] location) {
         if (matrix[location[0]][location[1]].tryAccess(monster)){
             legendLocations.put(monster, location);
@@ -69,6 +99,10 @@ public class LOV_Map extends Map{
         }
     }
 
+    /**
+     * Gets list of heroes and monsters' locations
+     * @return the list of heroes and monsters' locations as a string
+     */
     private String getLocations(){
         StringBuilder locations = new StringBuilder();
         locations.append(Color.color(Color.bgBlue, "Heroes:")).append("\n");
@@ -84,6 +118,11 @@ public class LOV_Map extends Map{
         return locations.toString();
     }
 
+    /**
+     * Gets the monster at a location
+     * @param location the location to get the monster at
+     * @return the monster at the location
+     */
     public Monster getMonsterAt(int[] location){
         for (Legend legend : legendLocations.keySet()){
             if (Arrays.equals(legendLocations.get(legend), location) && legend instanceof Monster){
@@ -93,6 +132,11 @@ public class LOV_Map extends Map{
         return null;
     }
 
+    /**
+     * Gets the hero at a location
+     * @param location the location to get the hero at
+     * @return the hero at the location
+     */
     public Hero getHeroAt(int[] location){
         for (Legend legend : legendLocations.keySet()){
             if (Arrays.equals(legendLocations.get(legend), location) && legend instanceof Hero){
@@ -102,6 +146,11 @@ public class LOV_Map extends Map{
         return null;
     }
 
+    /**
+     * Checks if a location contains a monster
+     * @param location the location to check
+     * @return true if the location contains a monster
+     */
     public boolean containsMonster(int[] location){
         for (Legend legend : legendLocations.keySet()){
             if (Arrays.equals(legendLocations.get(legend), location) && legend instanceof Monster){
@@ -111,6 +160,11 @@ public class LOV_Map extends Map{
         return false;
     }
 
+    /**
+     * Checks if a location contains a hero
+     * @param location the location to check
+     * @return true if the location contains a hero
+     */
     public boolean containsHero(int[] location){
         for (Legend legend : legendLocations.keySet()){
             if (Arrays.equals(legendLocations.get(legend), location) && legend instanceof Hero){
@@ -120,6 +174,12 @@ public class LOV_Map extends Map{
         return false;
     }
 
+    /**
+     * Method to move a legend
+     * @param legend the legend to move
+     * @param control the control to move the legend
+     * @return true if the legend was successfully moved
+     */
     public boolean moveLegend(Legend legend, char control) {
         int[] location = legendLocations.get(legend);
         int newrow = location[0], newcol = location[1];
@@ -149,6 +209,14 @@ public class LOV_Map extends Map{
         return placeLegend(legend, location, newrow, newcol);
     }
 
+    /**
+     * Place a legend in a new location
+     * @param legend the legend to place
+     * @param location the location to place the legend at
+     * @param newrow the new row to place the legend at
+     * @param newcol the new column to place the legend at
+     * @return true if the legend was successfully placed
+     */
     private boolean placeLegend(Legend legend, int[] location, int newrow, int newcol) {
         if (!locationInBounds(new int[]{newrow, newcol})) return false;
         if (matrix[newrow][newcol].tryAccess(legend) && matrix[location[0]][location[1]] instanceof LOV_Accessible){
@@ -162,6 +230,12 @@ public class LOV_Map extends Map{
         }
     }
 
+    /**
+     * Checks if a location is in the list of possible moves
+     * @param possibleMoves the list of possible moves
+     * @param ints the location to check
+     * @return true if the location is in the list of possible moves
+     */
     private boolean containsLocation(ArrayList<int[]> possibleMoves, int[] ints) {
         for (int[] possibleMove : possibleMoves) {
             if (Arrays.equals(possibleMove, ints)) return true;
@@ -169,6 +243,12 @@ public class LOV_Map extends Map{
         return false;
     }
 
+    /**
+     * Gets the possible moves for a legend
+     * @param legend the legend to get the possible moves for
+     * @param location the location of the legend
+     * @return the list of possible moves
+     */
     private ArrayList<int[]> getPossibleMoves(Legend legend, int[] location) {
 
         ArrayList<int[]> out = new ArrayList<>();
@@ -210,16 +290,29 @@ public class LOV_Map extends Map{
         return out;
     }
 
+    /**
+     * Checks if a location is in the bounds of the map
+     * @param location the location to check
+     * @return true if the location is in the bounds of the map
+     */
     public boolean locationInBounds(int[] location){
         return location[0] >= 0 && location[0] < R && location[1] >= 0 && location[1] < C;
     }
 
+    /**
+     * String representation of the map
+     * @return the string representation of the map with hero locations for easy understanding
+     */
     @Override
     public String toString() {
         return getLocations() + "\n" + super.toString(true);
     }
 
-
+    /**
+     * Teleports a hero to a new location
+     * @param legend the hero to teleport
+     * @return true if the hero was successfully teleported
+     */
     public boolean teleportHero(Hero legend) {
         int[] location = legendLocations.get(legend);
         ArrayList<int[]> possibleTeleports = getPossibleTeleports(legend, location);
@@ -230,6 +323,12 @@ public class LOV_Map extends Map{
         return placeLegend(legend, location, newrow, newcol);
     }
 
+    /**
+     * Gets the possible teleport locations for a hero
+     * @param legend the hero to get the possible teleport locations for
+     * @param location the location of the hero
+     * @return the list of possible teleport locations
+     */
     private ArrayList<int[]> getPossibleTeleports(Hero legend, int[] location) {
         ArrayList<int[]> out = new ArrayList<>();
         ArrayList<int[]> heroLocations = new ArrayList<>();
@@ -259,6 +358,11 @@ public class LOV_Map extends Map{
         return out;
     }
 
+    /**
+     * Make sure that the teleport locations are in a different lane than the hero
+     * @param location the location of the hero
+     * @param out the list of possible teleport locations after removing invalid options
+     */
     private static void ensureInDifferentLane(int[] location, ArrayList<int[]> out) {
         for (int i = 0; i < out.size(); i++) {
             if (out.get(i)[1] / 3 == location[1] / 3) {
@@ -268,6 +372,10 @@ public class LOV_Map extends Map{
         }
     }
 
+    /**
+     * Removes duplicate locations from the list of possible teleport locations
+     * @param out the list of possible teleport locations
+     */
     private static void removeDuplicates(ArrayList<int[]> out) {
         if (out.size() > 1) {
             for (int i = 0; i < out.size(); i++) {
@@ -281,6 +389,11 @@ public class LOV_Map extends Map{
         }
     }
 
+    /**
+     * Recalls a hero to their nexus
+     * @param hero the hero to recall
+     * @return true if the hero was successfully recalled
+     */
     public boolean recallHero(Hero hero) {
         int[] homeLocation  = hero.getStartingLocation();
         boolean validPlace = placeLegend(hero, legendLocations.get(hero), homeLocation[0], homeLocation[1]);

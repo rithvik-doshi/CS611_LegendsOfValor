@@ -1,3 +1,8 @@
+/**
+ * This class contains all the ASCII art messages used in the game.
+ * The messages are stored as static final strings.
+ */
+
 public class ArtMessages {
 
     private static final String WELCOME_TO_GAMECENTER = "\n" + "88888888888888888888888888888888888888888888888888888888888888888888888\n" +

@@ -123,10 +123,18 @@ public class Hero extends Legend{
         return getLevel()*10;
     }
 
+    /**
+     * Gets the hero's exp
+     * @return The hero's exp.
+     */
     public int getExp() {
         return exp;
     }
 
+    /**
+     * Sets the hero's exp.
+     * @param exp The hero's exp.
+     */
     public void setExp(int exp) {
         this.exp = exp;
     }
@@ -335,7 +343,7 @@ public class Hero extends Legend{
      * @return The list of monsters after spell is cast.
      */
     public DataList<Monster> castSpellOnMonster(DataList<Monster> monsters) {
-        DataList<Spell> spellList = getItemsByType(Spell.class);
+        DataList<Spell> spellList = getAllSpells();
         if (spellList.isEmpty()){
             System.out.println("You have no spells to cast!");
             return monsters;
@@ -359,8 +367,13 @@ public class Hero extends Legend{
         return monsters;
     }
 
+    /**
+     * Casts a spell on a monster.
+     * @param monster The monster to cast the spell on.
+     * @return The monster after spell is cast.
+     */
     public boolean castSpellOnOneMonster(Monster monster) {
-        DataList<Spell> spellList = getItemsByType(Spell.class);
+        DataList<Spell> spellList = getAllSpells();
         if (spellList.isEmpty()){
             System.out.println("You have no spells to cast!");
             return false;
@@ -381,6 +394,21 @@ public class Hero extends Legend{
         System.out.println(name + " dealt " + damageGiven + " damage to " + monster.name + "!");
         heroInventory.use(spell);
         return true;
+    }
+
+    /**
+     * Gets all the spells in the hero's inventory.
+     * @return A list of all the spells in the hero's inventory.
+     */
+    private DataList<Spell> getAllSpells() {
+        DataList<FireSpell> fireSpellList = getItemsByType(FireSpell.class);
+        DataList<IceSpell> iceSpellList = getItemsByType(IceSpell.class);
+        DataList<LightningSpell> lightningSpellList = getItemsByType(LightningSpell.class);
+        DataList<Spell> spellList = new DataList<>();
+        spellList.addAll(fireSpellList);
+        spellList.addAll(iceSpellList);
+        spellList.addAll(lightningSpellList);
+        return spellList;
     }
 
     /**
@@ -498,26 +526,50 @@ public class Hero extends Legend{
         return baseMp;
     }
 
+    /**
+     * Gets the hero's base health.
+     * @return The hero's base health.
+     */
     public int getDexterity() {
         return dexterity;
     }
 
+    /**
+     * Sets the hero's base health.
+     * @param dexterity The amount of base health to set.
+     */
     public void setDexterity(int dexterity) {
         this.dexterity = dexterity;
     }
 
+    /**
+     * Gets the hero's base strength.
+     * @return The hero's base strength.
+     */
     public int getAgility() {
         return agility;
     }
 
+    /**
+     * Sets the hero's base strength.
+     * @param agility The amount of base strength to set.
+     */
     public void setAgility(int agility) {
         this.agility = agility;
     }
 
+    /**
+     * Gets the hero's base agility.
+     * @return The hero's base agility.
+     */
     public int getStrength() {
         return strength;
     }
 
+    /**
+     * Sets the hero's base agility.
+     * @param strength The amount of base agility to set.
+     */
     public void setStrength(int strength) {
         this.strength = strength;
     }
