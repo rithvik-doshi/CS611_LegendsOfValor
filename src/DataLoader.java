@@ -33,7 +33,6 @@ public class DataLoader {
                 String line;
                 while ((line = br.readLine()) != null) {
                     sb.append(line).append("\n");
-                    System.out.println(line);
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);

@@ -2,7 +2,6 @@ import java.util.*;
 
 public class LOV_Map extends Map{
     public HashMap<Legend, int[]> legendLocations = new HashMap<>();
-    public HashMap<Hero, int[]> initialHeroLocations = new HashMap<>();
     protected LOV_Map() {
         super(8);
         for (int i = 0; i < matrix.length; i++) {
@@ -39,7 +38,6 @@ public class LOV_Map extends Map{
             location[1] = heroes.indexOf(hero) * 3;
             hero.setStartingLocation(location.clone());
             if (matrix[location[0]][location[1]].tryAccess(hero)){
-                System.out.println("Placed " + hero.name + " at " + Arrays.toString(location));
                 legendLocations.put(hero, location);
             }
         }
@@ -63,17 +61,12 @@ public class LOV_Map extends Map{
 
     private boolean placeMonster(Monster monster, int[] location) {
         if (matrix[location[0]][location[1]].tryAccess(monster)){
-            System.out.println("Placed " + monster.name + " at " + Arrays.toString(location));
             legendLocations.put(monster, location);
             return true;
         } else {
             System.out.println("Failed to place " + monster.name + " at " + Arrays.toString(location));
             return false;
         }
-    }
-
-    public void printLocations(){
-        System.out.println(getLocations());
     }
 
     private String getLocations(){

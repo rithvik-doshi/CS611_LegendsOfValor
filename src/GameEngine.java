@@ -51,8 +51,8 @@ public class GameEngine {
                     Color.bold + Color.green + "\n'X' " + Color.reset + "to cast spell" +
                     Color.bold + Color.green + "\n'F' " + Color.reset + "to skip turn"
             );
-            if (spaceType == 'N') System.out.print(" M for market");
-            System.out.print(":\n");
+            if (spaceType == 'N') System.out.print(Color.bold + Color.green + "\n'M' " + Color.reset + "for market");
+            System.out.print("\nEnter choice: ");
             String input = scanner.nextLine();
             try{
                 if (spaceType == 'N'){
@@ -174,7 +174,7 @@ public class GameEngine {
 
     public static void printFile(String filename) {
         System.out.println(DataLoader.dl.getInstructions(filename));
-                System.out.println("________________________________________________________________________________\n");
+        System.out.println("________________________________________________________________________________\n");
     }
 
     /**

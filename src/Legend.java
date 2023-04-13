@@ -147,11 +147,9 @@ public abstract class Legend {
 
     public void setStartingLocation(int[] startingLocation) {
         this.startingLocation = startingLocation;
-        System.out.println("Changed starting location: " + Arrays.toString(this.startingLocation));
     }
 
     public int[] getStartingLocation() {
-        System.out.println("Current starting location: " + Arrays.toString(this.startingLocation));
         return this.startingLocation;
     }
 }
